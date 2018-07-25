@@ -11,15 +11,20 @@ app.get('/', (req,res) => {
 	request('https://www.thecocktaildb.com/api/json/v1/1/random.php', function(err, _res, body) {
 		const drinks = JSON.parse(body);
 		const drink = drinks.drinks[0];
-		res.json({Name: drink.strDrink,
+		//need to go through ingredients and measure make sure they have values to the keys
+		const output = {
+			Name: drink.strDrink,
+			Category: drink.strCategory,
+			Thumbnail: drink.strDrinkThumb,
+			Glass: drink.strGlass,
 			Ingredents: {
 			Ingredient1: drink.strIngredient1, Measure1: drink.strMeasure1,
 			Ingredient2: drink.strIngredient2, Measure2: drink.strMeasure2,
 			Ingredient3: drink.strIngredient3, Measure3: drink.strMeasure3
 			},
-			Glass: drink.strGlass,
 			Instructions: drink.strInstructions
-		});
+			};
+		res.json(output);
 	});
 });
 
