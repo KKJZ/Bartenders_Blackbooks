@@ -7,6 +7,7 @@ const app = express();
 
 app.use(morgan('common'));
 
+//returns random drink as response
 app.get('/', (req,res) => {
 	request('https://www.thecocktaildb.com/api/json/v1/1/random.php', function(err, _res, body) {
 		const drinks = JSON.parse(body);
@@ -27,5 +28,14 @@ app.get('/', (req,res) => {
 		res.json(output);
 	});
 });
+
+//takes search and returns drinks by same name
+app.post('/drinksearch', (req, res) => {
+	const searchTerm = req.query.search;
+	request(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`, function(err, _res, body) {
+		const drinks = JSON.parse(body);
+		res.send(drinks.drinks);
+	})
+})
 
 app.listen(5000, () => console.log('listening at port 5000'));
