@@ -14,16 +14,16 @@ app.get('/', (req,res) => {
 		const drink = drinks.drinks[0];
 		//need to go through ingredients and measure make sure they have values to the keys
 		const output = {
-			Name: drink.strDrink,
-			Category: drink.strCategory,
-			Thumbnail: drink.strDrinkThumb,
-			Glass: drink.strGlass,
-			Ingredents: {
-			Ingredient1: drink.strIngredient1, Measure1: drink.strMeasure1,
-			Ingredient2: drink.strIngredient2, Measure2: drink.strMeasure2,
-			Ingredient3: drink.strIngredient3, Measure3: drink.strMeasure3
+			name: drink.strDrink,
+			category: drink.strCategory,
+			thumbnail: drink.strDrinkThumb,
+			glass: drink.strGlass,
+			ingredents: {
+			ingredient1: drink.strIngredient1, measure1: drink.strMeasure1,
+			ingredient2: drink.strIngredient2, measure2: drink.strMeasure2,
+			ingredient3: drink.strIngredient3, measure3: drink.strMeasure3
 			},
-			Instructions: drink.strInstructions
+			instructions: drink.strInstructions
 			};
 		res.json(output);
 	});
@@ -31,6 +31,7 @@ app.get('/', (req,res) => {
 
 //takes search and returns drinks by same name
 app.post('/drinksearch', (req, res) => {
+	console.log(req);
 	const searchTerm = req.query.search;
 	request(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`, function(err, _res, body) {
 		const drinks = JSON.parse(body);
