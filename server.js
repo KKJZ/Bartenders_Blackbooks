@@ -6,9 +6,10 @@ const request = require('request');
 const app = express();
 
 app.use(morgan('common'));
+app.use(express.static('public'));
 
 //returns random drink as response
-app.get('/', (req,res) => {
+app.get('/random', (req,res) => {
 	request('https://www.thecocktaildb.com/api/json/v1/1/random.php', function(err, _res, body) {
 		const drinks = JSON.parse(body);
 		const drink = drinks.drinks[0];

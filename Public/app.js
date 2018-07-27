@@ -1,4 +1,4 @@
-const randomDrinkURL = 'http://localhost:5000/'
+const randomDrinkURL = 'http://localhost:5000/random'
 
 //handle the random button
 function handleButton () {
