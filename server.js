@@ -5,7 +5,26 @@ const request = require('request');
 
 const app = express();
 
+//logging
 app.use(morgan('common'));
+
+//CORS
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
+});
+
+//SCHEMA
+//NAME: DRINK.NAME
+//CATEGORY: DRINK.CATEGORY
+//GLASS: DRINK.GLASS
+//INGREDENTS: [DRINK.INGREDIENT1 + DRINK.MEASURE1, ETC...]
+//INSTRUCTIONS: DRINK.INSTRUCTIONS
 
 //returns random drink as response
 app.get('/', (req,res) => {
@@ -36,6 +55,28 @@ app.post('/drinksearch', (req, res) => {
 		const drinks = JSON.parse(body);
 		res.send(drinks.drinks);
 	})
-})
+});
+
+
+//search that filters by main alchol type
+app.post('/drinksearch/:i', (req, res) => {});
+
+//search that works by glass type
+app.post('/drinksearch/:g', (req, res) => {});
+
+//make user profile
+app.post('/users', (req, res) => {});
+
+//login request would return a jwt
+app.post('/login', (req, res) => {});
+
+//add a drink to the user profile
+app.post('/mydrink', (req, res) => {});
+
+//update a drink you have saved
+app.put('/mydrink/:id', (req,res) => {});
+
+//remove drink from user profile
+app.delete('/mydrink/:id', (req, res) => {});
 
 app.listen(5000, () => console.log('listening at port 5000'));
