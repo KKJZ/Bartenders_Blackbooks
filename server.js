@@ -2,8 +2,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const request = require('request');
+const mongoose = require('mongoose');
+//es6 promise
+mongoose.Promise = global.Promise;
 
 const app = express();
+const {PORT, DATABASE_URL} = require('./config');
 
 //logging
 app.use(morgan('common'));
@@ -22,9 +26,9 @@ app.use(function (req, res, next) {
 
 //SCHEMA
 //NAME: DRINK.NAME
-//CATEGORY: DRINK.CATEGORY
 //GLASS: DRINK.GLASS
 //INGREDENTS: [DRINK.INGREDIENT1 + DRINK.MEASURE1, ETC...]
+//GARNISH: DRINK.GARNISH
 //INSTRUCTIONS: DRINK.INSTRUCTIONS
 
 //returns random drink as response
@@ -81,4 +85,42 @@ app.put('/mydrink/:id', (req,res) => {});
 //remove drink from user profile
 app.delete('/mydrink/:id', (req, res) => {});
 
-app.listen(5000, () => console.log('listening at port 5000'));
+let server;
+
+function runServer (databaseURL, port = PORT) {
+	return new Promise ((resolve, reject) => {
+		mongoose.connect(databaseURL, err => {
+			if (err) 
+				return reject(err);
+			})
+			console.log(`connected to ${databaseURL}`)
+			server = app.listen(port, () => {
+				console.log(`Server is listening on PORT: ${port}`);
+				resolve();
+			})
+			.on("error", err => {
+				mongoose.disconnect();
+				reject(err);
+			})
+	})
+};
+
+function closeServer () {
+	return mongoose.disconnect().then(() => {
+		return new Promise ((resolve, reject) => {
+			console.log("Closing Server")
+			server.close(err => {
+				if (err) {
+					return reject(err);
+				}
+				resolve();
+			});
+		});
+	});
+};
+
+if (require.main === module) {
+	runServer(DATABASE_URL).catch(err => console.log(err));
+}
+
+module.exports = {app, runServer, closeServer}
