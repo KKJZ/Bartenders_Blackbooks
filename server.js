@@ -3,15 +3,17 @@ const express = require('express');
 const morgan = require('morgan');
 const request = require('request');
 const mongoose = require('mongoose');
-//es6 promise
+//es6 promise 
 mongoose.Promise = global.Promise;
 
 const app = express();
 const {PORT, DATABASE_URL} = require('./config');
+const {DrinkCollection} =require('./models');
 
 //logging
 app.use(morgan('common'));
 app.use(express.static('public'));
+app.use(express.json());
 
 //CORS
 app.use(function (req, res, next) {
@@ -25,28 +27,59 @@ app.use(function (req, res, next) {
 });
 
 //pull up all drinks
-app.get('/drinksearch', (req, res) => {});
+app.get('/drinks', (req, res) => {
+	DrinkCollection.find()
+	.then(Drinks => { 
+		res.json(Drinks.map(Drink => Drink.serialize()));
+	})
+	.catch(err => {
+		console.error(err);
+		res.status(500).json({error: 'Something happened.'})
+	})
+});
+
+//add a drink to the list
+app.post('/drinks', (req, res) => {
+	const requiredFields = ["user", "name", "instructions"];
+	for (let i=0; i<requiredFields.length; i++) {
+		const field = requiredFields[i];
+		if (!(field in req.body)) {
+			const messege = `Request body is missing ${field}`;
+			console.error(messege);
+			return res.status(400).send(messege);
+		}
+	}
+	const item = DrinkCollection.create({
+		user: req.body.user,
+		name: req.body.name,
+		glass: req.body.glass,
+		ingredents: req.body.ingredents,
+		garnish: req.body.garnish,
+		instructions: req.body.instructions
+	}).then(drink => res.status(201).json(drink.serialize()))
+	.catch(err => {
+		console.log(err);
+		res.status(500).json({error: 'Something happened.'});
+	});
+});
 
 //search that filters by main alchol type
-app.post('/drinksearch/:i', (req, res) => {});
+// app.post('/drinksearch/:i', (req, res) => {});
 
 //search that works by glass type
-app.post('/drinksearch/:g', (req, res) => {});
+// app.post('/drinksearch/:g', (req, res) => {});
 
 //make user profile
-app.post('/users', (req, res) => {});
+// app.post('/users', (req, res) => {});
 
 //login request would return a jwt
-app.post('/login', (req, res) => {});
-
-//add a drink to the user profile
-app.post('/mydrink', (req, res) => {});
+// app.post('/login', (req, res) => {});
 
 //update a drink you have saved
-app.put('/mydrink/:id', (req,res) => {});
+// app.put('/mydrink/:id', (req,res) => {});
 
 //remove drink from user profile
-app.delete('/mydrink/:id', (req, res) => {});
+// app.delete('/mydrink/:id', (req, res) => {});
 
 let server;
 

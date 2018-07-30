@@ -12,23 +12,23 @@ const drinkSchema = mongoose.Schema({
 	{
 		ingredent: String,
 		measurement: String
-	}
+	},
 	{
 		ingredent: String,
 		measurement: String
-	}]
+	}],
 	garnish: String,
-	insrtuctions: {type: String, required: true}
+	instructions: {type: String, required: true}
 });
 
 //schema to make the ouptut look like ingredents: [ingredent measurement, ingredent measurement, ingredent measurement]
-drinkSchema.virual('pour').get(function() {
+drinkSchema.virtual('pour').get(function() {
 	for (let i=0; i<this.ingredents.length; i++) {
 		if (this.ingredents[i].measurement === null) {
-			return `${this.ingredents[i].ingredent},`
-		};
+			return this.ingredents[i].ingredent + ","
+		}
 		else {
-			return `${this.ingredents[i].ingredent} ${this.ingredents[i].measurement},` 
+			return this.ingredents[i].ingredent + this.ingredents[i].measurement + ","
 		};
 	};
 });
@@ -38,12 +38,12 @@ drinkSchema.methods.serialize = function() {
 		id: this._id,
 		user: this.user,
 		glass: this.glass,
-		ingredents: [this.pour],
+		ingredents: this.ingredents,
 		garnish: this.garnish,
-		insrtuctions: this.insrtuctions
+		instructions: this.instructions
 	};
 };
 
-const Drinks = mongoose.model('Drinks', drinkSchema);
+const DrinkCollection = mongoose.model("Drinks", drinkSchema);
 
-module.exports = { Drinks }
+module.exports = { DrinkCollection };
