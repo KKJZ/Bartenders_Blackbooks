@@ -39,8 +39,9 @@ app.get('/drinks', (req, res) => {
 });
 
 //add a drink to the list
+//when user is made add to their profile
 app.post('/drinks', (req, res) => {
-	const requiredFields = ["user", "name","glass","ingredents","instructions"];
+	const requiredFields = ["user", "drinkName","glass","ingredents","instructions"];
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -51,7 +52,7 @@ app.post('/drinks', (req, res) => {
 	}
 	const item = DrinkCollection.create({
 		user: req.body.user,
-		name: req.body.name,
+		drinkName: req.body.drinkName,
 		glass: req.body.glass,
 		ingredents: req.body.ingredents,
 		garnish: req.body.garnish,
@@ -64,12 +65,13 @@ app.post('/drinks', (req, res) => {
 });
 
 //update a drink you have saved
+//when user is made make sure user has access to this id
 app.put('/drinks/:id', (req,res) => {
 	if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
 		res.status(400).json({error: "Request path id and request body id values must match"});
 	}
 	const updated = {};
-	const updatedFields = ["user","name","glass","ingredents","garnish","instructions"];
+	const updatedFields = ["user", "drinkName", "glass", "ingredents", "garnish", "instructions"];
 	updatedFields.forEach(field => {
 		if (field in req.body) {
 			updated[field] = req.body[field];
@@ -80,7 +82,7 @@ app.put('/drinks/:id', (req,res) => {
 	.catch(err => res.status(500).json({messege: 'Something happened.'}));
 });
 
-//remove drink from user profile
+//remove drink from user profile and list
 app.delete('/drinks/:id', (req, res) => {
 	DrinkCollection.findByIdAndRemove(req.params.id)
 	.then(() => {
