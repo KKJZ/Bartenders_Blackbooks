@@ -40,7 +40,7 @@ app.get('/drinks', (req, res) => {
 
 //add a drink to the list
 app.post('/drinks', (req, res) => {
-	const requiredFields = ["user", "name", "instructions"];
+	const requiredFields = ["user", "name","glass","ingredents","instructions"];
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -63,6 +63,35 @@ app.post('/drinks', (req, res) => {
 	});
 });
 
+//update a drink you have saved
+app.put('/drinks/:id', (req,res) => {
+	if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+		res.status(400).json({error: "Request path id and request body id values must match"});
+	}
+	const updated = {};
+	const updatedFields = ["user","name","glass","ingredents","garnish","instructions"];
+	updatedFields.forEach(field => {
+		if (field in req.body) {
+			updated[field] = req.body[field];
+		}
+	});
+	DrinkCollection.findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
+	.then(updatedDrink => res.status(204).end())
+	.catch(err => res.status(500).json({messege: 'Something happened.'}));
+});
+
+//remove drink from user profile
+app.delete('/drinks/:id', (req, res) => {
+	DrinkCollection.findByIdAndRemove(req.params.id)
+	.then(() => {
+		res.status(204).json({messege: "success"});
+	})
+	.catch(err => {
+		console.error(err);
+		res.status(500).json({error: 'Something happened.'})
+	})
+});
+
 //search that filters by main alchol type
 // app.post('/drinksearch/:i', (req, res) => {});
 
@@ -74,12 +103,6 @@ app.post('/drinks', (req, res) => {
 
 //login request would return a jwt
 // app.post('/login', (req, res) => {});
-
-//update a drink you have saved
-// app.put('/mydrink/:id', (req,res) => {});
-
-//remove drink from user profile
-// app.delete('/mydrink/:id', (req, res) => {});
 
 let server;
 
