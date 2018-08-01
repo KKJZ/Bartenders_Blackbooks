@@ -25,7 +25,8 @@ userSchema.methods.validatePassword = function(password) {
 };
 
 //hash password
-userSchema.methods.hashPassword = function(password) {
+userSchema.methods.hashPass = function(password) {
+	console.log("Hashing Password");
 	return bcrypt.hash(password, 10);
 }
 

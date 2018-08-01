@@ -41,6 +41,7 @@ app.get('/drinks', (req, res) => {
 
 //add a drink to the list
 //when user is made add to their profile
+//need to make a secure route
 app.post('/drinks', (req, res) => {
 	const requiredFields = ["user", "drinkName","glass","ingredents","instructions"];
 	for (let i=0; i<requiredFields.length; i++) {
@@ -67,6 +68,7 @@ app.post('/drinks', (req, res) => {
 
 //update a drink you have saved
 //when user is made make sure user has access to this id
+//need to make a secure route
 app.put('/drinks/:id', (req,res) => {
 	if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
 		res.status(400).json({error: "Request path id and request body id values must match"});
@@ -84,6 +86,7 @@ app.put('/drinks/:id', (req,res) => {
 });
 
 //remove drink from user profile and list
+//need to make a secure route
 app.delete('/drinks/:id', (req, res) => {
 	DrinkCollection.findByIdAndRemove(req.params.id)
 	.then(() => {
@@ -111,19 +114,21 @@ app.post('/users', (req, res) => {
 			console.error(messege);
 			return res.status(400).send(messege);
 		}
-	}
-	console.log(req.body);
+	};
+	let user = Users();
 	let {userName, password, email} = req.body
 	return Users.find({userName})
 		.count()
 		.then(count => {
 			if (count > 0) {
-				//return already made
+				const messege = "User name is already taken";
+				console.error(messege);
+				res.status(400).json({error: messege})
 			}
-			return User.hashPassword(password);
+			return user.hashPass(password);
 		})
 		.then(hash => {
-			return User.create({
+			return Users.create({
 				userName,
 				password: hash,
 				email
