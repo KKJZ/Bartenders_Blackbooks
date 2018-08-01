@@ -9,6 +9,7 @@ mongoose.Promise = global.Promise;
 const app = express();
 const {PORT, DATABASE_URL} = require('./config');
 const {DrinkCollection} =require('./models');
+const {Users} = require('./users');
 
 //logging
 app.use(morgan('common'));
@@ -101,7 +102,41 @@ app.delete('/drinks/:id', (req, res) => {
 // app.post('/drinksearch/:g', (req, res) => {});
 
 //make user profile
-// app.post('/users', (req, res) => {});
+app.post('/users', (req, res) => {
+	const requiredFields = ['userName', 'password', 'email'];
+	for (let i=0; i<requiredFields.length; i++) {
+		const field = requiredFields[i];
+		if(!(field in req.body)) {
+			const messege = `Request body is missing ${field}`;
+			console.error(messege);
+			return res.status(400).send(messege);
+		}
+	}
+	console.log(req.body);
+	let {userName, password, email} = req.body
+	return Users.find({userName})
+		.count()
+		.then(count => {
+			if (count > 0) {
+				//return already made
+			}
+			return User.hashPassword(password);
+		})
+		.then(hash => {
+			return User.create({
+				userName,
+				password: hash,
+				email
+			})
+		})
+		.then(user => {
+			return res.status(201).json(user.serialize());
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({error: 'Something happened'})
+		})
+});
 
 //login request would return a jwt
 // app.post('/login', (req, res) => {});
