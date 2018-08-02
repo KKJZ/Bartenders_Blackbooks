@@ -27,6 +27,7 @@ function generateDrinkData () {
 	const generatedData = {
 		user: faker.name.firstName(),
 		drinkName: faker.name.title(),
+		drinkImage: faker.image.image(),
 		glass: faker.lorem.word(),
 		ingredents:[
 		{
@@ -88,7 +89,7 @@ describe('BlackBook API resource', function() {
 				expect(res.body).to.be.a('array');
 				res.body.forEach(function(drink) {
 					expect(drink).to.be.a('object');
-					expect(drink).to.include.keys("id", "user", "drinkName", "glass", "ingredents", "garnish", "instructions");
+					expect(drink).to.include.keys("id", "user", "drinkName", "glass", "ingredents", "garnish", "instructions", "drinkImage");
 					expect(drink.ingredents).to.be.a('array');
 				});
 				testDrink = res.body[0];
@@ -118,7 +119,7 @@ describe('BlackBook API resource', function() {
 				expect(res).to.have.status(201);
 				expect(res).to.be.json;
 				expect(res.body).to.be.a('object');
-				expect(res.body).to.include.keys("id", "user", "drinkName", "glass", "ingredents", "garnish", "instructions");
+				expect(res.body).to.include.keys("id", "user", "drinkName", "glass", "ingredents", "garnish", "instructions", "drinkImage");
 				expect(res.body.id).to.not.be.null;
 				return DrinkCollection.findById(res.body.id)
 			})

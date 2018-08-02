@@ -7,16 +7,9 @@ mongoose.Promise = global.Promise;
 const drinkSchema = mongoose.Schema({
 	user: {type: String, required: true},
 	drinkName: {type: String, required: true},
+	drinkImage: String,
 	glass: String,
-	ingredents:[
-	{
-		ingredent: String,
-		measurement: String
-	},
-	{
-		ingredent: String,
-		measurement: String
-	}],
+	ingredents: Array,
 	garnish: String,
 	instructions: {type: String, required: true}
 });
@@ -38,6 +31,7 @@ drinkSchema.methods.serialize = function() {
 		id: this._id,
 		user: this.user,
 		drinkName: this.drinkName,
+		drinkImage: this.drinkImage,
 		glass: this.glass,
 		ingredents: this.ingredents,
 		garnish: this.garnish,

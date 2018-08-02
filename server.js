@@ -3,8 +3,32 @@ const express = require('express');
 const morgan = require('morgan');
 const request = require('request');
 const mongoose = require('mongoose');
+const multer =  require('multer');
 //es6 promise 
 mongoose.Promise = global.Promise;
+
+//multer setup
+const storage = multer.diskStorage({
+	destination: function(req, file, cb) {
+		cb(null,'./images');
+	},
+	filename: function(req, file, cb) {
+		cb(null, Date.now() + file.originalname);
+	}
+});
+const fileFilter = function (req, file, cb) {
+	if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+		cb(null, true)
+	} else{
+		cb(new Error("File must be jpeg or png file type"),false)
+	}
+}
+const upload = multer({
+	storage: storage,
+	//max img file size: 5mb
+	limit: {fileSize: 1024 * 1024 * 5},
+	fileFilter: fileFilter
+});
 
 const app = express();
 const {PORT, DATABASE_URL} = require('./config');
@@ -14,6 +38,7 @@ const {Users} = require('./users');
 //logging
 app.use(morgan('common'));
 app.use(express.static('public'));
+app.use('/images', express.static('images'));
 app.use(express.json());
 
 //CORS
@@ -42,7 +67,9 @@ app.get('/drinks', (req, res) => {
 //add a drink to the list
 //when user is made add to their profile
 //need to make a secure route
-app.post('/drinks', (req, res) => {
+app.post('/drinks', upload.single('drinkImage'), (req, res) => {
+	console.log(req.file);
+	console.log(req.body)
 	const requiredFields = ["user", "drinkName","glass","ingredents","instructions"];
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
@@ -55,6 +82,7 @@ app.post('/drinks', (req, res) => {
 	const item = DrinkCollection.create({
 		user: req.body.user,
 		drinkName: req.body.drinkName,
+		drinkImage: req.file.path, 
 		glass: req.body.glass,
 		ingredents: req.body.ingredents,
 		garnish: req.body.garnish,
