@@ -129,7 +129,7 @@ describe('BlackBook API resource', function() {
 				expect(drink.drinkName).to.equal(newDrink.drinkName);
 				expect(drink.glass).to.equal(newDrink.glass);
 				expect(drink.ingredents[0].ingredent).to.equal(newDrink.ingredents[0].ingredent);
-				expect(drink.ingredents[0].measurement).to.equal(JSON.stringify(newDrink.ingredents[0].measurement));
+				expect(drink.ingredents[0].measurement).to.equal(newDrink.ingredents[0].measurement);
 				expect(drink.garnish).to.equal(newDrink.garnish);
 				expect(drink.instructions).to.equal(newDrink.instructions)
 			})

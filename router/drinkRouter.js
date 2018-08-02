@@ -44,8 +44,6 @@ router.get('/', (req, res) => {
 //when user is made add to their profile
 //need to make a secure route
 router.post('/', upload.single('drinkImage'), (req, res) => {
-	console.log(req.file);
-	console.log(req.body)
 	const requiredFields = ["user", "drinkName","glass","ingredents","instructions"];
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
@@ -58,7 +56,7 @@ router.post('/', upload.single('drinkImage'), (req, res) => {
 	const item = DrinkCollection.create({
 		user: req.body.user,
 		drinkName: req.body.drinkName,
-		drinkImage: req.file.path, 
+		drinkImage: function() { if (req.file.path = undefined) {req.body.drinkImage} else {req.file.path} }, 
 		glass: req.body.glass,
 		ingredents: req.body.ingredents,
 		garnish: req.body.garnish,
