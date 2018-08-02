@@ -3,37 +3,18 @@ const express = require('express');
 const morgan = require('morgan');
 const request = require('request');
 const mongoose = require('mongoose');
-const multer =  require('multer');
+const router = express.Router();
+
+const drinkRouter = require('./router/drinkRouter');
+const usersRouter = require('./router/usersRouter');
+const loginRouter = require('./router/loginRouter');
 //es6 promise 
 mongoose.Promise = global.Promise;
 
-//multer setup
-const storage = multer.diskStorage({
-	destination: function(req, file, cb) {
-		cb(null,'./images');
-	},
-	filename: function(req, file, cb) {
-		cb(null, Date.now() + file.originalname);
-	}
-});
-const fileFilter = function (req, file, cb) {
-	if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-		cb(null, true)
-	} else{
-		cb(new Error("File must be jpeg or png file type"),false)
-	}
-}
-const upload = multer({
-	storage: storage,
-	//max img file size: 5mb
-	limit: {fileSize: 1024 * 1024 * 5},
-	fileFilter: fileFilter
-});
-
 const app = express();
 const {PORT, DATABASE_URL} = require('./config');
-const {DrinkCollection} =require('./models');
-const {Users} = require('./users');
+const {DrinkCollection} =require('./models/drinks');
+const {Users} = require('./models/users');
 
 //logging
 app.use(morgan('common'));
@@ -52,127 +33,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-//pull up all drinks
-app.get('/drinks', (req, res) => {
-	DrinkCollection.find()
-	.then(Drinks => { 
-		res.json(Drinks.map(Drink => Drink.serialize()));
-	})
-	.catch(err => {
-		console.error(err);
-		res.status(500).json({error: 'Something happened.'})
-	})
-});
-
-//add a drink to the list
-//when user is made add to their profile
-//need to make a secure route
-app.post('/drinks', upload.single('drinkImage'), (req, res) => {
-	console.log(req.file);
-	console.log(req.body)
-	const requiredFields = ["user", "drinkName","glass","ingredents","instructions"];
-	for (let i=0; i<requiredFields.length; i++) {
-		const field = requiredFields[i];
-		if (!(field in req.body)) {
-			const messege = `Request body is missing ${field}`;
-			console.error(messege);
-			return res.status(400).send(messege);
-		}
-	}
-	const item = DrinkCollection.create({
-		user: req.body.user,
-		drinkName: req.body.drinkName,
-		drinkImage: req.file.path, 
-		glass: req.body.glass,
-		ingredents: req.body.ingredents,
-		garnish: req.body.garnish,
-		instructions: req.body.instructions
-	}).then(drink => res.status(201).json(drink.serialize()))
-	.catch(err => {
-		console.log(err);
-		res.status(500).json({error: 'Something happened.'});
-	});
-});
-
-//update a drink you have saved
-//when user is made make sure user has access to this id
-//need to make a secure route
-app.put('/drinks/:id', (req,res) => {
-	if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-		res.status(400).json({error: "Request path id and request body id values must match"});
-	}
-	const updated = {};
-	const updatedFields = ["user", "drinkName", "glass", "ingredents", "garnish", "instructions"];
-	updatedFields.forEach(field => {
-		if (field in req.body) {
-			updated[field] = req.body[field];
-		}
-	});
-	DrinkCollection.findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-	.then(updatedDrink => res.status(204).end())
-	.catch(err => res.status(500).json({messege: 'Something happened.'}));
-});
-
-//remove drink from user profile and list
-//need to make a secure route
-app.delete('/drinks/:id', (req, res) => {
-	DrinkCollection.findByIdAndRemove(req.params.id)
-	.then(() => {
-		res.status(204).json({messege: "success"});
-	})
-	.catch(err => {
-		console.error(err);
-		res.status(500).json({error: 'Something happened.'})
-	})
-});
-
-//search that filters by main alchol type
-// app.post('/drinksearch/:i', (req, res) => {});
-
-//search that works by glass type
-// app.post('/drinksearch/:g', (req, res) => {});
-
-//make user profile
-app.post('/users', (req, res) => {
-	const requiredFields = ['userName', 'password', 'email'];
-	for (let i=0; i<requiredFields.length; i++) {
-		const field = requiredFields[i];
-		if(!(field in req.body)) {
-			const messege = `Request body is missing ${field}`;
-			console.error(messege);
-			return res.status(400).send(messege);
-		}
-	};
-	let user = Users();
-	let {userName, password, email} = req.body
-	return Users.find({userName})
-		.count()
-		.then(count => {
-			if (count > 0) {
-				const messege = "User name is already taken";
-				console.error(messege);
-				res.status(400).json({error: messege})
-			}
-			return user.hashPass(password);
-		})
-		.then(hash => {
-			return Users.create({
-				userName,
-				password: hash,
-				email
-			})
-		})
-		.then(user => {
-			return res.status(201).json(user.serialize());
-		})
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({error: 'Something happened'})
-		})
-});
-
-//login request would return a jwt
-// app.post('/login', (req, res) => {});
+//router to endpoints
+app.use('/login', loginRouter);
+app.use('/drinks', drinkRouter);
+app.use('/users', usersRouter);
 
 let server;
 
