@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const request = require('request');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const router = express.Router();
 
 const drinkRouter = require('./router/drinkRouter');

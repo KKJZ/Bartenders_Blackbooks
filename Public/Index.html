@@ -6,10 +6,27 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-	<nav class="border">
+	<!--unhide when you have logged in -->
+	<nav class="border hidden">
 	<!-- Home will be the search menu -->Home | 
 	<!-- My Account will be where you can look at saved drinks, to remove or update them --> My Account | 
 	<!-- Go back to login screen  -->Logout</nav>
+	<div class="register">
+		<!--if they want to register it would load here -->
+	</div>
+	<div class="login">
+		<form id="login">
+			<fieldset>
+				<legend>Login</legend>
+				<label for="userName">User Name:</label>
+				<input type="text" name="userName"><br>
+				<label for="Password">Password:</label>
+				<input type="password" name="password"><br>
+				<input type="submit" name="Submit">
+				<button class="register">Register here!</button>
+			</fieldset>
+		</form>
+	</div>
 	<div class="button"><button class="drinks">Get Drinks</button></div>
 	<div class="drink_results"></div>
 	<hr>
@@ -48,6 +65,9 @@
 				<input type="submit" name="Submit">
 			</fieldset>
 		</form>
+	</div>
+	<div class="newDrink">
+		
 	</div>
 
 <script type="text/javascript" src="app.js"></script>

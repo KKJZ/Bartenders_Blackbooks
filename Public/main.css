@@ -28,6 +28,20 @@ article {
 	margin-left: 0 auto;
 }
 
+fieldset {
+	text-align: center;
+}
+
+div.login {
+	width: 100%;
+}
+
+form.login {
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+}
+
 div.button {
 	width: 100%;
 	margin-bottom: 50px;
@@ -51,4 +65,8 @@ img.result {
 .border {
 	border: black 1px solid;
   	/*background-color: rgba(50, 31, 31, 0.8);*/
+}
+
+.hidden {
+	display: none;
 }

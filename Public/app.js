@@ -104,16 +104,27 @@ function handleMakeDrink () {
 		};
 		console.log(form);
 		console.log(data);
+		postDrink(data, renderMadeDrink);
 	})
 };
 
 //post drink to db
-function postDrink() {
-
+function postDrink(data, callback) {
+	const options = {
+		url: '/drinks',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
+		success: callback,
+		error: makeDrinkError
+	}
+	$.ajax(options);
 };
 
 //return drink from db
-function renderMadeDrink () {
+function renderMadeDrink (obj) {
+	$('div.newDrink').html(`<p>obj</p>`)
 
 };
 

@@ -17,7 +17,10 @@ router.post('/', (req, res) => {
 	}
 	let user = Users();
 	let {userName, password} = req.body;
+	console.log(Users.find(userName))
 	user.validatePassword(password)
+	.catch(err => {console.error(err) 
+		return res.status(500).send('Something happened.')})
 });
 
 module.exports = router;
