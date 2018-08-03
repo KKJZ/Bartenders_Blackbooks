@@ -10,8 +10,45 @@
 	<!-- Home will be the search menu -->Home | 
 	<!-- My Account will be where you can look at saved drinks, to remove or update them --> My Account | 
 	<!-- Go back to login screen  -->Logout</nav>
-	<div class="button"><button class="random">Random Drink</button></div>
-	<div class="results"></div>
+	<div class="button"><button class="drinks">Get Drinks</button></div>
+	<div class="drink_results"></div>
+	<hr>
+	<div class="user-button">
+		<form id="user_register">
+			<fieldset>
+				<legend>Register a User</legend>
+				<label>User Name:
+					<input type="text" name="userName" placeholder="User Name Here"></label><br>
+				<label>Password:
+					<input type="Password" name="password" placeholder="password"></label><br>
+				<label>Email:
+					<input type="email" name="email" placeholder="Email@here.com"></label><br>
+				<input type="submit" name="submit">
+			</fieldset>
+		</form>
+	</div>
+	<div class="user_results">
+	</div>
+	<hr>
+	<div class="MakeDrink">
+		<form id="drink_register">
+			<fieldset>
+				<legend>Make A new drink</legend>
+				<label>Drink Name:
+					<input type="text" name="drinkName" placeholder="Drink Name"></label><br>
+				<label>Glass:
+					<input type="text" name="glass" placeholder="Glass Type"></label><br>
+				<label>Ingredents:
+					<input type="text" name="ingredent" placeholder="Ingredent">
+					<input type="text" name="measurment" placeholder="Measurment"></label><br>
+				<label>Instructions
+					<input type="text" name="instructions" placeholder="Instructions"></label><br>
+				<label>Drink Image:
+					<input type="file" name="drinkImage"></label><br>
+				<input type="submit" name="Submit">
+			</fieldset>
+		</form>
+	</div>
 
 <script type="text/javascript" src="app.js"></script>
 </body>

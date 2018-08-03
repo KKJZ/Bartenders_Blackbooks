@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
 
 //make user profile
 router.post('/', (req, res) => {
+	console.log(req.body);
 	const requiredFields = ['userName', 'password', 'email'];
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i];
