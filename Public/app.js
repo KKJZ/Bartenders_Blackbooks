@@ -1,6 +1,6 @@
 //handle the get drink button
-function handleButton () {
-	$('.drinks').on('click', function () {
+function handleAllDrinksButton () {
+	$('.drinks').on('click', function (event) {
 		event.preventDefault();
 		console.log('button pressed GETting drinks');
 		getDrink(renderDrink);
@@ -22,6 +22,7 @@ function getDrink (callback) {
 
 //render drink  to the div.results
 function renderDrink (obj) {
+	$('div.drink_results').html('');
 	for (let i=0; i<obj.length; i++) {
 		const options = `
 		<article>
@@ -38,61 +39,20 @@ function renderDrink (obj) {
 //for fail function
 function forFail (err) {
 	console.log(err);
-	$('div.drink_results').html(`<p>ERROR: code ${err.status},<br>${err.responseText}`)
+	$('div.drink_results').html(`<p style='color: red; text-align: center;'>ERROR: code ${err.status},<br>${err.responseText}`)
 }
-
-//make user
-function handleUser () {
-	$('#user_register').on('submit', function() {
-		event.preventDefault();
-		let form = $(this);
-		console.log(form);
-		console.log('User submitted.');
-		let data = {
-			userName: form[0][1].value,
-			password: form[0][2].value,
-			email: form[0][3].value	
-		}
-		console.log(data);
-		postUser(data, renderUser);
-	})
-}
-
-//post user makes a post request to the server to make the user
-function postUser (data, callback) {
-	console.log(data)
-	const request = {
-		url: '/users',
-		type: 'POST',
-		dataType: 'json',
-		data: JSON.stringify(data),
-		contentType: "application/json; charset=utf-8",
-		success: callback,
-		error: errorUser,
-	}
-	$.ajax(request);
-};
-
-//render user returns the user name and a success status back to the user
-function renderUser (obj) {
-	console.log(obj);
-	$('div.user_results').html(`${obj.userName} was successfully created.`)
-};
-
-//error on user make 
-function errorUser (err) {
-	console.log(err.responseText, err.status);
-	$('div.user_results').html(`<p>ERROR: code ${err.status},<br>${err.responseText}`)
-};
 
 //handle form drink
 function handleMakeDrink () {
 	$('#drink_register').on('submit', function() {
 		event.preventDefault();
 		let form = $(this);
+		let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
+		console.log(form.serialize());
 		console.log(`POSTing drink data`);
+		let user = $('span.userName');
 		let data = {
-			user: "test",
+			user: user[0].textContent,
 			drinkName: form[0][1].value,
 			glass: form[0][2].value,
 			ingredents: [{
@@ -100,7 +60,7 @@ function handleMakeDrink () {
 				measurement: form[0][4].value
 			}],
 			instructions: form[0][5].value,
-			drinkImage: form[0][6].value
+			drinkImage: filename
 		};
 		console.log(form);
 		console.log(data);
@@ -124,16 +84,87 @@ function postDrink(data, callback) {
 
 //return drink from db
 function renderMadeDrink (obj) {
-	$('div.newDrink').html(`<p>obj</p>`)
+	console.log(obj);
+	$('div.newDrink').html(`<p>${obj}</p>`)
 
 };
 
 //handle error
 function makeDrinkError (err) {
 	console.log(err.responseText, err.status);
-	$('div.user_results').html(`<p>ERROR: code ${err.status},<br>${err.responseText}`);
+	$('div.user_results').html(`<p style='color: red; text-align: center;'>ERROR: code ${err.status},<br>${err.responseText}`);
 };
 
-handleButton();
-handleUser();
-handleMakeDrink();
+//handle login
+function handleLogin () {
+	$('form#login').on('submit', function (event) {
+		event.preventDefault();
+		console.log($(this));
+	})
+
+};
+
+//handle register button
+function handleRegister () {
+	$('button.register').on('click', function (event) {
+		event.preventDefault();
+		$('div.login').addClass('hidden');
+		$('div.register').removeClass('hidden');
+	})
+};
+
+function handleRegisterSubmit () {
+	$('form#register').on('submit', function (event) {
+		console.log(($(this).serialize()))
+		event.preventDefault();
+		$('div.user_results').html('');	
+		let data = $(this);
+		let userData = {
+			userName: data[0][1].value,
+			password: data[0][2].value,
+			email: data[0][3].value
+		};
+		console.log(userData);
+		registerUser(userData, renderMain);
+	})
+};
+
+//register the user in the db
+function registerUser (data, callback) {
+	const options = {
+		url: '/users',
+		type: 'POST',
+		dataType: 'json',
+		data: JSON.stringify(data),
+		contentType: "application/json; charset=utf-8",
+		success: callback,
+		error: errorRegister
+	};
+	$.ajax(options);
+};
+
+//render homepage for user
+function renderMain (data) {
+	console.log(data);
+	$('div.register').addClass('hidden');
+	$('nav').removeClass('hidden');
+	$('span.userAccount').html(`<span class='userName'>${data.userName}</span>'s Account`);
+	$('main').removeClass('hidden');
+};
+
+//on error register
+function errorRegister (err) {
+	console.log(err.responseText, err.status);
+	$('div.user_results').html(`<p style='color: red; text-align: center;'>ERROR: code ${err.status},<br>${err.responseText}`);
+};
+
+//onload
+function onload () {
+	handleAllDrinksButton();
+	handleMakeDrink();
+	handleRegister();
+	handleLogin();
+	handleRegisterSubmit();
+}
+
+onload();

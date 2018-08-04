@@ -9,66 +9,64 @@
 	<!--unhide when you have logged in -->
 	<nav class="border hidden">
 	<!-- Home will be the search menu -->Home | 
-	<!-- My Account will be where you can look at saved drinks, to remove or update them --> My Account | 
+	<!-- My Account will be where you can look at saved drinks, to remove or update them --> <span class="userAccount"></span> | 
 	<!-- Go back to login screen  -->Logout</nav>
-	<div class="register">
-		<!--if they want to register it would load here -->
+	<div class="register hidden">
+		<form role='Register' id="register">
+			<fieldset>
+				<legend>Register</legend>
+				<label for="userName">User Name:</label>
+				<input type="text" name="userName" placeholder="User Name"><br>
+				<label for="Password">Password:</label>
+				<input type="password" name="password" placeholder="Password"><br>
+				<label for="email">Email:
+				<input type="email" name="email" placeholder="Email@here.com"></label><br>
+				<input type="submit" name="Submit">
+			</fieldset>
+		</form>
 	</div>
 	<div class="login">
-		<form id="login">
+		<form role="login" id="login">
 			<fieldset>
 				<legend>Login</legend>
 				<label for="userName">User Name:</label>
-				<input type="text" name="userName"><br>
+				<input type="text" name="userName" placeholder="User Name"><br>
 				<label for="Password">Password:</label>
-				<input type="password" name="password"><br>
+				<input type="password" name="password" placeholder="Password"><br>
 				<input type="submit" name="Submit">
 				<button class="register">Register here!</button>
 			</fieldset>
 		</form>
 	</div>
-	<div class="button"><button class="drinks">Get Drinks</button></div>
-	<div class="drink_results"></div>
-	<hr>
-	<div class="user-button">
-		<form id="user_register">
-			<fieldset>
-				<legend>Register a User</legend>
-				<label>User Name:
-					<input type="text" name="userName" placeholder="User Name Here"></label><br>
-				<label>Password:
-					<input type="Password" name="password" placeholder="password"></label><br>
-				<label>Email:
-					<input type="email" name="email" placeholder="Email@here.com"></label><br>
-				<input type="submit" name="submit">
-			</fieldset>
-		</form>
-	</div>
 	<div class="user_results">
 	</div>
-	<hr>
-	<div class="MakeDrink">
-		<form id="drink_register">
-			<fieldset>
-				<legend>Make A new drink</legend>
-				<label>Drink Name:
-					<input type="text" name="drinkName" placeholder="Drink Name"></label><br>
-				<label>Glass:
-					<input type="text" name="glass" placeholder="Glass Type"></label><br>
-				<label>Ingredents:
-					<input type="text" name="ingredent" placeholder="Ingredent">
-					<input type="text" name="measurment" placeholder="Measurment"></label><br>
-				<label>Instructions
-					<input type="text" name="instructions" placeholder="Instructions"></label><br>
-				<label>Drink Image:
-					<input type="file" name="drinkImage"></label><br>
-				<input type="submit" name="Submit">
-			</fieldset>
-		</form>
-	</div>
-	<div class="newDrink">
-		
-	</div>
+	<main role='main' class="hidden">
+		<div class="button"><button class="drinks">Get Drinks</button></div>
+		<div class="drink_results"></div>
+		<hr>
+	
+		<div class="MakeDrink">
+			<form id="drink_register">
+				<fieldset>
+					<legend>Make A new drink</legend>
+					<label>Drink Name:
+						<input type="text" name="drinkName" placeholder="Drink Name"></label><br>
+					<label>Glass:
+						<input type="text" name="glass" placeholder="Glass Type"></label><br>
+					<label>Ingredents:
+						<input type="text" name="ingredent" placeholder="Ingredent">
+						<input type="text" name="measurment" placeholder="Measurment"></label><br>
+					<label>Instructions
+						<input type="text" name="instructions" placeholder="Instructions"></label><br>
+					<label>Drink Image:
+						<input type="file" name="drinkImage" accept="image/*"></label><br>
+					<input type="submit" name="Submit">
+				</fieldset>
+			</form>
+		</div>
+		<div class="newDrink">
+		</div>
+	</main>
 
 <script type="text/javascript" src="app.js"></script>
 </body>

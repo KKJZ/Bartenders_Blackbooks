@@ -32,6 +32,11 @@ fieldset {
 	text-align: center;
 }
 
+input {
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
 div.login {
 	width: 100%;
 }

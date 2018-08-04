@@ -52,11 +52,12 @@ router.post('/', upload.single('drinkImage'), (req, res) => {
 			console.error(messege);
 			return res.status(400).send(messege);
 		}
-	}
+	};
+	console.log(req);
 	const item = DrinkCollection.create({
 		user: req.body.user,
 		drinkName: req.body.drinkName,
-		drinkImage: function() { if (req.file.path = undefined) {req.body.drinkImage} else {req.file.path} }, 
+		drinkImage: req.file.path, 
 		glass: req.body.glass,
 		ingredents: req.body.ingredents,
 		garnish: req.body.garnish,
