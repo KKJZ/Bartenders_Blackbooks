@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const multer =  require('multer');
 
 const {DrinkCollection} = require('../models/drinks');
@@ -43,36 +44,44 @@ router.get('/', (req, res) => {
 //add a drink to the list
 //when user is made add to their profile
 //need to make a secure route
-router.post('/', upload.single('drinkImage'), (req, res) => {
-	const requiredFields = ["user", "drinkName","glass","ingredents","instructions"];
-	for (let i=0; i<requiredFields.length; i++) {
-		const field = requiredFields[i];
-		if (!(field in req.body)) {
-			const messege = `Request body is missing ${field}`;
-			console.error(messege);
-			return res.status(400).send(messege);
+router.post('/', upload.single('drinkImage'), verifyToken, (req, res) => {
+	jwt.verify(req.token, "testCert", (err, authData) => {
+		if (err) {
+			res.sendStatus(403);
+		}	else {
+			console.log(authData);
+			const requiredFields = ["drinkName","glass","ingredents","instructions"];
+			for (let i=0; i<requiredFields.length; i++) {
+				const field = requiredFields[i];
+				if (!(field in req.body)) {
+					const messege = `Request body is missing ${field}`;
+					console.error(messege);
+					return res.status(400).send(messege);
+				}
+			};
+			const item = DrinkCollection.create({
+				user: authData.user,
+				drinkName: req.body.drinkName,
+				drinkImage: req.file.path, 
+				glass: req.body.glass,
+				ingredents: req.body.ingredents,
+				garnish: req.body.garnish,
+				instructions: req.body.instructions
+				//Add Drink id to User model
+			}).then(drink => res.status(201).json(drink.serialize()))
+			.catch(err => {
+				console.log(err);
+				res.status(500).json({error: 'Something happened.'});
+			});
 		}
-	};
-	console.log(req);
-	const item = DrinkCollection.create({
-		user: req.body.user,
-		drinkName: req.body.drinkName,
-		drinkImage: req.file.path, 
-		glass: req.body.glass,
-		ingredents: req.body.ingredents,
-		garnish: req.body.garnish,
-		instructions: req.body.instructions
-	}).then(drink => res.status(201).json(drink.serialize()))
-	.catch(err => {
-		console.log(err);
-		res.status(500).json({error: 'Something happened.'});
 	});
+
 });
 
 //update a drink you have saved
 //when user is made make sure user has access to this id
 //need to make a secure route
-router.put('/:id', (req,res) => {
+router.put('/:id', verifyToken, (req,res) => {
 	if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
 		res.status(400).json({error: "Request path id and request body id values must match"});
 	}
@@ -90,7 +99,7 @@ router.put('/:id', (req,res) => {
 
 //remove drink from user profile and list
 //need to make a secure route
-router.delete('/:id', (req, res) => {
+router.delete('/:id', verifyToken, (req, res) => {
 	DrinkCollection.findByIdAndRemove(req.params.id)
 	.then(() => {
 		res.status(204).json({messege: "success"});
@@ -100,6 +109,24 @@ router.delete('/:id', (req, res) => {
 		res.status(500).json({error: 'Something happened.'})
 	})
 });
+
+//verify token
+function verifyToken(req, res, next) {
+	//get auth header
+	const bearerHeader = req.headers['authorization'];
+	// check if bearer is undefined
+	if (typeof bearerHeader !== 'undefined') {
+		//split at space
+		const bearer = bearerHeader.split(' ');
+		const bearerToken = bearer[1];
+		//set token
+		req.token = bearerToken;
+		next();
+	} else {
+		//forbidden
+		res.sendStatus(403);
+	}
+};
 
 //search that filters by main alchol type
 // router.post('/drinks/:i', (req, res) => {});

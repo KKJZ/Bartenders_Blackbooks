@@ -20,14 +20,14 @@ userSchema.methods.serialize = function() {
 };
 
 //validate password
-userSchema.methods.validatePassword = function(password) {
-	return bcrypt.compare(password, this.password);
+userSchema.methods.validatePassword = function(password, dbhash) {
+	return bcrypt.compareSync(password, dbhash);
 };
 
 //hash password
 userSchema.methods.hashPass = function(password) {
 	console.log("Hashing Password");
-	return bcrypt.hash(password, 10);
+	return bcrypt.hashSync(password, 10);
 }
 
 const Users = mongoose.model('Users', userSchema);
