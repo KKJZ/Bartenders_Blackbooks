@@ -38,7 +38,7 @@ router.post('/', jsonParser, (req, res) => {
 			res.status(400).send('Wrong password');
 		} else {
 			jwt.sign({user: userName, password: password}, "testCert", {expiresIn: '1h'}, (err, token) => {
-				res.json({token});
+				res.json({userName, token});
 			})
 		}
 	})

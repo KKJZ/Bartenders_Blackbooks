@@ -39,7 +39,9 @@ function renderDrink (obj) {
 //for fail function
 function forFail (err) {
 	console.log(err);
-	$('div.drink_results').html(`<p style='color: red; text-align: center;'>ERROR: code ${err.status},<br>${err.responseText}`)
+	$('div.drink_results').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`)
 }
 
 //handle form drink
@@ -92,7 +94,9 @@ function renderMadeDrink (obj) {
 //handle error
 function makeDrinkError (err) {
 	console.log(err.responseText, err.status);
-	$('div.user_results').html(`<p style='color: red; text-align: center;'>ERROR: code ${err.status},<br>${err.responseText}`);
+	$('div.user_results').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`);
 };
 
 //handle login
@@ -104,18 +108,25 @@ function handleLogin () {
 			userName: form[0][1].value,
 			password: form[0][2].value
 		};
+		login(data, renderMain)
 		console.log(data)
-		$.ajax({
-			url: '/login',
-			type: 'POST',
-			dataType: 'json',
-			data: JSON.stringify(data),
-			contentType: "application/json; charset=utf-8",
-			success: (token) => console.log(token),
-			error: (err) => console.log(err.status, err.responseText)
-		})
+
 	});
 };
+
+//handle login requests
+function login (objData, callback) {
+	$.ajax({
+	url: '/login',
+	type: 'POST',
+	dataType: 'json',
+	data: JSON.stringify(data),
+	contentType: "application/json; charset=utf-8",
+	success: callback(objData, token),
+	error: (err) => console.log(err.status, err.responseText)
+	})
+
+}
 
 //handle register button
 function handleRegister () {
@@ -157,18 +168,23 @@ function registerUser (data, callback) {
 };
 
 //render homepage for user
-function renderMain (data) {
+function renderMain (data, token) {
 	console.log(data);
+	console.log(token);
 	$('div.register').addClass('hidden');
+	$('div.login').addClass('hidden');
 	$('nav').removeClass('hidden');
-	$('span.userAccount').html(`<span class='userName'>${data.userName}</span>'s Account`);
+	$('span.userAccount').html(`<span class='userName'>${data.userName}</span>'s Account
+		<span class='token hidden'>${data.token}</span>`);
 	$('main').removeClass('hidden');
 };
 
 //on error register
 function errorRegister (err) {
 	console.log(err.responseText, err.status);
-	$('div.user_results').html(`<p style='color: red; text-align: center;'>ERROR: code ${err.status},<br>${err.responseText}`);
+	$('div.user_results').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`);
 };
 
 //onload

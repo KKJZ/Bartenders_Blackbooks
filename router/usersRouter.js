@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 const {DrinkCollection} = require('../models/drinks');
 const {Users} = require('../models/users');
@@ -38,7 +39,7 @@ router.post('/', jsonParser, (req, res) => {
 			if (count > 0) {
 				const messege = "User name is already taken";
 				console.error(messege);
-				res.status(400).json({error: messege})
+				res.status(400).send(messege);
 			}
 			return user.hashPass(password);
 		})
@@ -50,7 +51,11 @@ router.post('/', jsonParser, (req, res) => {
 			})
 		})
 		.then(user => {
-			return res.status(201).json(user.serialize());
+			jwt.sign({user: user.userName, password: user.password}, "testCert", {expiresIn: '1h'}, (err, token) => {
+				console.log(`ERROR: ${err}`)
+				console.log(`TOKEN: ${token}`);
+				return res.json({userName, token})
+			})
 		})
 		.catch(err => {
 			console.error(err);
