@@ -2,24 +2,26 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const multer =  require('multer');
+const bodyParser = require('body-parser');
 
 const {DrinkCollection} = require('../models/drinks');
 const {Users} = require('../models/users');
 
+const jsonParser = bodyParser.json();
 //multer setup
 const storage = multer.diskStorage({
 	destination: function(req, file, cb) {
 		cb(null,'./images');
 	},
 	filename: function(req, file, cb) {
-		cb(null, Date.now() + file.originalname);
+		cb(null, Date.now() + "-" + file.originalname);
 	}
 });
 const fileFilter = function (req, file, cb) {
 	if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
 		cb(null, true)
 	} else{
-		cb(new Error("File must be jpeg or png file type"),false)
+		cb(new Error("File must be jpeg or png file type"))
 	}
 }
 const upload = multer({
@@ -50,7 +52,7 @@ router.post('/', upload.single('drinkImage'), verifyToken, (req, res) => {
 			res.sendStatus(403);
 		}	else {
 			console.log(authData);
-			const requiredFields = ["drinkName","glass","ingredents","instructions"];
+			const requiredFields = ["drinkName","glass","ingredents","instructions", "garnish"];
 			for (let i=0; i<requiredFields.length; i++) {
 				const field = requiredFields[i];
 				if (!(field in req.body)) {

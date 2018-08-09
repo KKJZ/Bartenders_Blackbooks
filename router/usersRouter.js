@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
 
 const {DrinkCollection} = require('../models/drinks');
 const {Users} = require('../models/users');
 
+const jsonParser = bodyParser.json();
 //show users profiles
-router.get('/', (req, res) => {
+router.get('/', jsonParser, (req, res) => {
 	Users.find()
 	.then(users => {
 		res.json(users.map(user => user.serialize()));
@@ -17,7 +19,7 @@ router.get('/', (req, res) => {
 })
 
 //make user profile
-router.post('/', (req, res) => {
+router.post('/', jsonParser, (req, res) => {
 	console.log(req.body);
 	const requiredFields = ['userName', 'password', 'email'];
 	for (let i=0; i<requiredFields.length; i++) {

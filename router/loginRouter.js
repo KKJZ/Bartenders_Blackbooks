@@ -2,12 +2,14 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
 const {DrinkCollection} = require('../models/drinks');
 const {Users} = require('../models/users');
 
+const jsonParser = bodyParser.json();
 //login request would return a jwt
-router.post('/', (req, res) => {
+router.post('/', jsonParser, (req, res) => {
 	//make sure it is a valid request
 	const requiredFields = ['userName', 'password'];
 	for (let i=0; i<requiredFields.length; i++) {
@@ -24,14 +26,16 @@ router.post('/', (req, res) => {
 	let users = Users();
 	let torf;
 	Users.findOne({"userName": userName}, (err, user) => {
+		console.log('USER:', user)
+		if (user === null) {
+			return res.status(400).send('User not found')}
 		console.log( "HASED PASSWORD:", users.validatePassword(password, user.password));
 		torf = users.validatePassword(password, user.password);
-		console.log(torf);
 		return torf;
 	})
 	.then(val => {
 		if (torf === false) {
-			res.send('Wrong password').end();
+			res.status(400).send('Wrong password');
 		} else {
 			jwt.sign({user: userName, password: password}, "testCert", {expiresIn: '1h'}, (err, token) => {
 				res.json({token});

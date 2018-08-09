@@ -99,9 +99,22 @@ function makeDrinkError (err) {
 function handleLogin () {
 	$('form#login').on('submit', function (event) {
 		event.preventDefault();
-		console.log($(this));
-	})
-
+		let form = $(this);
+		let data = {
+			userName: form[0][1].value,
+			password: form[0][2].value
+		};
+		console.log(data)
+		$.ajax({
+			url: '/login',
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			success: (token) => console.log(token),
+			error: (err) => console.log(err.status, err.responseText)
+		})
+	});
 };
 
 //handle register button
