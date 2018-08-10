@@ -50,9 +50,9 @@ function handleMakeDrink () {
 		event.preventDefault();
 		let form = $(this);
 		let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
-		console.log(form.serialize());
 		console.log(`POSTing drink data`);
 		let user = $('span.userName');
+		let token = $('span.token');
 		let data = {
 			user: user[0].textContent,
 			drinkName: form[0][1].value,
@@ -62,24 +62,30 @@ function handleMakeDrink () {
 				measurement: form[0][4].value
 			}],
 			instructions: form[0][5].value,
-			drinkImage: filename
+			drinkImage: filename,
+			garnish: form[0][7].value
 		};
 		console.log(form);
 		console.log(data);
-		postDrink(data, renderMadeDrink);
+		let formData = new FormData($(this)[0]);
+		console.log(`MY FORM DATA:${form}`)
+		postDrink(formData, token[0].textContent, renderMadeDrink);
 	})
 };
 
 //post drink to db
-function postDrink(data, callback) {
+function postDrink(data, jwt, callback) {
+	console.log(`JWT: ${jwt}`);
 	const options = {
 		url: '/drinks',
 		type: 'POST',
-		dataType: 'json',
-		data: JSON.stringify(data),
-		contentType: "application/json; charset=utf-8",
+		data: data,
+		cache: false,
+		contentType: false,
+		processData: false,
 		success: callback,
-		error: makeDrinkError
+		error: makeDrinkError,
+		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);}
 	}
 	$.ajax(options);
 };
@@ -94,7 +100,7 @@ function renderMadeDrink (obj) {
 //handle error
 function makeDrinkError (err) {
 	console.log(err.responseText, err.status);
-	$('div.user_results').html(`
+	$('div.newDrink').html(`
 		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
 		<br>${err.responseText}`);
 };
@@ -102,6 +108,7 @@ function makeDrinkError (err) {
 //handle login
 function handleLogin () {
 	$('form#login').on('submit', function (event) {
+		$('div.user_results').html('');
 		event.preventDefault();
 		let form = $(this);
 		let data = {
@@ -109,8 +116,6 @@ function handleLogin () {
 			password: form[0][2].value
 		};
 		login(data, renderMain)
-		console.log(data)
-
 	});
 };
 
@@ -120,12 +125,19 @@ function login (objData, callback) {
 	url: '/login',
 	type: 'POST',
 	dataType: 'json',
-	data: JSON.stringify(data),
+	data: JSON.stringify(objData),
 	contentType: "application/json; charset=utf-8",
-	success: callback(objData, token),
-	error: (err) => console.log(err.status, err.responseText)
+	success: callback,
+	error: loginError
 	})
 
+};
+
+function loginError (err) {
+	console.log(err.responseText, err.status);
+	$('div.user_results').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`)
 }
 
 //handle register button
@@ -139,7 +151,6 @@ function handleRegister () {
 
 function handleRegisterSubmit () {
 	$('form#register').on('submit', function (event) {
-		console.log(($(this).serialize()))
 		event.preventDefault();
 		$('div.user_results').html('');	
 		let data = $(this);
@@ -168,9 +179,9 @@ function registerUser (data, callback) {
 };
 
 //render homepage for user
-function renderMain (data, token) {
+function renderMain (data) {
 	console.log(data);
-	console.log(token);
+	console.log(`JWT:${data.token}`);
 	$('div.register').addClass('hidden');
 	$('div.login').addClass('hidden');
 	$('nav').removeClass('hidden');

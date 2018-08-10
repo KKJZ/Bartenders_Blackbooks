@@ -116,11 +116,13 @@ router.delete('/:id', verifyToken, (req, res) => {
 function verifyToken(req, res, next) {
 	//get auth header
 	const bearerHeader = req.headers['authorization'];
+	console.log(`AUTHORIZATION: ${bearerHeader}`);
 	// check if bearer is undefined
 	if (typeof bearerHeader !== 'undefined') {
 		//split at space
 		const bearer = bearerHeader.split(' ');
 		const bearerToken = bearer[1];
+		console.log(`JWT: ${bearerToken}`)
 		//set token
 		req.token = bearerToken;
 		next();
