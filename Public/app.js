@@ -26,7 +26,7 @@ function renderDrink (obj) {
 	for (let i=0; i<obj.length; i++) {
 		const options = `
 		<div class='drink_log colu-3 border'>
-		<img class="result" src=${obj[i].drinkImage}>
+		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
 		User: ${obj[i].user}<br>
 		Name : ${obj[i].drinkName}<br>
 		Glass: ${obj[i].glass}<br>

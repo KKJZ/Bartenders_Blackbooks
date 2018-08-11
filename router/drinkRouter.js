@@ -56,6 +56,22 @@ router.get('/:id', (req, res) => {
 	})
 })
 
+//get drink by user 
+router.get('/:userName', (req, res) => {
+	console.log(`CHECKING: ${req.params.userName}`);
+	DrinkCollection.find({userName: req.params.userName})
+	.then(drinks => {
+		if (drinks.count() === 0) {
+			res.status(400).send('You have no drinks saved.')
+		}else {
+			res.json(drinks.map(drink => drink.serialize()));
+		}})
+	.catch(err => {
+		console.error(err);
+		res.status(500).json({error: 'Something happened.'})
+	})
+})
+
 //add a drink to the list
 //when user is made add to their profile
 //need to make a secure route
