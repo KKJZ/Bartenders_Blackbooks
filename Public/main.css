@@ -32,6 +32,18 @@ fieldset {
 	text-align: center;
 }
 
+fieldset.makeDrink {
+	text-align: left;
+	margin-left: 400px !important;
+    margin-right: 400px !important;
+}
+
+fieldset.makeDrink > h1,input.btn {
+	text-align: center !important;
+	margin-left: 0;
+	margin-right: 0;
+}
+
 input {
 	margin-bottom: 5px;
 	margin-top: 5px;
@@ -43,6 +55,24 @@ legend {
 
 div.login {
 	width: 100%;
+	max-width: 330px;
+	padding: 15px;
+	padding-bottom: 40px;
+    padding-top: 40px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.register {
+	width: 100%;
+	max-width: 330px;
+	padding: 15px;
+	padding-bottom: 40px;
+    padding-top: 40px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 form.login {
@@ -53,7 +83,9 @@ form.login {
 
 div.button {
 	width: 100%;
-	margin-bottom: 50px;
+	max-width: 300px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 div.results {
@@ -71,9 +103,27 @@ img.result {
 	margin-bottom: 10px; 
 }
 
+img.icon {
+	width: 72px;
+	height: 72px;
+}
+
+.drinks {
+	margin-bottom: 40px;
+}
+
 .border {
 	border: black 1px solid;
   	/*background-color: rgba(50, 31, 31, 0.8);*/
+}
+
+.drink_log {
+	height: 300px;
+}
+
+.drink_btn {
+	position: absolute;
+	bottom: 0;
 }
 
 .hidden {

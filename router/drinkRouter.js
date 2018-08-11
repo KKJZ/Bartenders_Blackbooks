@@ -41,7 +41,20 @@ router.get('/', (req, res) => {
 		console.error(err);
 		res.status(500).json({error: 'Something happened.'})
 	})
-});
+})
+
+//get drink by id
+router.get('/:id', (req, res) => {
+	console.log(`CHECKING: ${req.params.id}`);
+	DrinkCollection.findById(req.params.id)
+	.then(drink => {
+		res.json(drink.serialize());
+	})
+	.catch(err => {
+		console.error(err);
+		res.status(500).json({error: 'Something happened.'})
+	})
+})
 
 //add a drink to the list
 //when user is made add to their profile
@@ -61,12 +74,15 @@ router.post('/', upload.single('drinkImage'), verifyToken, (req, res) => {
 					return res.status(400).send(messege);
 				}
 			};
+			req.body.ingredents.trim().replace(/(\r\n\t|\n|\r\t)/gm,"");
+			let ingredents = req.body.ingredents.split(",");
+			console.log(`INGR VAR: ${ingredents}`)
 			const item = DrinkCollection.create({
 				user: authData.user,
 				drinkName: req.body.drinkName,
 				drinkImage: req.file.path, 
 				glass: req.body.glass,
-				ingredents: req.body.ingredents,
+				ingredents: ingredents,
 				garnish: req.body.garnish,
 				instructions: req.body.instructions
 				//Add Drink id to User model

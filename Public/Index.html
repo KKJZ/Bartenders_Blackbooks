@@ -3,9 +3,9 @@
 <head>
 	<title>Bartender's Blackbook</title>
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
+	<link rel="icon" type="image/gif/png" href="./icon/shaker.png">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Search the Db for drinks and add drinks also">
@@ -20,54 +20,62 @@
 	<div class="register hidden">
 		<form role='Register' id="register" method="POST">
 			<fieldset>
-				<legend>Register</legend>
-				<label for="userName">User Name:</label>
-				<input type="text" name="userName" placeholder="User Name"><br>
-				<label for="Password">Password:</label>
-				<input type="password" name="password" placeholder="Password"><br>
-				<label for="email">Email:
-				<input type="email" name="email" placeholder="Email@here.com"></label><br>
-				<input type="submit" name="Submit">
+				<img class="icon" src="./icons/shaker.png">
+				<h1>Register</h1>
+				<label for="userName" class="sr-only">User Name:</label>
+				<input type="text" name="userName" placeholder="User Name" class="form-control">
+				<br>
+				<label for="Password" class="sr-only">Password:</label>
+				<input type="password" name="password" placeholder="Password" class="form-control">
+				<br>
+				<label for="email" class="sr-only">Email:
+				<input type="email" name="email" placeholder="Email@here.com" class="form-control"></label>
+				<br>
+				<input type="submit" name="Submit" class="btn btn-lg btn-primary btn-block">
 			</fieldset>
 		</form>
 	</div>
 	<div class="login">
 		<form role="login" id="login" method="POST">
 			<fieldset>
-				<legend>Login</legend>
-				<label for="userName">User Name:</label>
-				<input type="text" name="userName" placeholder="User Name"><br>
-				<label for="Password">Password:</label>
-				<input type="password" name="password" placeholder="Password"><br>
-				<input type="submit" name="Submit">
-				<button class="register">Register here!</button>
+				<img class="icon" src="./icons/shaker.png">
+				<h1>Login</h1>
+				<label for="userName" class="sr-only">User Name:</label>
+				<input type="text" name="userName" placeholder="User Name" class="form-control">
+				<br>
+				<label for="Password" class="sr-only">Password:</label>
+				<input type="password" name="password" placeholder="Password" class="form-control">
+				<br>
+				<input type="submit" class="btn btn-lg btn-primary btn-block" name="Submit">
+
+				<button class="register btn btn-lrg btn-block">Register here!</button>
 			</fieldset>
 		</form>
 	</div>
 	<div class="user_results">
 	</div>
 	<main role='main' class="hidden">
-		<div class="button"><button class="drinks">Get Drinks</button></div>
-		<div class="drink_results"></div>
+		<div class="button"><button class="drinks btn btn-block">Get list all drinks</button></div>
+		<div class="drink_results rows"></div>
 		<hr>
-	
+		
 		<div class="MakeDrink">
 			<form id="drink_register">
-				<fieldset>
-					<legend>Make A new drink</legend>
+				<fieldset class="makeDrink">
+					<h1>Make a new drink</h1>
 					<label for="drinkName">Drink Name:
-						<input type="text" name="drinkName" placeholder="Drink Name"></label><br>
+						<input type="text" name="drinkName" placeholder="Moscow Mule"></label><br>
 					<label for="glass">Glass:
-						<input type="text" name="glass" placeholder="Glass Type"></label><br>
+						<input type="text" name="glass" placeholder="Copper Mug"></label><br>
 					<label for="ingredents">Ingredents: <!-- lets try seperating them by commas and make it an array that the back end will make into the correct obj -->
-						<textarea name="ingredents"></textarea></label><br>
-					<label for="instructions">Instructions
-						<input type="text" name="instructions" placeholder="Instructions"></label><br>
+						<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill"></textarea></label><br>
+					<label for="instructions" >Instructions
+						<input type="text" name="instructions" placeholder="How it is made"></label><br>
 					<label for="drinkImage">Drink Image:
 						<input type="file" name="drinkImage" accept="image/*"></label><br>
 					<label for="garnish">Garnish:
-						<input type="text" name="garnish" placeholder="Garnish"></label><br>
-					<input type="submit" name="Submit">
+						<input type="text" name="garnish" placeholder="Lime Wedge"></label><br>
+					<input class="btn btn-block btn-lrg btn-primary" type="submit" name="Submit">
 				</fieldset>
 			</form>
 		</div>

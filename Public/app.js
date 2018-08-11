@@ -25,15 +25,21 @@ function renderDrink (obj) {
 	$('div.drink_results').html('');
 	for (let i=0; i<obj.length; i++) {
 		const options = `
-		<article>
+		<div class='drink_log colu-3 border'>
 		<img class="result" src=${obj[i].drinkImage}>
 		User: ${obj[i].user}<br>
 		Name : ${obj[i].drinkName}<br>
 		Glass: ${obj[i].glass}<br>
-		</article>`
+		<span class="hidden">${obj[i].id}</span>
+		<button onclick=${getDrinkByID(obj[i].id)} class="drink-btn btn btn-block btn-primary">Learn about this drink</button>
+		</div>`
 		console.log(obj[i]);
 		$('div.drink_results').append(options);
 	};
+}
+
+function getDrinkByID (id) {
+	console.log(id);
 }
 
 //for fail function
