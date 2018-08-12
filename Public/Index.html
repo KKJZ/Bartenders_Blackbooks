@@ -14,9 +14,13 @@
 <body>
 	<!--unhide when you have logged in -->
 	<nav class="border hidden">
-	<!-- Home will be the search menu -->Home | 
-	<!-- My Account will be where you can look at saved drinks, to remove or update them --> <span class="userAccount"></span> | 
-	<!-- Go back to login screen  -->Logout</nav>
+	<!-- Home will be the search menu -->
+	<button class="home btn btn-primary">Home</button> |
+	<!-- My Account will be where you can look at saved drinks, to remove or update them --> 
+	<span class="userAccount"></span> | 
+	<!-- Go back to login screen  -->
+	<button class="logout btn">Logout</button>
+	</nav>
 	<div class="register hidden">
 		<form role='Register' id="register" method="POST">
 			<fieldset>
@@ -55,10 +59,26 @@
 	<div class="user_results">
 	</div>
 	<main role='main' class="hidden">
-		<div class="button"><button class="drinks btn btn-block">Get list all drinks</button></div>
-		<div class="drink_results rows"></div>
+		<div class="menu_buttons">
+			<div class="button_drinks"><button class="drinks btn btn-block">Get a list all drinks</button></div>
+			<div class="button_make"><button class="drinks btn btn-block">Make a drink</button></div>
+			<div class="button_view"><button class="drinks btn btn-block">View My drinks</button></div>
+			<div class="button_terms"><button class="drinks btn btn-block">Terminology and Mixology</button></div>
+		</div>
+		<!-- Get list of all drinks goes into here -->
+		<div class="drink_results rows">
+		</div>
+		<!-- Make a drink goes here -->
+		<div class="newDrink rows">
+		</div>
 		<hr>
-		
+		<!-- view my drinks goes here -->
+		<div class="myDrinks rows">
+		</div>
+		<!-- term and mix goes here -->
+		<div class="termMix rows">
+		</div>
+		<!-- drink form -->
 		<div class="MakeDrink">
 			<form id="drink_register">
 				<fieldset class="makeDrink">
@@ -78,8 +98,6 @@
 					<input class="btn btn-block btn-lrg btn-primary" type="submit" name="Submit">
 				</fieldset>
 			</form>
-		</div>
-		<div class="newDrink">
 		</div>
 	</main>
 

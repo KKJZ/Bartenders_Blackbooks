@@ -1,11 +1,12 @@
 //handle the get drink button
 function handleAllDrinksButton () {
-	$('.drinks').on('click', function (event) {
+	$('div.button_drinks').on('click', function (event) {
 		event.preventDefault();
+		$('div.menu_buttons').addClass('hidden');
 		console.log('button pressed GETting drinks');
 		getDrink(renderDrink);
 	})
-}
+};
 
 //ajax call to the random drink endpoint
 function getDrink (callback) {
@@ -18,7 +19,7 @@ function getDrink (callback) {
 		crossOrigin: false
 	};
 	$.ajax(options);
-}
+};
 
 //render drink  to the div.results
 function renderDrink (obj) {
@@ -27,20 +28,20 @@ function renderDrink (obj) {
 		const options = `
 		<div class='drink_log colu-3 border'>
 		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
-		User: ${obj[i].user}<br>
 		Name : ${obj[i].drinkName}<br>
+		User: ${obj[i].user}<br>
 		Glass: ${obj[i].glass}<br>
 		<span class="hidden">${obj[i].id}</span>
-		<button onclick=${getDrinkByID(obj[i].id)} class="drink-btn btn btn-block btn-primary">Learn about this drink</button>
+		<button class="drink_btn btn btn-block btn-primary">Learn about this drink</button>
 		</div>`
 		console.log(obj[i]);
 		$('div.drink_results').append(options);
 	};
-}
+};
 
 function getDrinkByID (id) {
 	console.log(id);
-}
+};
 
 //for fail function
 function forFail (err) {
@@ -48,7 +49,7 @@ function forFail (err) {
 	$('div.drink_results').html(`
 		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
 		<br>${err.responseText}`)
-}
+};
 
 //handle form drink
 function handleMakeDrink () {
@@ -144,7 +145,7 @@ function loginError (err) {
 	$('div.user_results').html(`
 		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
 		<br>${err.responseText}`)
-}
+};
 
 //handle register button
 function handleRegister () {
@@ -204,6 +205,40 @@ function errorRegister (err) {
 		<br>${err.responseText}`);
 };
 
+//to do list
+//make event listener for button.home
+function handleHomeButton () {
+	$('button.home').on('click', (event) => {
+		event.preventDefault();
+		$('div.menu_buttons').removeClass('hidden');
+		$('div.drink_results').html('');
+		$('div.newDrink').html('');
+		$('div.myDrinks').html('');
+		$('div.termMix').html('');
+	})
+};
+
+//make event listener for button.logout
+function handleLogoutButton() {
+
+};
+
+//make event listener for div.button_make
+function handleButtonMake() {
+
+};
+
+//make event listener for div.button_view
+function handleButtonView() {
+
+};
+
+//make event listener for div.button_terms
+function handleButtonTerms() {
+
+};
+//favorites option
+
 //onload
 function onload () {
 	handleAllDrinksButton();
@@ -211,6 +246,10 @@ function onload () {
 	handleRegister();
 	handleLogin();
 	handleRegisterSubmit();
+	handleHomeButton();
+	handleLogoutButton();
+	handleButtonMake();
+	handleButtonTerms();
 }
 
 onload();

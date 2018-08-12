@@ -33,6 +33,7 @@ const upload = multer({
 
 //pull up all drinks
 router.get('/', (req, res) => {
+	console.log(req.query)
 	DrinkCollection.find()
 	.then(Drinks => { 
 		res.json(Drinks.map(Drink => Drink.serialize()));
@@ -45,7 +46,7 @@ router.get('/', (req, res) => {
 
 //get drink by id
 router.get('/:id', (req, res) => {
-	console.log(`CHECKING: ${req.params.id}`);
+	console.log(`CHECKING ID: ${req.params.id}`);
 	DrinkCollection.findById(req.params.id)
 	.then(drink => {
 		res.json(drink.serialize());
@@ -57,9 +58,9 @@ router.get('/:id', (req, res) => {
 })
 
 //get drink by user 
-router.get('/:userName', (req, res) => {
-	console.log(`CHECKING: ${req.params.userName}`);
-	DrinkCollection.find({userName: req.params.userName})
+router.get('/name/:name', (req, res) => {
+	console.log(`CHECKING USERNAME: ${req.params.name}`);
+	DrinkCollection.find({userName: req.params.name})
 	.then(drinks => {
 		if (drinks.count() === 0) {
 			res.status(400).send('You have no drinks saved.')
