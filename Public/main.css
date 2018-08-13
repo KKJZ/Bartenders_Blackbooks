@@ -81,7 +81,7 @@ form.login {
 	margin-left: auto;
 }
 
-div.button_drinks, div.button_make, div.button_view, div.button_terms{
+div.button_drinks, div.button_make, div.button_myDrinks, div.button_terms{
 	width: 100%;
 	max-width: 300px;
 	margin-left: auto;

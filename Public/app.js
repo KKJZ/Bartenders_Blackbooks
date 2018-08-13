@@ -220,22 +220,76 @@ function handleHomeButton () {
 
 //make event listener for button.logout
 function handleLogoutButton() {
+	$('button.logout').on('click', (event) => {
+		event.preventDefault();
+		$('div.login').removeClass('hidden');
+		$('nav').addClass('hidden');
+		$('span.userAccount').html("");
+		$('main').addClass('hidden');
+	})
 
 };
 
 //make event listener for div.button_make
 function handleButtonMake() {
-
+	$('div.button_make').on('click', (event) => {
+		event.preventDefault();
+		console.log('Button Make pressed');
+	})
 };
 
-//make event listener for div.button_view
+
+//make event listener for div.button_myDrinks
 function handleButtonView() {
-
+	$('div.button_myDrinks').on('click', (event) => {
+		event.preventDefault();
+		console.log('View my drinks pressed');
+		$('div.menu_buttons').addClass('hidden');
+		console.log("GETting user drinks");
+		let user = $('span.userName')[0].textContent;
+		console.log(`USER: ${user}`);
+		getUserDrinks(user, renderMyDrinks);
+	})
 };
+
+//search drinks by user
+function getUserDrinks (user, callback) {
+	const options = {
+		url: `/drinks/name/${user}`,
+		type: 'GET',
+		dataType: 'json',
+		success: callback,
+		error: forFail,
+		crossOrigin: false
+	};
+	$.ajax(options);
+};
+
+//render my Drinks
+function renderMyDrinks (obj) {
+	$('div.myDrinks').html('');
+	for (let i=0; i<obj.length; i++) {
+		const options = `
+		<div class='drink_log colu-3 border'>
+		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
+		Name : ${obj[i].drinkName}<br>
+		User: ${obj[i].user}<br>
+		Glass: ${obj[i].glass}<br>
+		<span class="hidden">${obj[i].id}</span>
+		<button class="drink_btn btn btn-block btn-primary">Learn about this drink</button>
+		</div>`
+		console.log(obj[i]);
+		$('div.myDrinks').append(options);
+	};		
+};
+
 
 //make event listener for div.button_terms
 function handleButtonTerms() {
-
+	$('div.button_terms').on('click', (event) => {
+		event.preventDefault();
+		console.log("Terms button pressed");
+	})
 };
 //favorites option
 
@@ -249,6 +303,7 @@ function onload () {
 	handleHomeButton();
 	handleLogoutButton();
 	handleButtonMake();
+	handleButtonView();
 	handleButtonTerms();
 }
 

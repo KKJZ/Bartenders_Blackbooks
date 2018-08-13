@@ -60,9 +60,10 @@ router.get('/:id', (req, res) => {
 //get drink by user 
 router.get('/name/:name', (req, res) => {
 	console.log(`CHECKING USERNAME: ${req.params.name}`);
-	DrinkCollection.find({userName: req.params.name})
+	DrinkCollection.find({"user": req.params.name})
 	.then(drinks => {
-		if (drinks.count() === 0) {
+		console.log(drinks.length);
+		if (drinks.length === 0) {
 			res.status(400).send('You have no drinks saved.')
 		}else {
 			res.json(drinks.map(drink => drink.serialize()));
