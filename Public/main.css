@@ -34,8 +34,6 @@ fieldset {
 
 fieldset.makeDrink {
 	text-align: left;
-	margin-left: 400px !important;
-    margin-right: 400px !important;
 }
 
 fieldset.makeDrink > h1,input.btn {
@@ -165,6 +163,8 @@ img.icon {
 
 .colu-3, .colu-4, .colu-6, .colu-12 {
   width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 @media only screen and (min-width: 640px) {

@@ -26,8 +26,8 @@ function renderDrink (obj) {
 	$('div.drink_results').html('');
 	for (let i=0; i<obj.length; i++) {
 		const options = `
-		<div class='drink_log colu-3 border'>
-		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
+		<div class='drink_log colu-12 border'>
+		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}"><br>
 		Name : ${obj[i].drinkName}<br>
 		User: ${obj[i].user}<br>
 		Glass: ${obj[i].glass}<br>
@@ -100,7 +100,17 @@ function postDrink(data, jwt, callback) {
 //return drink from db
 function renderMadeDrink (obj) {
 	console.log(obj);
-	$('div.newDrink').html(`<p>${obj}</p>`)
+	$('div.newDrink').html(`
+		<div class='drink colu-3 border'>
+			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
+			Name : ${obj.drinkName}<br>
+			User: ${obj.user}<br>
+			Glass: ${obj.glass}<br>
+			Garnish: ${obj.garnish}<br>
+			Instructions: ${obj.instructions}<br>
+			<span class="hidden">${obj.id}</span>
+		</div>
+		`)
 
 };
 
@@ -212,7 +222,7 @@ function handleHomeButton () {
 		event.preventDefault();
 		$('div.menu_buttons').removeClass('hidden');
 		$('div.drink_results').html('');
-		$('div.newDrink').html('');
+		$('form#drink_register').html('');
 		$('div.myDrinks').html('');
 		$('div.termMix').html('');
 	})
@@ -235,6 +245,27 @@ function handleButtonMake() {
 	$('div.button_make').on('click', (event) => {
 		event.preventDefault();
 		console.log('Button Make pressed');
+		$('div.menu_buttons').addClass('hidden');
+		$('div')
+		const drinkForm =`
+		<fieldset class="makeDrink">
+			<h1>Make a new drink</h1>
+			<label for="drinkName">Drink Name:
+				<input type="text" name="drinkName" placeholder="Moscow Mule"></label><br>
+			<label for="glass">Glass:
+				<input type="text" name="glass" placeholder="Copper Mug"></label><br>
+			<label for="ingredents">Ingredents: <!-- lets try seperating them by commas and make it an array that the back end will make into the correct obj -->
+				<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill"></textarea></label><br>
+			<label for="instructions" >Instructions
+				<input type="text" name="instructions" placeholder="How it is made"></label><br>
+			<label for="drinkImage">Drink Image:
+				<input type="file" name="drinkImage" accept="image/*"></label><br>
+			<label for="garnish">Garnish:
+				<input type="text" name="garnish" placeholder="Lime Wedge"></label><br>
+			<input class="btn btn-block btn-lrg btn-primary" type="submit" name="Submit">
+		</fieldset>
+		`
+		$('form#drink_register').html(drinkForm)
 	})
 };
 
