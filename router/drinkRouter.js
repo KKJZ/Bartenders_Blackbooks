@@ -136,13 +136,19 @@ router.put('/:id', verifyToken, (req,res) => {
 //remove drink from user profile and list
 //need to make a secure route
 router.delete('/:id', verifyToken, (req, res) => {
-	DrinkCollection.findByIdAndRemove(req.params.id)
-	.then(() => {
-		res.status(204).json({messege: "success"});
-	})
-	.catch(err => {
-		console.error(err);
-		res.status(500).json({error: 'Something happened.'})
+	jwt.verify(req.token, "testCert", (err, authData) => {
+		if (err) {
+			res.sendStatus(403)
+		} else {
+			DrinkCollection.findByIdAndRemove(req.params.id)
+			.then(() => {
+				res.status(204).json({messege: "success"});
+			})
+			.catch(err => {
+				console.error(err);
+				res.status(500).json({error: 'Something happened.'})
+			})
+		}
 	})
 });
 

@@ -107,11 +107,35 @@ img.icon {
 	height: 72px;
 }
 
+div.newDrink > div.drink {
+	position: absolute;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+}
+
 .home, .logout {
 	width: 100px;
     height: 50px;
     margin-bottom: 5px;
     margin-top: 5px;
+}
+
+.edit {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 20px;
+	/*position: absolute;*/
+	/*right: 0;*/
+	/*bottom: 1em;*/
+}
+
+.delete {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 20px;
+	/*position: absolute;*/
+	/*left: 0;*/
+	/*bottom: 1em;*/
 }
 
 .drinks {
@@ -132,6 +156,15 @@ img.icon {
 	position: absolute;
 	bottom: 1em;
 	left: 0;
+}
+
+.drinkPage {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 30px;
+	width: 250px;
+	height: 250px;
+	float: left;
 }
 
 .hidden {
@@ -169,23 +202,27 @@ img.icon {
 
 @media only screen and (min-width: 640px) {
 
-  .colu-3 {
-    width: 25%;
-  }
+	.colu-3 {
+    	width: 25%;
+	}
 
-  .colu-4 {
-    width: 33.33%
-  }
+	.colu-4 {
+		width: 33.33%
+	}
 
-  .colu-6 {
-    width: 50%;
-  }
+	.colu-6 {
+		width: 50%;
+	}
 
-  .colu-12 {
-    width: 100%;
-  }
+	.colu-12 {
+		width: 100%;
+	}
 }
 @media only screen and (min-width: 426px) {
+	.drinkPage {
+		width: 500px;
+		height: 500px;
+	}
 
 	legend {
 		font-size: 25px;
@@ -197,4 +234,5 @@ img.icon {
 	.home, .logout {
 		width: 75px;
 	}
+
 }

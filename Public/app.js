@@ -1,127 +1,3 @@
-//handle the get drink button
-function handleAllDrinksButton () {
-	$('div.button_drinks').on('click', function (event) {
-		event.preventDefault();
-		$('div.menu_buttons').addClass('hidden');
-		console.log('button pressed GETting drinks');
-		getDrink(renderDrink);
-	})
-};
-
-//ajax call to the random drink endpoint
-function getDrink (callback) {
-	const options = {
-		url: "/drinks",
-		type: 'GET',
-		dataType: 'json',
-		success: callback,
-		error: forFail,
-		crossOrigin: false
-	};
-	$.ajax(options);
-};
-
-//render drink  to the div.results
-function renderDrink (obj) {
-	$('div.drink_results').html('');
-	for (let i=0; i<obj.length; i++) {
-		const options = `
-		<div class='drink_log colu-12 border'>
-		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}"><br>
-		Name : ${obj[i].drinkName}<br>
-		User: ${obj[i].user}<br>
-		Glass: ${obj[i].glass}<br>
-		<span class="hidden">${obj[i].id}</span>
-		<button class="drink_btn btn btn-block btn-primary">Learn about this drink</button>
-		</div>`
-		console.log(obj[i]);
-		$('div.drink_results').append(options);
-	};
-};
-
-function getDrinkByID (id) {
-	console.log(id);
-};
-
-//for fail function
-function forFail (err) {
-	console.log(err);
-	$('div.drink_results').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`)
-};
-
-//handle form drink
-function handleMakeDrink () {
-	$('#drink_register').on('submit', function() {
-		event.preventDefault();
-		let form = $(this);
-		let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
-		console.log(`POSTing drink data`);
-		let user = $('span.userName');
-		let token = $('span.token');
-		let data = {
-			user: user[0].textContent,
-			drinkName: form[0][1].value,
-			glass: form[0][2].value,
-			ingredents: [{
-				ingredent: form[0][3].value,
-				measurement: form[0][4].value
-			}],
-			instructions: form[0][5].value,
-			drinkImage: filename,
-			garnish: form[0][7].value
-		};
-		console.log(form);
-		console.log(data);
-		let formData = new FormData($(this)[0]);
-		console.log(`MY FORM DATA:${form}`)
-		postDrink(formData, token[0].textContent, renderMadeDrink);
-	})
-};
-
-//post drink to db
-function postDrink(data, jwt, callback) {
-	console.log(`JWT: ${jwt}`);
-	const options = {
-		url: '/drinks',
-		type: 'POST',
-		data: data,
-		cache: false,
-		contentType: false,
-		processData: false,
-		success: callback,
-		error: makeDrinkError,
-		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);}
-	}
-	$.ajax(options);
-};
-
-//return drink from db
-function renderMadeDrink (obj) {
-	console.log(obj);
-	$('div.newDrink').html(`
-		<div class='drink colu-3 border'>
-			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			Name : ${obj.drinkName}<br>
-			User: ${obj.user}<br>
-			Glass: ${obj.glass}<br>
-			Garnish: ${obj.garnish}<br>
-			Instructions: ${obj.instructions}<br>
-			<span class="hidden">${obj.id}</span>
-		</div>
-		`)
-
-};
-
-//handle error
-function makeDrinkError (err) {
-	console.log(err.responseText, err.status);
-	$('div.newDrink').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`);
-};
-
 //handle login
 function handleLogin () {
 	$('form#login').on('submit', function (event) {
@@ -135,7 +11,6 @@ function handleLogin () {
 		login(data, renderMain)
 	});
 };
-
 //handle login requests
 function login (objData, callback) {
 	$.ajax({
@@ -156,7 +31,6 @@ function loginError (err) {
 		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
 		<br>${err.responseText}`)
 };
-
 //handle register button
 function handleRegister () {
 	$('button.register').on('click', function (event) {
@@ -180,7 +54,6 @@ function handleRegisterSubmit () {
 		registerUser(userData, renderMain);
 	})
 };
-
 //register the user in the db
 function registerUser (data, callback) {
 	const options = {
@@ -194,7 +67,13 @@ function registerUser (data, callback) {
 	};
 	$.ajax(options);
 };
-
+//on error register
+function errorRegister (err) {
+	console.log(err.responseText, err.status);
+	$('div.user_results').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`);
+};
 //render homepage for user
 function renderMain (data) {
 	console.log(data);
@@ -206,16 +85,6 @@ function renderMain (data) {
 		<span class='token hidden'>${data.token}</span>`);
 	$('main').removeClass('hidden');
 };
-
-//on error register
-function errorRegister (err) {
-	console.log(err.responseText, err.status);
-	$('div.user_results').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`);
-};
-
-//to do list
 //make event listener for button.home
 function handleHomeButton () {
 	$('button.home').on('click', (event) => {
@@ -224,11 +93,14 @@ function handleHomeButton () {
 		$('div.drink_results').html('');
 		$('form#drink_register').html('');
 		$('div.myDrinks').html('');
+		$('div.myDrink').html('');
 		$('div.termMix').html('');
+		$('div.newDrink').html('');
+		$('div.drink_result').html('');
+		$("div.error").html('');
 	})
 };
-
-//make event listener for button.logout
+//botton logout
 function handleLogoutButton() {
 	$('button.logout').on('click', (event) => {
 		event.preventDefault();
@@ -239,6 +111,102 @@ function handleLogoutButton() {
 	})
 
 };
+//handle the get drink button
+function handleAllDrinksButton () {
+	$('div.button_drinks').on('click', function (event) {
+		event.preventDefault();
+		$('div.menu_buttons').addClass('hidden');
+		console.log('button pressed GETting drinks');
+		getDrink(renderDrink);
+	})
+};
+//ajax call to the drink endpoint
+function getDrink (callback) {
+	const options = {
+		url: "/drinks",
+		type: 'GET',
+		dataType: 'json',
+		success: callback,
+		error: forGetDrinkFail,
+		crossOrigin: false
+	};
+	$.ajax(options);
+};
+//for fail function
+function forGetDrinkFail (err) {
+	console.log(err);
+	$('div.error').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`)
+};
+//render drink  to the div.drink_results
+function renderDrink (obj) {
+	$('div.drink_results').html('');
+	for (let i=0; i<obj.length; i++) {
+		const options = `
+		<div class='drink_log colu-4 border'>
+		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}"><br>
+		Name : ${obj[i].drinkName}<br>
+		User: ${obj[i].user}<br>
+		Glass: ${obj[i].glass}<br>
+		<button id=${obj[i].id} class="drink_btn btn btn-block btn-primary">Learn more about this drink</button>
+		</div>`
+		console.log(obj[i]);
+		$('div.drink_results').append(options);
+	};
+};
+//clicking on the drink in the list
+function handleDrinkList () {
+	$('div.drink_results').on('click', 'button', (event) => {
+		event.preventDefault();
+		console.log($(this));
+		let theId = $(event)[0].target.id;
+		console.log(`BUTTON PRESSED: ${theId}`)
+		getOneDrink(theId, renderOneDrink)
+	})
+};
+//goes to id endpoint and gets one drink back
+function getOneDrink (id, callback) {
+	const options = {
+		url: `/drinks/${id}`,
+		type: 'GET',
+		dataType: 'json',
+		success: callback,
+		error: forGetDrinkFail,
+		crossOrigin: false
+	};
+	$.ajax(options);
+};
+
+function renderOneDrink (obj) {
+	$('div.drink_results').html('');
+	$('div.drink_result').html(`
+		<div class='drink colu-12 border'>
+			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
+			<h2>Name</h2> ${obj.drinkName}<br>
+			<h2>User</h2> ${obj.user}<br>
+			<h2>Glass</h2> ${obj.glass}<br>
+			<h2>Ingredents</h2> ${splitIng(obj.ingredents)}<br>
+			<h2>Garnish</h2> ${obj.garnish}<br>
+			<h2>Instructions</h2> ${obj.instructions}<br>
+			<span class="hidden">${obj.id}</span>
+		</div>
+		<form id="comments">
+			<label for="comments" class"sr-only">
+				<input type="text" placeholder="Comments" class="form-control"></label>
+		</form>
+		`)
+};
+//split ingredents by the posistion in the array
+function splitIng (obj) {
+	let ol = `<ol>`
+	obj.forEach(function(ing) {
+		ol += `<li>${ing}</li>`
+	})
+	ol += `</ol>`
+	console.log(ol);
+	return ol
+}
 
 //make event listener for div.button_make
 function handleButtonMake() {
@@ -251,15 +219,15 @@ function handleButtonMake() {
 		<fieldset class="makeDrink">
 			<h1>Make a new drink</h1>
 			<label for="drinkName">Drink Name:
-				<input type="text" name="drinkName" placeholder="Moscow Mule"></label><br>
+				<input type="text" name="drinkName" placeholder="Moscow Mule" required></label><br>
 			<label for="glass">Glass:
 				<input type="text" name="glass" placeholder="Copper Mug"></label><br>
-			<label for="ingredents">Ingredents: <!-- lets try seperating them by commas and make it an array that the back end will make into the correct obj -->
-				<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill"></textarea></label><br>
+			<label for="ingredents">Ingredents:
+				<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill" required></textarea></label><br>
 			<label for="instructions" >Instructions
-				<input type="text" name="instructions" placeholder="How it is made"></label><br>
+				<input type="text" name="instructions" placeholder="How it is made" required></label><br>
 			<label for="drinkImage">Drink Image:
-				<input type="file" name="drinkImage" accept="image/*"></label><br>
+				<input type="file" name="drinkImage" accept="image/*" required></label><br>
 			<label for="garnish">Garnish:
 				<input type="text" name="garnish" placeholder="Lime Wedge"></label><br>
 			<input class="btn btn-block btn-lrg btn-primary" type="submit" name="Submit">
@@ -268,8 +236,75 @@ function handleButtonMake() {
 		$('form#drink_register').html(drinkForm)
 	})
 };
-
-
+//handle form to make a drink
+function handleMakeDrink () {
+	$('#drink_register').on('submit', function() {
+		event.preventDefault();
+		let form = $(this);
+		let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
+		console.log(`POSTing drink data`);
+		let user = $('span.userName');
+		let token = $('span.token')[0].textContent;
+		let data = {
+			user: user[0].textContent,
+			drinkName: form[0][1].value,
+			glass: form[0][2].value,
+			ingredents: [{
+				ingredent: form[0][3].value,
+				measurement: form[0][4].value
+			}],
+			instructions: form[0][5].value,
+			drinkImage: filename,
+			garnish: form[0][7].value
+		};
+		console.log(form);
+		console.log(data);
+		let formData = new FormData($(this)[0]);
+		console.log(`MY FORM DATA:${form}`)
+		postDrink(formData, token, renderMadeDrink);
+	})
+};
+//post drink to db
+function postDrink(data, jwt, callback) {
+	console.log(`JWT: ${jwt}`);
+	const options = {
+		url: '/drinks',
+		type: 'POST',
+		data: data,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: callback,
+		error: forPostDrinkFail,
+		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);}
+	}
+	$.ajax(options);
+};
+//post drink fail
+function forPostDrinkFail (err) {
+	console.log(err);
+	$('div.error').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`)
+};
+//return drink from db
+function renderMadeDrink (obj) {
+	console.log(obj);
+	$('form#drink_register').html('');
+	$('div.drink_result').html(`
+		<div class='drink colu-12 border'>
+			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
+			<h2>Name</h2> ${obj.drinkName}<br>
+			<h2>User</h2> ${obj.user}<br>
+			<h2>Glass</h2> ${obj.glass}<br>
+			<h2>Ingredents</h2> ${splitIng(obj.ingredents)}<br>
+			<h2>Garnish</h2> ${obj.garnish}<br>
+			<h2>Instructions</h2> ${obj.instructions}<br>
+			<button id=${obj.id} class="btn edit">Edit</button>
+			<button id=${obj.id} value=${obj.drinkName} class="btn delete">Delete</button>
+		</div>
+		`)
+};
 //make event listener for div.button_myDrinks
 function handleButtonView() {
 	$('div.button_myDrinks').on('click', (event) => {
@@ -282,7 +317,6 @@ function handleButtonView() {
 		getUserDrinks(user, renderMyDrinks);
 	})
 };
-
 //search drinks by user
 function getUserDrinks (user, callback) {
 	const options = {
@@ -290,13 +324,19 @@ function getUserDrinks (user, callback) {
 		type: 'GET',
 		dataType: 'json',
 		success: callback,
-		error: forFail,
+		error: myDrinksFail,
 		crossOrigin: false
 	};
 	$.ajax(options);
 };
-
-//render my Drinks
+//for fail on my drinks
+function myDrinksFail (err) {
+	console.log(err);
+	$('div.error').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`)
+};
+//render my drinks
 function renderMyDrinks (obj) {
 	$('div.myDrinks').html('');
 	for (let i=0; i<obj.length; i++) {
@@ -306,15 +346,43 @@ function renderMyDrinks (obj) {
 		Name : ${obj[i].drinkName}<br>
 		User: ${obj[i].user}<br>
 		Glass: ${obj[i].glass}<br>
-		<span class="hidden">${obj[i].id}</span>
-		<button class="drink_btn btn btn-block btn-primary">Learn about this drink</button>
+		<button id=${obj[i].id} class="drink_btn btn btn-block btn-primary">Learn about this drink</button>
 		</div>`
 		console.log(obj[i]);
 		$('div.myDrinks').append(options);
 	};		
 };
-
-
+//add event listener to the elements in div.myDrinks so the can go into div.myDrink
+function handleMyDrinkList () {
+	$('div.myDrinks').on('click', 'button', (event) => {
+		event.preventDefault();
+		console.log($(event));
+		let theId = $(event)[0].target.id;
+		console.log(`BUTTON PRESSED: ${theId}`)
+		getOneDrink(theId, renderOneMyDrink)
+	})
+};
+//render my one drink 
+function renderOneMyDrink (obj) {
+	$('div.myDrinks').html('');
+	$('div.myDrink').html(`
+			<div class='drink colu-12 border'>
+			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
+			<h2>Name</h2> ${obj.drinkName}<br>
+			<h2>User</h2> ${obj.user}<br>
+			<h2>Glass</h2> ${obj.glass}<br>
+			<h2>Ingredents</h2> ${splitIng(obj.ingredents)}<br>
+			<h2>Garnish</h2> ${obj.garnish}<br>
+			<h2>Instructions</h2> ${obj.instructions}<br>
+			<button id=${obj.id} class="btn edit">Edit</button>
+			<button id=${obj.id} value=${obj.drinkName} class="btn delete">Delete</button>
+		</div>
+			<form id="comments">
+				<label for="comments" class"sr-only">
+					<input type="text" placeholder="Comments" class="form-control"></label>
+			</form>`
+		);
+};
 //make event listener for div.button_terms
 function handleButtonTerms() {
 	$('div.button_terms').on('click', (event) => {
@@ -322,8 +390,49 @@ function handleButtonTerms() {
 		console.log("Terms button pressed");
 	})
 };
-//favorites option
-
+//if someone presses the delete button
+function handleDrinkDeleteResult() {
+	$('div.drink_result').on('click', 'button', (event) => {
+		event.preventDefault();
+		let token = $('span.token')[0].textContent;
+		let theId = $(event)[0].target.id;
+		let name = $(event)[0].target.value
+		console.log($(event));
+		console.log(`DELETE ID: ${theId}`);
+		console.log(`NAME: ${name}`)
+		deleteById(theId, token, renderDelete, name)
+	})
+};
+//delete by id
+function deleteById (id, jwt, callback, name) {
+	const options = {
+		url: `/drinks/${id}`,
+		type: 'DELETE',
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: callback(name),
+		error: forFail,
+		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);}
+	};
+	$.ajax(options);
+};
+//handle drink delete error 
+function deleteDrinkError (err) {
+	console.log(err);
+};
+//return user to home screen after delete
+function renderDelete (name) {
+	console.log(`${name}: Deleted!`);
+	$('div.menu_buttons').removeClass('hidden');
+	$('div.drink_results').html('');
+	$('form#drink_register').html('');
+	$('div.myDrinks').html('');
+	$('div.termMix').html('');
+	$('div.newDrink').html('');
+	$('div.drink_result').html('');
+	$("div.error").html(`${name}: DELETED`);
+};
 //onload
 function onload () {
 	handleAllDrinksButton();
@@ -336,6 +445,13 @@ function onload () {
 	handleButtonMake();
 	handleButtonView();
 	handleButtonTerms();
+	handleDrinkList();
+	handleDrinkDeleteResult();
+	handleMyDrinkList();
 }
-
 onload();
+//------------------------------------------------------------------------------------------------------------------------------
+//features still to add
+//favorites
+//editting 
+//comments
