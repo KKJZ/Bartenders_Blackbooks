@@ -145,10 +145,10 @@ function renderDrink (obj) {
 	for (let i=0; i<obj.length; i++) {
 		const options = `
 		<div class='drink_log colu-4 border'>
-		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}"><br>
-		Name : ${obj[i].drinkName}<br>
-		User: ${obj[i].user}<br>
-		Glass: ${obj[i].glass}<br>
+		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
+		<span class="result">Name: ${obj[i].drinkName}</span>
+		<span class="result">User: ${obj[i].user}</span>
+		<span class="result">Glass: ${obj[i].glass}</span>
 		<button id=${obj[i].id} class="drink_btn btn btn-block btn-primary">Learn more about this drink</button>
 		</div>`
 		console.log(obj[i]);
@@ -183,12 +183,12 @@ function renderOneDrink (obj) {
 	$('div.drink_result').html(`
 		<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			<h2>Name</h2> ${obj.drinkName}<br>
-			<h2>User</h2> ${obj.user}<br>
-			<h2>Glass</h2> ${obj.glass}<br>
-			<h2>Ingredents</h2> ${splitIng(obj.ingredents)}<br>
-			<h2>Garnish</h2> ${obj.garnish}<br>
-			<h2>Instructions</h2> ${obj.instructions}<br>
+			<h2>Name</h2> <span id="${obj.drinkName}" class="result">${obj.drinkName}</span>
+			<h2>User</h2> <span id="${obj.user}" class="result">${obj.user}</span>
+			<h2>Glass</h2> <span id="${obj.glass}" class="result">${obj.glass}</span>
+			<h2>Ingredents</h2> <span id="${obj.ingredents}" class="result">${splitIng(obj.ingredents)}</span>
+			<h2>Garnish</h2> <span id="${obj.garnish}" class="result">${obj.garnish}</span>
+			<h2>Instructions</h2> <span id="${obj.instructions}" class="result"> ${obj.instructions}</span>
 			<span class="hidden">${obj.id}</span>
 		</div>
 		<form id="comments">
@@ -204,7 +204,6 @@ function splitIng (obj) {
 		ol += `<li>${ing}</li>`
 	})
 	ol += `</ol>`
-	console.log(ol);
 	return ol
 }
 
@@ -291,15 +290,15 @@ function forPostDrinkFail (err) {
 function renderMadeDrink (obj) {
 	console.log(obj);
 	$('form#drink_register').html('');
-	$('div.drink_result').html(`
+	$('div.myDrink').html(`
 		<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			<h2>Name</h2> ${obj.drinkName}<br>
-			<h2>User</h2> ${obj.user}<br>
-			<h2>Glass</h2> ${obj.glass}<br>
-			<h2>Ingredents</h2> ${splitIng(obj.ingredents)}<br>
-			<h2>Garnish</h2> ${obj.garnish}<br>
-			<h2>Instructions</h2> ${obj.instructions}<br>
+			<h2>Name</h2> <span id="${obj.drinkName}" class="result">${obj.drinkName}</span>
+			<h2>User</h2> <span id="${obj.user}" class="result">${obj.user}</span>
+			<h2>Glass</h2> <span id="${obj.glass}" class="result">${obj.glass}</span>
+			<h2>Ingredents</h2> <span id="${obj.ingredents}" class="result">${splitIng(obj.ingredents)}</span>
+			<h2>Garnish</h2> <span id="${obj.garnish}" class="result">${obj.garnish}</span>
+			<h2>Instructions</h2> <span id="${obj.instructions}" class="result">${obj.instructions}</span>
 			<button id=${obj.id} class="btn edit">Edit</button>
 			<button id=${obj.id} value=${obj.drinkName} class="btn delete">Delete</button>
 		</div>
@@ -343,9 +342,9 @@ function renderMyDrinks (obj) {
 		const options = `
 		<div class='drink_log colu-3 border'>
 		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
-		Name : ${obj[i].drinkName}<br>
-		User: ${obj[i].user}<br>
-		Glass: ${obj[i].glass}<br>
+		<span class="result">Name: ${obj[i].drinkName}</span>
+		<span class="result">User: ${obj[i].user}</span>
+		<span class="result">Glass: ${obj[i].glass}</span>
 		<button id=${obj[i].id} class="drink_btn btn btn-block btn-primary">Learn about this drink</button>
 		</div>`
 		console.log(obj[i]);
@@ -356,7 +355,6 @@ function renderMyDrinks (obj) {
 function handleMyDrinkList () {
 	$('div.myDrinks').on('click', 'button', (event) => {
 		event.preventDefault();
-		console.log($(event));
 		let theId = $(event)[0].target.id;
 		console.log(`BUTTON PRESSED: ${theId}`)
 		getOneDrink(theId, renderOneMyDrink)
@@ -368,14 +366,14 @@ function renderOneMyDrink (obj) {
 	$('div.myDrink').html(`
 			<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			<h2>Name</h2> ${obj.drinkName}<br>
-			<h2>User</h2> ${obj.user}<br>
-			<h2>Glass</h2> ${obj.glass}<br>
-			<h2>Ingredents</h2> ${splitIng(obj.ingredents)}<br>
-			<h2>Garnish</h2> ${obj.garnish}<br>
-			<h2>Instructions</h2> ${obj.instructions}<br>
+			<h2>Name</h2> <span id="${obj.drinkName}" class="result">${obj.drinkName}</span>
+			<h2>User</h2> <span id="${obj.user}" class="result">${obj.user}</span>
+			<h2>Glass</h2> <span id="${obj.glass}" class="result">${obj.glass}</span>
+			<h2>Ingredents</h2> <span id="${obj.ingredents}" class="result">${splitIng(obj.ingredents)}</span>
+			<h2>Garnish</h2> <span id="${obj.garnish}" class="result">${obj.garnish}</span>
+			<h2>Instructions</h2> <span id="${obj.garnish}" class="result">${obj.instructions}</span>
 			<button id=${obj.id} class="btn edit">Edit</button>
-			<button id=${obj.id} value=${obj.drinkName} class="btn delete">Delete</button>
+			<button id=${obj.id} value="${obj.drinkName}" class="btn delete">Delete</button>
 		</div>
 			<form id="comments">
 				<label for="comments" class"sr-only">
@@ -383,6 +381,12 @@ function renderOneMyDrink (obj) {
 			</form>`
 		);
 };
+//add event listener to div.myDrink for edit
+function handleMyDrinkEdit () {
+	$('div.myDrink').on('click', 'button.edit', (event) => {
+		console.log(`EDIT WAS PRESSED`);
+	})
+}
 //make event listener for div.button_terms
 function handleButtonTerms() {
 	$('div.button_terms').on('click', (event) => {
@@ -392,7 +396,7 @@ function handleButtonTerms() {
 };
 //if someone presses the delete button
 function handleDrinkDeleteResult() {
-	$('div.drink_result').on('click', 'button', (event) => {
+	$('div.myDrink').on('click', 'button.delete', (event) => {
 		event.preventDefault();
 		let token = $('span.token')[0].textContent;
 		let theId = $(event)[0].target.id;
@@ -412,7 +416,7 @@ function deleteById (id, jwt, callback, name) {
 		contentType: false,
 		processData: false,
 		success: callback(name),
-		error: forFail,
+		error: deleteDrinkError,
 		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);}
 	};
 	$.ajax(options);
@@ -428,10 +432,11 @@ function renderDelete (name) {
 	$('div.drink_results').html('');
 	$('form#drink_register').html('');
 	$('div.myDrinks').html('');
+	$('div.myDrink').html('');
 	$('div.termMix').html('');
 	$('div.newDrink').html('');
 	$('div.drink_result').html('');
-	$("div.error").html(`${name}: DELETED`);
+	$("div.error").html(`<h1>${name}: DELETED</h1>`);
 };
 //onload
 function onload () {
@@ -448,6 +453,7 @@ function onload () {
 	handleDrinkList();
 	handleDrinkDeleteResult();
 	handleMyDrinkList();
+	handleMyDrinkEdit();
 }
 onload();
 //------------------------------------------------------------------------------------------------------------------------------

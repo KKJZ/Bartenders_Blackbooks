@@ -18,6 +18,10 @@ nav {
 	/*position: fixed;*/
 }
 
+h1 {
+	text-align: center;
+}
+
 article {
 	border: black 1px solid;
 	display: inline-block;
@@ -102,9 +106,13 @@ img.result {
 	margin-bottom: 10px; 
 }
 
+span.result {
+	display: block;
+}
+
 img.icon {
-	width: 72px;
-	height: 72px;
+	width: 90px;
+	height: 90px;
 }
 
 div.newDrink > div.drink {
