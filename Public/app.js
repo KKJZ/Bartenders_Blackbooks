@@ -366,10 +366,11 @@ function renderOneMyDrink (obj) {
 	$('div.myDrink').html(`
 			<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
+			<span id="drinkId" class="hidden">${obj.id}</span>
 			<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
 			<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
 			<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
-			<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}</span>
+			<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}<span id="${obj.ingredents}"></span></span>
 			<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
 			<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
 			<button id=${obj.id} class="btn edit">Edit</button>
@@ -385,20 +386,33 @@ function renderOneMyDrink (obj) {
 function handleMyDrinkEdit () {
 	$('div.myDrink').on('click', 'button.edit', (event) => {
 		console.log(`EDIT WAS PRESSED`);
+		$('button.edit').addClass('hidden');
+		$('button.delete').addClass('hidden');
 		//make varible for the existting values,
-		console.log($('span#drinkName'));
-		console.log($('span#userName'));
-		console.log($('span#glass'));
-		console.log($('span#ingredents'));
-		console.log($('span#instructions'));
-		console.log($('span#garnish'))
+		let drinkId = $('span#drinkId')[0].textContent;
+		let drinkName = $('span#drinkName')[0].textContent;
+		let glass = $('span#glass')[0].textContent;
+		let ingredents = $('span#ingredents')[0].lastChild.id;
+		let instructions = $('span#instructions')[0].textContent;
+		let garnish = $('span#garnish')[0].textContent;
+		console.log($('span#ingredents')[0].lastChild.id);
 		//turn the spans into a form
-		$('span#drinkName').replaceWith(`<form id="drinkID" for="edit drink" method="PUT"><input type="text" name="drinkName">`);
-		$('span#glass').replaceWith(`<input type="text" name="glass">`);
-		$('span#ingredents').replaceWith(`<textarea name="ingredents" rows="6"></textarea>`);
-		$('span#instructions').replaceWith(`<input type="text" name="instructions">`);
-		$('span#garnish').replaceWith(`<input type="text" name="garnish"><input type="submit" name="submit"></form>`);
+		$('span#drinkName').replaceWith(`<form id="edit" for="edit drink" method="PUT"><input type="text" value="${drinkName}" name="drinkName">`);
+		$('span#glass').replaceWith(`<input type="text" value="${glass}" name="glass">`);
+		//need to add comas after each item in the array
+		$('span#ingredents').replaceWith(`<textarea name="ingredents"  rows="6">${ingredents}</textarea>`);
+		$('span#garnish').replaceWith(`<input type="text" value="${garnish}" name="garnish">`);
+		$('span#instructions').replaceWith(`<input type="text" value="${instructions}" name="instructions"><input class="btn-block btn " type="submit" name="submit"></form>`);
 	})
+};
+//handle form submit for drink editting
+function handleDrinkEditForm () {
+	$('form#edit').on('submit', (event) => {
+		console.log('EDIT FORM SUBMITTED')
+	});
+};
+//put request function
+function sendEditRequest (obj, callback) {};
 //make event listener for div.button_terms
 function handleButtonTerms() {
 	$('div.button_terms').on('click', (event) => {
@@ -466,6 +480,7 @@ function onload () {
 	handleDrinkDeleteResult();
 	handleMyDrinkList();
 	handleMyDrinkEdit();
+	handleDrinkEditForm();
 }
 onload();
 //------------------------------------------------------------------------------------------------------------------------------
