@@ -293,12 +293,12 @@ function renderMadeDrink (obj) {
 	$('div.myDrink').html(`
 		<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			<h2>Name</h2> <span id="${obj.drinkName}" class="result">${obj.drinkName}</span>
-			<h2>User</h2> <span id="${obj.user}" class="result">${obj.user}</span>
-			<h2>Glass</h2> <span id="${obj.glass}" class="result">${obj.glass}</span>
-			<h2>Ingredents</h2> <span id="${obj.ingredents}" class="result">${splitIng(obj.ingredents)}</span>
-			<h2>Garnish</h2> <span id="${obj.garnish}" class="result">${obj.garnish}</span>
-			<h2>Instructions</h2> <span id="${obj.instructions}" class="result">${obj.instructions}</span>
+			<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
+			<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
+			<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
+			<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}</span>
+			<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
+			<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
 			<button id=${obj.id} class="btn edit">Edit</button>
 			<button id=${obj.id} value=${obj.drinkName} class="btn delete">Delete</button>
 		</div>
@@ -366,12 +366,12 @@ function renderOneMyDrink (obj) {
 	$('div.myDrink').html(`
 			<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			<h2>Name</h2> <span id="${obj.drinkName}" class="result">${obj.drinkName}</span>
-			<h2>User</h2> <span id="${obj.user}" class="result">${obj.user}</span>
-			<h2>Glass</h2> <span id="${obj.glass}" class="result">${obj.glass}</span>
-			<h2>Ingredents</h2> <span id="${obj.ingredents}" class="result">${splitIng(obj.ingredents)}</span>
-			<h2>Garnish</h2> <span id="${obj.garnish}" class="result">${obj.garnish}</span>
-			<h2>Instructions</h2> <span id="${obj.garnish}" class="result">${obj.instructions}</span>
+			<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
+			<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
+			<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
+			<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}</span>
+			<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
+			<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
 			<button id=${obj.id} class="btn edit">Edit</button>
 			<button id=${obj.id} value="${obj.drinkName}" class="btn delete">Delete</button>
 		</div>
@@ -385,6 +385,11 @@ function renderOneMyDrink (obj) {
 function handleMyDrinkEdit () {
 	$('div.myDrink').on('click', 'button.edit', (event) => {
 		console.log(`EDIT WAS PRESSED`);
+		console.log($('span#drinkName'));
+		console.log($('span#userName'));
+		console.log($('span#glass'));
+		console.log($('span#ingredents'));
+		console.log($('span#instructions'));
 	})
 }
 //make event listener for div.button_terms
