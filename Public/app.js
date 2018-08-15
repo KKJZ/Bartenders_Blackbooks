@@ -385,13 +385,20 @@ function renderOneMyDrink (obj) {
 function handleMyDrinkEdit () {
 	$('div.myDrink').on('click', 'button.edit', (event) => {
 		console.log(`EDIT WAS PRESSED`);
+		//make varible for the existting values,
 		console.log($('span#drinkName'));
 		console.log($('span#userName'));
 		console.log($('span#glass'));
 		console.log($('span#ingredents'));
 		console.log($('span#instructions'));
+		console.log($('span#garnish'))
+		//turn the spans into a form
+		$('span#drinkName').replaceWith(`<form id="drinkID" for="edit drink" method="PUT"><input type="text" name="drinkName">`);
+		$('span#glass').replaceWith(`<input type="text" name="glass">`);
+		$('span#ingredents').replaceWith(`<textarea name="ingredents" rows="6"></textarea>`);
+		$('span#instructions').replaceWith(`<input type="text" name="instructions">`);
+		$('span#garnish').replaceWith(`<input type="text" name="garnish"><input type="submit" name="submit"></form>`);
 	})
-}
 //make event listener for div.button_terms
 function handleButtonTerms() {
 	$('div.button_terms').on('click', (event) => {
