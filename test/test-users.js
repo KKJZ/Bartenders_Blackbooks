@@ -81,6 +81,7 @@ describe('BlackBook API resource', function() {
 		});
 	});
 	//POST Make User 
-	// describe('')
+	// describe('should make a user and return token, user and email', function () {})
 	//POST Login
-	// describe('')
+	// describe('should log in a user that is already made in the db', function () {})
+});
