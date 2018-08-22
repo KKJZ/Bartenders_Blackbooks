@@ -39,12 +39,12 @@ function tearDownDb () {
 	return mongoose.connection.dropDatabase();
 };
 
-describe('BlackBook API resource', function() {
+describe('BlackBook API Users', function() {
 	before (function() {
 		return runServer(TEST_DATABASE_URL);
 	});
 	beforeEach(function() {
-		return seedDrinks();
+		return seedUsers();
 	});
 	afterEach(function() {
 		return tearDownDb();
@@ -77,11 +77,45 @@ describe('BlackBook API resource', function() {
 					expect(user).to.be.a('object');
 					expect(user).to.include.keys("userName", "email");
 				});
-			})
+			});
 		});
 	});
 	//POST Make User 
-	// describe('should make a user and return token, user and email', function () {})
+	describe('POST user', function () {
+		it('Should return userName and token', function () {
+			let newUser = {
+				userName: faker.internet.userName(),
+				password: "password",
+				email: faker.internet.email()
+			};
+			return chai.request(app).post('/users').send(newUser)
+			.then(function (res) {
+				expect(res.body).to.have.keys("userName", "token");
+				expect(res.body.userName).to.equal(newUser.userName);
+				expect(res.body.token).to.not.be.null;
+			});
+		});
+	});
 	//POST Login
-	// describe('should log in a user that is already made in the db', function () {})
+	describe('POST login', function() {
+		it("should return userName and token when given password and userName", function() {
+			let newUser = {
+				userName: faker.internet.userName(),
+				password: "password",
+				email: faker.internet.email()
+			};
+			return chai.request(app).post('/users').send(newUser)
+			.then(function(res) {
+				expect(res.body).to.have.keys("userName", "token");
+				expect(res.body.userName).to.equal(newUser.userName);
+				expect(res.body.token).to.not.be.null;
+				return chai.request(app).post('/login').send({userName: newUser.userName,password: newUser.password})
+				.then(function(res) {
+					expect(res.body).to.have.keys("userName", "token");
+					expect(res.body.userName).to.equal(newUser.userName);
+					expect(res.body.token).to.not.be.null;
+				})
+			})
+		})
+	})
 });
