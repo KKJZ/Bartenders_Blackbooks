@@ -77,8 +77,9 @@ describe('BlackBook API resource', function() {
 					expect(user).to.be.a('object');
 					expect(user).to.include.keys("userName", "email");
 				});
-		})
-});
+			})
+		});
+	});
 	//POST Make User 
 	// describe('')
 	//POST Login
