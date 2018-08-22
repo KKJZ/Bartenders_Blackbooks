@@ -20,7 +20,7 @@ const {Users} = require('./models/users');
 //logging
 app.use(morgan('common'));
 
-app.use(express.static('/public/index.html'));
+app.use(express.static('./public'));
 app.use('/images', express.static('images'));
 app.use(express.json());
 
