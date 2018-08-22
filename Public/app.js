@@ -92,6 +92,7 @@ function handleHomeButton () {
 		$('div.menu_buttons').removeClass('hidden');
 		$('div.drink_results').html('');
 		$('form#drink_register').html('');
+		$('div.editDrink > img').remove()
 		$('form#edit').html('');
 		$('div.myDrinks').html('');
 		$('div.myDrink').html('');
@@ -105,6 +106,7 @@ function handleHomeButton () {
 function handleLogoutButton() {
 	$('button.logout').on('click', (event) => {
 		event.preventDefault();
+		$('div.error').html('');
 		$('div.login').removeClass('hidden');
 		$('nav').addClass('hidden');
 		$('span.userAccount').html("");
@@ -116,6 +118,7 @@ function handleLogoutButton() {
 function handleAllDrinksButton () {
 	$('div.button_drinks').on('click', function (event) {
 		event.preventDefault();
+		$('div.error').html('');
 		$('div.menu_buttons').addClass('hidden');
 		console.log('button pressed GETting drinks');
 		getDrink(renderDrink);
@@ -213,6 +216,7 @@ function splitIng (obj) {
 function handleButtonMake() {
 	$('div.button_make').on('click', (event) => {
 		event.preventDefault();
+		$('div.error').html('');
 		console.log('Button Make pressed');
 		$('div.menu_buttons').addClass('hidden');
 		$('div')
@@ -241,10 +245,8 @@ function handleButtonMake() {
 function handleMakeDrink () {
 	$('#drink_register').on('submit', function() {
 		event.preventDefault();
-		// let form = $(this);
 		// let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
 		console.log(`POSTing drink data`);
-		// let user = $('span.userName');
 		let token = $('span.token')[0].textContent;
 		// let data = {
 		// 	user: user[0].textContent,
@@ -260,7 +262,6 @@ function handleMakeDrink () {
 		// };
 		// console.log(form);
 		// console.log(data);
-		console.log($(this)[0]);
 		let formData = new FormData($(this)[0]);
 		console.log(`MY FORM DATA:${formData}`)
 		postDrink(formData, token, renderMadeDrink);
@@ -289,13 +290,14 @@ function forPostDrinkFail (err) {
 		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
 		<br>${err.responseText}`)
 };
-//return drink from db
+//return just made drink from db
 function renderMadeDrink (obj) {
 	console.log(obj);
 	$('form#drink_register').html('');
 	$('div.myDrink').html(`
 		<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
+			<span id="drinkId" class="hidden">${obj.id}</span>
 			<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
 			<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
 			<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
@@ -312,6 +314,7 @@ function handleButtonView() {
 	$('div.button_myDrinks').on('click', (event) => {
 		event.preventDefault();
 		console.log('View my drinks pressed');
+		$('div.error').html('');
 		$('div.menu_buttons').addClass('hidden');
 		console.log("GETting user drinks");
 		let user = $('span.userName')[0].textContent;
@@ -343,7 +346,7 @@ function renderMyDrinks (obj) {
 	$('div.myDrinks').html('');
 	for (let i=0; i<obj.length; i++) {
 		const options = `
-		<div class='drink_log colu-3 border'>
+		<div class='drink_log colu-4 border'>
 		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
 		<span class="result">Name: ${obj[i].drinkName}</span>
 		<span class="result">User: ${obj[i].user}</span>
@@ -369,15 +372,13 @@ function renderOneMyDrink (obj) {
 	$('div.myDrink').html(`
 		<div class="drink colu-12 border">
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			<form id="edit" for="edit drink" method="PUT">
-				<span id="drinkId" class="hidden">${obj.id}</span>
-				<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
-				<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
-				<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
-				<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}<span id="${obj.ingredents}"></span></span>
-				<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
-				<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
-			</form>
+			<span id="drinkId" class="hidden">${obj.id}</span>
+			<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
+			<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
+			<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
+			<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}<span id="${obj.ingredents}"></span></span>
+			<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
+			<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
 			<button id=${obj.id} class="btn edit">Edit</button>
 			<button id=${obj.id} value="${obj.drinkName}" class="btn delete">Delete</button>
 		</div>`
@@ -409,15 +410,15 @@ function handleMyDrinkEdit () {
 			<fieldset class="editDrink">
 				<input type="text" class="hidden" id="id" name="id" value="${drinkId}">
 				<label for="drinkName">Drink Name:
-					<input type="text" value="${drinkName}" name="drinkName"></label><br>
+					<input type="text" value="${drinkName}" name="drinkName" required></label><br>
 				<label for="glass">Glass:
-					<input type="text" value="${glass}" name="glass"></label><br>
+					<input type="text" value="${glass}" name="glass" required></label><br>
 				<label for="ingredents">ingredents:
-					<textarea name="ingredents" rows="6">${ingredents}</textarea></label><br>
+					<textarea name="ingredents" rows="6" required>${ingredents}</textarea></label><br>
 				<label for="garnish">Garnish:
-					<input type="text" value="${garnish}" name="garnish"></label><br>
+					<input type="text" value="${garnish}" name="garnish" required></label><br>
 				<label for="instructions">Instructions:
-					<textarea name="instructions" rows="6">${instructions}</textarea></label><br>
+					<textarea name="instructions" rows="6" required>${instructions}</textarea></label><br>
 				<label for="drinkImage">Drink Image:
 					<input type="file" name="drinkImage" accept="image/*"></label><br>
 				<input class="btn-block btn-lrg btn-primary btn" type="submit" name="Submit">
@@ -468,6 +469,7 @@ function editDrink (obj, id, jwt) {
 function handleButtonTerms() {
 	$('div.button_terms').on('click', (event) => {
 		event.preventDefault();
+		$('div.error').html('');
 		console.log("Terms button pressed");
 	})
 };

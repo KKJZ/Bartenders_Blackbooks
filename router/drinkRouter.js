@@ -134,11 +134,10 @@ router.put('/:id', upload.single('drinkImage'), verifyToken, jsonParser, (req,re
 				updated[field] = req.body[field];
 			}
 		});
-		// console.log(req.file);
+		console.log(req.file);
 		if (!(req.file === undefined)) {
 			//unlink
 			DrinkCollection.findById(req.params.id).then(drink => 
-				// console.log(`old path: ${drink.drinkImage}`);
 				fs.unlink(drink.drinkImage , (error) => {
 					if (error) {throw error};
 					console.log(`${drink.drinkName}'s picture was removed`);
@@ -146,6 +145,7 @@ router.put('/:id', upload.single('drinkImage'), verifyToken, jsonParser, (req,re
 			//add new one
 			updated["drinkImage"] = req.file.path;
 			console.log(`NEW path: ${updated.drinkImage}`)
+			console.log(`CHECKING updated: ${updated}`)
 		};
 		DrinkCollection.findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
 		.then(updatedDrink => res.status(204).end())
