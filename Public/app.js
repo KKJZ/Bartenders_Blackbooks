@@ -92,6 +92,7 @@ function handleHomeButton () {
 		$('div.menu_buttons').removeClass('hidden');
 		$('div.drink_results').html('');
 		$('form#drink_register').html('');
+		$('form#edit').html('');
 		$('div.myDrinks').html('');
 		$('div.myDrink').html('');
 		$('div.termMix').html('');
@@ -190,12 +191,13 @@ function renderOneDrink (obj) {
 			<h2>Garnish</h2> <span id="${obj.garnish}" class="result">${obj.garnish}</span>
 			<h2>Instructions</h2> <span id="${obj.instructions}" class="result"> ${obj.instructions}</span>
 			<span class="hidden">${obj.id}</span>
-		</div>
-		<form id="comments">
-			<label for="comments" class"sr-only">
-				<input type="text" placeholder="Comments" class="form-control"></label>
-		</form>
-		`)
+		</div>`
+		// <form id="comments">
+		// 	<label for="comments" class"sr-only">
+		// 		<input type="text" placeholder="Comments" class="form-control"></label>
+		// </form>
+		// 
+		)
 };
 //split ingredents by the posistion in the array
 function splitIng (obj) {
@@ -224,7 +226,7 @@ function handleButtonMake() {
 			<label for="ingredents">Ingredents:
 				<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill" required></textarea></label><br>
 			<label for="instructions" >Instructions
-				<input type="text" name="instructions" placeholder="How it is made" required></label><br>
+				<textarea name="instructions" rows="6" placeholder="How it is made" required></textarea></label><br>
 			<label for="drinkImage">Drink Image:
 				<input type="file" name="drinkImage" accept="image/*" required></label><br>
 			<label for="garnish">Garnish:
@@ -239,27 +241,28 @@ function handleButtonMake() {
 function handleMakeDrink () {
 	$('#drink_register').on('submit', function() {
 		event.preventDefault();
-		let form = $(this);
-		let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
+		// let form = $(this);
+		// let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
 		console.log(`POSTing drink data`);
-		let user = $('span.userName');
+		// let user = $('span.userName');
 		let token = $('span.token')[0].textContent;
-		let data = {
-			user: user[0].textContent,
-			drinkName: form[0][1].value,
-			glass: form[0][2].value,
-			ingredents: [{
-				ingredent: form[0][3].value,
-				measurement: form[0][4].value
-			}],
-			instructions: form[0][5].value,
-			drinkImage: filename,
-			garnish: form[0][7].value
-		};
-		console.log(form);
-		console.log(data);
+		// let data = {
+		// 	user: user[0].textContent,
+		// 	drinkName: form[0][1].value,
+		// 	glass: form[0][2].value,
+		// 	ingredents: [{
+		// 		ingredent: form[0][3].value,
+		// 		measurement: form[0][4].value
+		// 	}],
+		// 	instructions: form[0][5].value,
+		// 	drinkImage: filename,
+		// 	garnish: form[0][7].value
+		// };
+		// console.log(form);
+		// console.log(data);
+		console.log($(this)[0]);
 		let formData = new FormData($(this)[0]);
-		console.log(`MY FORM DATA:${form}`)
+		console.log(`MY FORM DATA:${formData}`)
 		postDrink(formData, token, renderMadeDrink);
 	})
 };
@@ -356,31 +359,33 @@ function handleMyDrinkList () {
 	$('div.myDrinks').on('click', 'button', (event) => {
 		event.preventDefault();
 		let theId = $(event)[0].target.id;
-		console.log(`BUTTON PRESSED: ${theId}`)
-		getOneDrink(theId, renderOneMyDrink)
-	})
+		console.log(`BUTTON PRESSED: ${theId}`);
+		getOneDrink(theId, renderOneMyDrink);
+	});
 };
 //render my one drink 
 function renderOneMyDrink (obj) {
 	$('div.myDrinks').html('');
 	$('div.myDrink').html(`
-			<div class='drink colu-12 border'>
+		<div class="drink colu-12 border">
 			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
-			<span id="drinkId" class="hidden">${obj.id}</span>
-			<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
-			<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
-			<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
-			<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}<span id="${obj.ingredents}"></span></span>
-			<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
-			<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
+			<form id="edit" for="edit drink" method="PUT">
+				<span id="drinkId" class="hidden">${obj.id}</span>
+				<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
+				<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
+				<h2>Glass</h2> <span id="glass" class="result">${obj.glass}</span>
+				<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}<span id="${obj.ingredents}"></span></span>
+				<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
+				<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
+			</form>
 			<button id=${obj.id} class="btn edit">Edit</button>
 			<button id=${obj.id} value="${obj.drinkName}" class="btn delete">Delete</button>
-		</div>
-			<form id="comments">
-				<label for="comments" class"sr-only">
-					<input type="text" placeholder="Comments" class="form-control"></label>
-			</form>`
+		</div>`
 		);
+	// <form id="comments">
+	// 	<label for="comments" class"sr-only">
+	// 		<input type="text" placeholder="Comments" class="form-control"></label>
+	// </form>`
 };
 //add event listener to div.myDrink for edit
 function handleMyDrinkEdit () {
@@ -389,6 +394,7 @@ function handleMyDrinkEdit () {
 		$('button.edit').addClass('hidden');
 		$('button.delete').addClass('hidden');
 		//make varible for the existting values,
+		let drinkImage = $('img.drinkPage')[0].src;
 		let drinkId = $('span#drinkId')[0].textContent;
 		let drinkName = $('span#drinkName')[0].textContent;
 		let glass = $('span#glass')[0].textContent;
@@ -397,22 +403,67 @@ function handleMyDrinkEdit () {
 		let garnish = $('span#garnish')[0].textContent;
 		console.log($('span#ingredents')[0].lastChild.id);
 		//turn the spans into a form
-		$('span#drinkName').replaceWith(`<form id="edit" for="edit drink" method="PUT"><input type="text" value="${drinkName}" name="drinkName">`);
-		$('span#glass').replaceWith(`<input type="text" value="${glass}" name="glass">`);
-		//need to add comas after each item in the array
-		$('span#ingredents').replaceWith(`<textarea name="ingredents"  rows="6">${ingredents}</textarea>`);
-		$('span#garnish').replaceWith(`<input type="text" value="${garnish}" name="garnish">`);
-		$('span#instructions').replaceWith(`<input type="text" value="${instructions}" name="instructions"><input class="btn-block btn " type="submit" name="submit"></form>`);
+		$('div.editDrink').removeClass('hidden');
+		$('div.editDrink').prepend(`<img class="edit drinkPage" src=${drinkImage} alt="${drinkName}">`);
+		$('form#edit').html(`
+			<fieldset class="editDrink">
+				<input type="text" class="hidden" id="id" name="id" value="${drinkId}">
+				<label for="drinkName">Drink Name:
+					<input type="text" value="${drinkName}" name="drinkName"></label><br>
+				<label for="glass">Glass:
+					<input type="text" value="${glass}" name="glass"></label><br>
+				<label for="ingredents">ingredents:
+					<textarea name="ingredents" rows="6">${ingredents}</textarea></label><br>
+				<label for="garnish">Garnish:
+					<input type="text" value="${garnish}" name="garnish"></label><br>
+				<label for="instructions">Instructions:
+					<textarea name="instructions" rows="6">${instructions}</textarea></label><br>
+				<label for="drinkImage">Drink Image:
+					<input type="file" name="drinkImage" accept="image/*"></label><br>
+				<input class="btn-block btn-lrg btn-primary btn" type="submit" name="Submit">
+			</fieldset>
+				`)
+		$('div.myDrink').html('');
+
+		// $('span#drinkName').replaceWith(`<input type="text" value="${drinkName}" name="drinkName">`);
+		// $('span#glass').replaceWith(`<input type="text" value="${glass}" name="glass">`);
+		// $('span#ingredents').replaceWith(`<textarea name="ingredents"  rows="6">${ingredents}</textarea>`);
+		// $('span#garnish').replaceWith(`<input type="text" value="${garnish}" name="garnish">`);
+		// $('span#instructions').replaceWith(`<textarea name="instructions"  rows="6">${instructions}</textarea><input class="btn-block btn" type="submit" name="edit">`);
 	})
 };
 //handle form submit for drink editting
 function handleDrinkEditForm () {
-	$('form#edit').on('submit', (event) => {
-		console.log('EDIT FORM SUBMITTED')
+	$('#edit').on('submit', function() {
+		event.preventDefault();
+		console.log('EDIT FORM SUBMITTED');
+		let token = $('span.token')[0].textContent;
+		let formData = new FormData($(this)[0]);
+		let id = $('input#id')[0].value;
+		editDrink(formData, id, token);
 	});
 };
-//put request function
-function sendEditRequest (obj, callback) {};
+//put request function callback: getOneDrink(id, renderOneMyDrink);
+function editDrink (obj, id, jwt) {
+	console.log(`JWT: ${jwt}`);
+	const options = {
+		url: `/drinks/${id}`,
+		type: 'PUT',
+		data: obj,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: () => {
+			$('div.editDrink').addClass('hidden'),
+			$('div.editDrink > img').remove(),
+			$('form#edit').html(''),
+			getOneDrink(id, renderOneMyDrink)},
+		error: forPostDrinkFail,
+		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ jwt);}
+	}
+	$.ajax(options);
+};
+
 //make event listener for div.button_terms
 function handleButtonTerms() {
 	$('div.button_terms').on('click', (event) => {

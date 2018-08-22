@@ -83,7 +83,7 @@ form.login {
 	margin-left: auto;
 }
 
-div.button_drinks, div.button_make, div.button_myDrinks, div.button_terms{
+div.button_drinks, div.button_make, div.button_myDrinks, div.button_terms, div.editDrink{
 	width: 100%;
 	max-width: 300px;
 	margin-left: auto;
@@ -167,12 +167,14 @@ div.newDrink > div.drink {
 }
 
 .drinkPage {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	margin-right: 30px;
-	width: 250px;
-	height: 250px;
-	float: left;
+	display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 250px;
+    height: 250px;
+    float: none;
 }
 
 .hidden {
@@ -208,6 +210,17 @@ div.newDrink > div.drink {
   margin-bottom: 5px;
 }
 
+@media only screen and (min-width: 700px) {
+
+	.drinkPage {
+		width: 500px;
+    	height: 500px;
+    	margin-right: 5px;
+    	float: left;
+    	margin-left: auto;
+	}
+}
+
 @media only screen and (min-width: 640px) {
 
 	.colu-3 {
@@ -227,10 +240,6 @@ div.newDrink > div.drink {
 	}
 }
 @media only screen and (min-width: 426px) {
-	.drinkPage {
-		width: 500px;
-		height: 500px;
-	}
 
 	legend {
 		font-size: 25px;

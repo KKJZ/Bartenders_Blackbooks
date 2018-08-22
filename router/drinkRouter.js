@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const multer =  require('multer');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const {DrinkCollection} = require('../models/drinks');
 const {Users} = require('../models/users');
@@ -78,11 +79,12 @@ router.get('/name/:name', (req, res) => {
 //when user is made add to their profile
 //need to make a secure route
 router.post('/', upload.single('drinkImage'), verifyToken, (req, res) => {
+	console.log(req.body)
 	jwt.verify(req.token, "testCert", (err, authData) => {
 		if (err) {
 			res.sendStatus(403);
 		}	else {
-			console.log(authData);
+			// console.log(authData);
 			const requiredFields = ["drinkName","glass","ingredents","instructions", "garnish"];
 			for (let i=0; i<requiredFields.length; i++) {
 				const field = requiredFields[i];
@@ -94,7 +96,7 @@ router.post('/', upload.single('drinkImage'), verifyToken, (req, res) => {
 			};
 			req.body.ingredents.trim().replace(/(\r\n\t|\n|\r\t)/gm,"");
 			let ingredents = req.body.ingredents.split(",");
-			console.log(`INGR VAR: ${ingredents}`)
+			// console.log(`INGR VAR: ${ingredents}`)
 			const item = DrinkCollection.create({
 				user: authData.user,
 				drinkName: req.body.drinkName,
@@ -117,20 +119,39 @@ router.post('/', upload.single('drinkImage'), verifyToken, (req, res) => {
 //update a drink you have saved
 //when user is made make sure user has access to this id
 //need to make a secure route
-router.put('/:id', verifyToken, (req,res) => {
-	if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-		res.status(400).json({error: "Request path id and request body id values must match"});
-	}
-	const updated = {};
-	const updatedFields = ["user", "drinkName", "glass", "ingredents", "garnish", "instructions"];
-	updatedFields.forEach(field => {
-		if (field in req.body) {
-			updated[field] = req.body[field];
+router.put('/:id', upload.single('drinkImage'), verifyToken, jsonParser, (req,res) => {
+	jwt.verify(req.token, "testCert", (err, authData) => {
+		if (err) {
+			res.sendStatus(403);
+		}	else { 
+			if(!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+			res.status(400).json({error: "Request path id and request body id values must match"});
 		}
+		const updated = {};
+		const updatedFields = ["user", "drinkName", "glass", "ingredents", "garnish", "instructions"];
+		updatedFields.forEach(field => {
+			if (field in req.body) {
+				updated[field] = req.body[field];
+			}
+		});
+		// console.log(req.file);
+		if (!(req.file === undefined)) {
+			//unlink
+			DrinkCollection.findById(req.params.id).then(drink => 
+				// console.log(`old path: ${drink.drinkImage}`);
+				fs.unlink(drink.drinkImage , (error) => {
+					if (error) {throw error};
+					console.log(`${drink.drinkName}'s picture was removed`);
+				}));
+			//add new one
+			updated["drinkImage"] = req.file.path;
+			console.log(`NEW path: ${updated.drinkImage}`)
+		};
+		DrinkCollection.findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
+		.then(updatedDrink => res.status(204).end())
+		.catch(err => res.status(500).json({messege: 'Something happened.'}));
+		};
 	});
-	DrinkCollection.findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
-	.then(updatedDrink => res.status(204).end())
-	.catch(err => res.status(500).json({messege: 'Something happened.'}));
 });
 
 //remove drink from user profile and list
@@ -140,6 +161,12 @@ router.delete('/:id', verifyToken, (req, res) => {
 		if (err) {
 			res.sendStatus(403)
 		} else {
+			// unlink
+			DrinkCollection.findById(req.params.id).then(drink => 
+				fs.unlink(drink.drinkImage , (error) => {
+					if (error) {throw error};
+					console.log(`${drink.drinkName}'s picture was removed`);
+				}));
 			DrinkCollection.findByIdAndRemove(req.params.id)
 			.then(() => {
 				res.status(204).json({messege: "success"});
