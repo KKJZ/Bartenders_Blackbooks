@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const request = require('request');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const path = require('path')
 const router = express.Router();
 
 const drinkRouter = require('./router/drinkRouter');
@@ -20,7 +21,6 @@ const {Users} = require('./models/users');
 //logging
 app.use(morgan('common'));
 
-// app.set('view engine', "html");
 app.use('/images', express.static('images'));
 // app.use(express.json());
 // app.render('public/index', function (err, html) {
