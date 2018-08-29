@@ -21,8 +21,7 @@ const {Users} = require('./models/users');
 app.use(morgan('common'));
 
 // app.set('view engine', "html");
-app.use(express.static('/public'));
-// app.use('/images', express.static('images'));
+app.use('/images', express.static('images'));
 // app.use(express.json());
 // app.render('public/index', function (err, html) {
 // 	console.log(err);
