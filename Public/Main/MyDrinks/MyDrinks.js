@@ -473,6 +473,9 @@ function handleButtonTerms() {
 		event.preventDefault();
 		$('div.error').html('');
 		console.log("Terms button pressed");
+		let token = $('span.token')[0].textContent;
+		localStorage.setItem('jwt', token)
+		window.location = "./Terms/terms.html"
 	})
 };
 //if someone presses the delete button

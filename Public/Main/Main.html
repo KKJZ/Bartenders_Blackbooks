@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bartender's Blackbook</title>
+	<link rel="stylesheet" type="text/css" href="./main.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="icon" type="image/gif/png" href="./icon/shaker.png">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Search the Db for drinks and add drinks also">
+
+</head>
+<body>
+	<!--unhide when you have logged in -->
+	<nav class="border">
+	<!-- Home will be the search menu -->
+	<button class="home btn btn-primary">Home</button> |
+	<!-- My Account will be where you can look at saved drinks, to remove or update them --> 
+	<span class="userAccount"></span> | 
+	<!-- Go back to login screen  -->
+	<button class="logout btn">Logout</button>
+	</nav>
+
+	<main role='main'>
+		<!-- errors go in here -->
+		<div class="error">
+		</div>
+		<div class="menu_buttons">
+			<div class="button_drinks"><button class="drinks btn btn-block">Get a list all drinks</button></div>
+			<div class="button_make"><button class="drinks btn btn-block">Make a drink</button></div>
+			<div class="button_myDrinks"><button class="drinks btn btn-block">View My drinks</button></div>
+			<div class="button_terms"><button class="drinks btn btn-block">Terminology and Mixology</button></div>
+		</div>
+	</main>
+
+<script type="text/javascript" src="Main.js"></script>
+</body>
+</html>

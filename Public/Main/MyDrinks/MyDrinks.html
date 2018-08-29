@@ -13,7 +13,7 @@
 </head>
 <body>
 	<!--unhide when you have logged in -->
-	<nav class="border hidden">
+	<nav class="border">
 	<!-- Home will be the search menu -->
 	<button class="home btn btn-primary">Home</button> |
 	<!-- My Account will be where you can look at saved drinks, to remove or update them --> 
@@ -21,44 +21,8 @@
 	<!-- Go back to login screen  -->
 	<button class="logout btn">Logout</button>
 	</nav>
-	<div class="register hidden">
-		<form role='Register' id="register" method="POST">
-			<fieldset>
-				<img class="icon" src="./icons/shaker.png">
-				<h1>Register</h1>
-				<label for="userName" class="sr-only">User Name:</label>
-				<input type="text" name="userName" placeholder="User Name" class="userName form-control">
-				<br>
-				<label for="Password" class="sr-only">Password:</label>
-				<input type="password" name="password" placeholder="Password" class="password form-control">
-				<br>
-				<label for="email" class="sr-only">Email:</label>
-				<input type="email" name="email" placeholder="Email@here.com" class="email form-control">
-				<br>
-				<input type="submit" name="Submit" class="btn btn-lg btn-primary btn-block">
-			</fieldset>
-		</form>
-	</div>
-	<div class="login">
-		<form role="login" id="login" method="POST">
-			<fieldset>
-				<img class="icon" src="./icons/shaker.png">
-				<h1>Login</h1>
-				<label for="userName" class="sr-only">User Name:</label>
-				<input type="text" name="userName" placeholder="User Name" class="userName form-control">
-				<br>
-				<label for="Password" class="sr-only">Password:</label>
-				<input type="password" name="password" placeholder="Password" class="password form-control">
-				<br>
-				<input type="submit" class="btn btn-lg btn-primary btn-block" name="Submit">
 
-				<button class="register btn btn-lrg btn-block">Register here!</button>
-			</fieldset>
-		</form>
-	</div>
-	<div class="user_results">
-	</div>
-	<main role='main' class="hidden">
+	<main role='main'>
 		<!-- errors go in here -->
 		<div class="error">
 		</div>
