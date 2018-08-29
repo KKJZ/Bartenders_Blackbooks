@@ -1,3 +1,5 @@
+const API = "http://localhost:8080";
+
 //handle login
 function handleLogin () {
 	$('form#login').on('submit', function (event) {
@@ -14,7 +16,7 @@ function handleLogin () {
 //handle login requests
 function login (objData, callback) {
 	$.ajax({
-	url: '/login',
+	url: `${API}/login`,
 	type: 'POST',
 	dataType: 'json',
 	data: JSON.stringify(objData),
@@ -57,7 +59,7 @@ function handleRegisterSubmit () {
 //register the user in the db
 function registerUser (data, callback) {
 	const options = {
-		url: '/users',
+		url: `${API}/users`,
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify(data),
@@ -127,7 +129,7 @@ function handleAllDrinksButton () {
 //ajax call to the drink endpoint
 function getDrink (callback) {
 	const options = {
-		url: "/drinks",
+		url: `${API}/drinks`,
 		type: 'GET',
 		dataType: 'json',
 		success: callback,
@@ -172,7 +174,7 @@ function handleDrinkList () {
 //goes to id endpoint and gets one drink back
 function getOneDrink (id, callback) {
 	const options = {
-		url: `/drinks/${id}`,
+		url: `${API}/drinks/${id}`,
 		type: 'GET',
 		dataType: 'json',
 		success: callback,
@@ -271,7 +273,7 @@ function handleMakeDrink () {
 function postDrink(data, jwt, callback) {
 	console.log(`JWT: ${jwt}`);
 	const options = {
-		url: '/drinks',
+		url: `${API}/drinks`,
 		type: 'POST',
 		data: data,
 		cache: false,
@@ -325,7 +327,7 @@ function handleButtonView() {
 //search drinks by user
 function getUserDrinks (user, callback) {
 	const options = {
-		url: `/drinks/name/${user}`,
+		url: `${API}/drinks/name/${user}`,
 		type: 'GET',
 		dataType: 'json',
 		success: callback,
@@ -448,7 +450,7 @@ function handleDrinkEditForm () {
 function editDrink (obj, id, jwt) {
 	console.log(`JWT: ${jwt}`);
 	const options = {
-		url: `/drinks/${id}`,
+		url: `${API}/drinks/${id}`,
 		type: 'PUT',
 		data: obj,
 		cache: false,
@@ -489,7 +491,7 @@ function handleDrinkDeleteResult() {
 //delete by id
 function deleteById (id, jwt, callback, name) {
 	const options = {
-		url: `/drinks/${id}`,
+		url: `${API}/drinks/${id}`,
 		type: 'DELETE',
 		cache: false,
 		contentType: false,
