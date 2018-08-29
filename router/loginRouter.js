@@ -39,6 +39,8 @@ router.post('/', jsonParser, (req, res) => {
 		} else {
 			jwt.sign({user: userName, password: password}, "testCert", {expiresIn: '1h'}, (err, token) => {
 				res.json({userName, token});
+				console.log('redirect');
+				res.redirect();
 			})
 		}
 	})

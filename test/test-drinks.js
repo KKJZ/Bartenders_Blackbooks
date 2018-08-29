@@ -28,7 +28,7 @@ function generateUser () {
 		userName: faker.internet.userName(),
 		password: "password",
 		email: faker.internet.email()
-	}
+	};
 	return user;
 };
 
@@ -209,5 +209,4 @@ describe('BlackBook API Drinks', function() {
 			})
 		});
 	})
-
 });

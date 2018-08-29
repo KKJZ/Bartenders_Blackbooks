@@ -20,9 +20,14 @@ const {Users} = require('./models/users');
 //logging
 app.use(morgan('common'));
 
-app.use("/", express.static(__dirname + '/public'));
-app.use('/images', express.static('images'));
-app.use(express.json());
+// app.set('view engine', "html");
+app.use(express.static('/public'));
+// app.use('/images', express.static('images'));
+// app.use(express.json());
+// app.render('public/index', function (err, html) {
+// 	console.log(err);
+// 	console.log(html);
+// });
 
 //CORS
 app.use(function (req, res, next) {
