@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 
 const {DrinkCollection} = require('../models/drinks');
 const {Users} = require('../models/users');
-const {verifyToken} = require('./drinkRouter')
 
 const jsonParser = bodyParser.json();
 //login request would return a jwt
@@ -38,7 +37,7 @@ router.post('/', jsonParser, (req, res) => {
 		if (torf === false) {
 			res.status(400).send('Wrong password');
 		} else {
-			jwt.sign({user: userName, password: password}, "testCert", {expiresIn: '1h'}, (err, token) => {
+			jwt.sign({user: userName}, "testCert", {expiresIn: '1h'}, (err, token) => {
 				res.json({userName, token});
 				console.log('redirect');
 				res.redirect();
@@ -67,5 +66,37 @@ router.post('/', jsonParser, (req, res) => {
 	// })
 
 //refresh endpoint
-router.post('/refresh', function)
+router.post('/refresh', verifyToken, (req, res) => {
+	jwt.verify(req.token, "testCert", (err, authData) => {
+		if (err) {
+			res.sendStatus(403)
+		} else {
+			let user = req.body.userName;
+			jwt.sign({user}, "testCert", {expiresIn: '1s'}, (err, token) => {
+				console.log(`ERROR: ${err}`);
+				console.log(`TOKEN: ${token}`);
+				return res.json({userName, token})
+			})
+		};
+	});
+});
+
+function verifyToken(req, res, next) {
+	//get auth header
+	const bearerHeader = req.headers['authorization'];
+	console.log(`AUTHORIZATION: ${bearerHeader}`);
+	// check if bearer is undefined
+	if (typeof bearerHeader !== 'undefined') {
+		//split at space
+		const bearer = bearerHeader.split(' ');
+		const bearerToken = bearer[1];
+		console.log(`JWT: ${bearerToken}`)
+		//set token
+		req.token = bearerToken;
+		next();
+	} else {
+		//forbidden
+		res.sendStatus(403);
+	}
+};
 module.exports = router;

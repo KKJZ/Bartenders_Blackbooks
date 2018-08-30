@@ -204,4 +204,4 @@ function verifyToken(req, res, next) {
 
 //search that works by glass type
 // router.post('/drinks/:g', (req, res) => {});
-module.exports = router;
+module.exports = router, verifyToken;
