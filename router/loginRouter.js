@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const {DrinkCollection} = require('../models/drinks');
 const {Users} = require('../models/users');
+const {verifyToken} = require('./drinkRouter')
 
 const jsonParser = bodyParser.json();
 //login request would return a jwt
@@ -65,4 +66,6 @@ router.post('/', jsonParser, (req, res) => {
 	// 	res.json({token: token});
 	// })
 
+//refresh endpoint
+router.post('/refresh', function)
 module.exports = router;
