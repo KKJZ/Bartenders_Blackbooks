@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bartender's Blackbook</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="icon" type="image/gif/png" href="./icon/shaker.png">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Search the Db for drinks and add drinks also">
+
+</head>
+<body>
+	<!--unhide when you have logged in -->
+	<nav class="border hidden">
+	<!-- Home will be the search menu -->
+	<button class="home btn btn-primary">Home</button> |
+	<!-- My Account will be where you can look at saved drinks, to remove or update them --> 
+	<span class="userAccount"></span> | 
+	<!-- Go back to login screen  -->
+	<button class="logout btn">Logout</button>
+	</nav>
+	<div class="register hidden">
+		<form role='Register' id="register" method="POST">
+			<fieldset>
+				<img class="icon" src="./icons/shaker.png">
+				<h1>Register</h1>
+				<label for="userName" class="sr-only">User Name:</label>
+				<input type="text" name="userName" placeholder="User Name" class="userName form-control">
+				<br>
+				<label for="Password" class="sr-only">Password:</label>
+				<input type="password" name="password" placeholder="Password" class="password form-control">
+				<br>
+				<label for="email" class="sr-only">Email:
+				<input type="email" name="email" placeholder="Email@here.com" class="email form-control"></label>
+				<br>
+				<input type="submit" name="Submit" class="btn btn-lg btn-primary btn-block">
+			</fieldset>
+		</form>
+	</div>
+	<div class="login">
+		<form role="login" id="login" method="POST">
+			<fieldset>
+				<img class="icon" src="./icons/shaker.png">
+				<h1>Login</h1>
+				<label for="userName" class="sr-only">User Name:</label>
+				<input type="text" name="userName" placeholder="User Name" class="userName form-control">
+				<br>
+				<label for="Password" class="sr-only">Password:</label>
+				<input type="password" name="password" placeholder="Password" class="password form-control">
+				<br>
+				<input type="submit" class="btn btn-lg btn-primary btn-block" name="Submit">
+
+				<button class="register btn btn-lrg btn-block">Register here!</button>
+			</fieldset>
+		</form>
+	</div>
+	<div class="user_results">
+	</div>
+	<main role='main' class="hidden">
+		<!-- errors go in here -->
+		<div class="error">
+		</div>
+		<div class="menu_buttons">
+			<div class="button_drinks"><button class="drinks btn btn-block">Get a list all drinks</button></div>
+			<div class="button_make"><button class="drinks btn btn-block">Make a drink</button></div>
+			<div class="button_myDrinks"><button class="drinks btn btn-block">View My drinks</button></div>
+			<div class="button_terms"><button class="drinks btn btn-block">Terminology and Mixology</button></div>
+		</div>
+		<!-- Get list of all drinks goes into here -->
+		<div class="drink_results rows">
+		</div>
+		<!-- a single drink will render here -->
+		<div class="drink_result rows">
+		</div>
+		<!-- Make a drink goes here -->
+		<div class="makeDrink rows">
+			<div class="newDrink rows"></div>
+			<form id="drink_register">
+			</form>
+		</div>
+		<!-- view my drinks goes here -->
+		<div class="myDrinks rows">
+		</div>
+		<!-- viewing a single drink of yours -->
+		<div class="myDrink rows">
+		</div>
+		<!-- editting a drink of yours -->
+		<div class="editMyDrink rows">
+			<div class="editDrink col-12 border hidden">
+				<form id="edit" for="edit drink" method="PUT"></form>
+			</div>
+		</div>
+		<!-- term and mix goes here -->
+		<div class="termMix rows">
+		</div>
+	</main>
+
+<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
