@@ -210,9 +210,6 @@ function editDrink (obj, id, jwt) {
 	}
 	$.ajax(options);
 };
-//----------------------------------------------------------------------------------------------
-
-
 //if someone presses the delete button
 function handleDrinkDeleteResult() {
 	$('div.myDrink').on('click', 'button.delete', (event) => {
@@ -244,22 +241,16 @@ function deleteById (id, jwt, callback, name) {
 function deleteDrinkError (err) {
 	console.log(err);
 };
-//return user to home screen after delete
+//return user to myDrinks after delete
 function renderDelete (name) {
 	console.log(`${name}: Deleted!`);
-	$('div.menu_buttons').removeClass('hidden');
-	$('div.drink_results').html('');
-	$('form#drink_register').html('');
-	$('div.myDrinks').html('');
-	$('div.myDrink').html('');
-	$('div.termMix').html('');
-	$('div.newDrink').html('');
-	$('div.drink_result').html('');
+	getUserDrinks(localStorage.getItem('userName'), renderMyDrinks);
 	$("div.error").html(`<h1>${name}: DELETED</h1>`);
 };
+//----------------------------------------------------------------------------------------------
 //onload
 function onload () {
-	getUserDrinks(localStorage.getItem('userName'), renderMyDrinks)
+	getUserDrinks(localStorage.getItem('userName'), renderMyDrinks);
 
 	handleHomeButton();
 	handleLogoutButton();
@@ -271,6 +262,7 @@ function onload () {
 onload();
 //------------------------------------------------------------------------------------------------------------------------------
 //features still to add
+//terms and mix
 //favorites
 //editting 
 //comments
