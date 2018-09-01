@@ -194,7 +194,7 @@ function splitIng (obj) {
 	})
 	ol += `</ol>`
 	return ol
-}
+};
 
 //make event listener for div.button_make
 // function handleButtonMake() {

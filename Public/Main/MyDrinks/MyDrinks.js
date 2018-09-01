@@ -52,6 +52,34 @@ function getUserDrinks (user, callback) {
 	};
 	$.ajax(options);
 };
+//goes to id endpoint and gets one drink back
+function getOneDrink (id, callback) {
+	const options = {
+		url: `${API}/drinks/${id}`,
+		type: 'GET',
+		dataType: 'json',
+		success: callback,
+		error: forGetDrinkFail,
+		crossOrigin: false
+	};
+	$.ajax(options);
+};
+//for fail function
+function forGetDrinkFail (err) {
+	console.log(err);
+	$('div.error').html(`
+		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
+		<br>${err.responseText}`)
+};
+//split ingredents by the posistion in the array
+function splitIng (obj) {
+	let ol = `<ol>`
+	obj.forEach(function(ing) {
+		ol += `<li>${ing}</li>`
+	})
+	ol += `</ol>`
+	return ol
+};
 //for fail on my drinks
 function myDrinksFail (err) {
 	console.log(err);
@@ -232,14 +260,9 @@ function renderDelete (name) {
 //onload
 function onload () {
 	getUserDrinks(localStorage.getItem('userName'), renderMyDrinks)
-	handleAllDrinksButton();
-	handleMakeDrink();
+
 	handleHomeButton();
 	handleLogoutButton();
-	handleButtonMake();
-	handleButtonView();
-	handleButtonTerms();
-	handleDrinkList();
 	handleDrinkDeleteResult();
 	handleMyDrinkList();
 	handleMyDrinkEdit();
