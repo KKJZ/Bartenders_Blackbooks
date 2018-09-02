@@ -1,4 +1,4 @@
-const API = "http://localhost:8080";
+const API = "https://bartendersbestfriend.herokuapp.com/";
 
 function navSetup () {
 	console.log("JWT:",localStorage.getItem('jwt'));

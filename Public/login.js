@@ -1,4 +1,4 @@
-const API = "http://localhost:8080";
+const API = "https://bartendersbestfriend.herokuapp.com/";
 
 //handle login
 function handleLogin () {
