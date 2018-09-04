@@ -102,6 +102,12 @@ div.search {
 	margin-left: auto; 
 }
 
+input.back {
+	text-align: center;
+	margin-right: 200px;
+	margin-left: 200px;
+}
+
 form#search {
 	text-align: center;
 	margin-right: auto;

@@ -66,23 +66,23 @@ router.post('/', jsonParser, (req, res) => {
 	// })
 
 //refresh endpoint
-router.post('/refresh', verifyToken, (req, res) => {
+router.post('/refresh', verifyToken, jsonParser, (req, res) => {
 	jwt.verify(req.token, "testCert", (err, authData) => {
 		if (err) {
 			res.sendStatus(403)
 		} else {
+			console.log(req.body);
 			let user = req.body.userName;
-			jwt.sign({user}, "testCert", {expiresIn: '1s'}, (err, token) => {
+			jwt.sign({user}, "testCert", {expiresIn: '1h'}, (err, token) => {
 				console.log(`ERROR: ${err}`);
 				console.log(`TOKEN: ${token}`);
-				return res.json({userName, token})
+				return res.json({user, token})
 			})
 		};
 	});
 });
 
-function verifyToken(req, res, next) {
-	//get auth header
+function verifyToken(req, res, next) {	//get auth header
 	const bearerHeader = req.headers['authorization'];
 	console.log(`AUTHORIZATION: ${bearerHeader}`);
 	// check if bearer is undefined

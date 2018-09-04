@@ -89,6 +89,8 @@ function getOneDrink (id, callback) {
 //render one drink || lets make a new page instead named Result.html
 function renderOneDrink (obj) {
 	$('div.drink_results').html('');
+	$('form#search').addClass('hidden');
+	$('input.back').removeClass('hidden');
 	$('div.drink_result').html(`
 		<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${API}/${obj.drinkImage} alt="${obj.drinkName}">
@@ -121,6 +123,7 @@ function splitIng (obj) {
 function handleSearch() {
 	$('form#search').on('submit', (event) => {
 		event.preventDefault();
+		$('div.error').html('');
 		console.log(`Search: ${event.target[0].value}`);
 		let name = event.target[0].value;
 		getSearchDrinkName(name, renderDrink);
@@ -137,6 +140,15 @@ function getSearchDrinkName(name, callback) {
 	};
 	$.ajax(options);
 };
+//handle back button
+function handleBackBtn() {
+	$('input.back').on('click', (event) => {
+		$('input.back').addClass('hidden');
+		$('form#search').removeClass('hidden');
+		$('div.drink_result').html('');
+		getDrink(renderDrink);	
+	})
+};
 //------------------------------------------------------------------------------------------------------------
 //onload
 function onload () {
@@ -147,6 +159,7 @@ function onload () {
 	handleLogoutButton();
 	handleDrinkList();
 	handleSearch();
+	handleBackBtn();
 }
 onload();
 //------------------------------------------------------------------------------------------------------------------------------

@@ -107,6 +107,19 @@ function handleButtonTerms() {
 		window.location = "./Terms/terms.html"
 	})
 };
+//Check/refresh jwt
+function checkJWT () {
+	console.log("User:", localStorage.getItem('userName'));
+	$.ajax({
+		url: `${API}/login/refresh`,
+		type: "POST",
+		dataType: "json",
+		data: {userName: localStorage.getItem('userName')},
+		success: (obj) => {console.log(obj)},
+		error: (err) => console.log(err),
+		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('jwt'));}
+	})
+};
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //ajax call to the drink endpoint
 function getDrink (callback) {
@@ -518,6 +531,7 @@ function onload () {
 	handleMyDrinkList();
 	handleMyDrinkEdit();
 	handleDrinkEditForm();
+	checkJWT();
 }
 onload();
 //------------------------------------------------------------------------------------------------------------------------------
