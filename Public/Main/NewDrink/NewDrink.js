@@ -1,4 +1,4 @@
-const API = "https://bartendersbestfriend.herokuapp.com/";
+const API = "https://bartendersbestfriend.herokuapp.com";
 
 //setup Nav
 function navSetup () {

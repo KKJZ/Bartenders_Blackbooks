@@ -96,6 +96,18 @@ div.results {
 	align-items: center;
 }
 
+div.search {
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto; 
+}
+
+form#search {
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;	
+}
+
 img.result {
 	margin-top: 5px;
 	margin-left: auto;

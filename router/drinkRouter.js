@@ -34,7 +34,6 @@ const upload = multer({
 
 //pull up all drinks
 router.get('/', (req, res) => {
-	console.log(req.query)
 	DrinkCollection.find()
 	.then(Drinks => { 
 		res.json(Drinks.map(Drink => Drink.serialize()));
@@ -43,7 +42,7 @@ router.get('/', (req, res) => {
 		console.error(err);
 		res.status(500).json({error: 'Something happened.'})
 	})
-})
+});
 
 //get drink by id
 router.get('/:id', (req, res) => {
@@ -56,7 +55,7 @@ router.get('/:id', (req, res) => {
 		console.error(err);
 		res.status(500).json({error: 'Something happened.'})
 	})
-})
+});
 
 //get drink by user 
 router.get('/name/:name', (req, res) => {
@@ -73,7 +72,23 @@ router.get('/name/:name', (req, res) => {
 		console.error(err);
 		res.status(500).json({error: 'Something happened.'})
 	})
-})
+});
+
+//search drink name
+router.get('/drink/:name', (req, res) => {
+	DrinkCollection.find({"drinkName": req.params.name})
+	.then(drinks => {
+		if (drinks.length === 0) {
+			res.status(400).send('No drinks found with that name.');
+		}else {
+			res.json(drinks.map(drink => drink.serialize()));
+		}
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(500).json({error: "Something happened."})
+	})
+});
 
 //add a drink to the list
 //when user is made add to their profile

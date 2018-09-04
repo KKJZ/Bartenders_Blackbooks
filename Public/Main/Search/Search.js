@@ -1,4 +1,4 @@
-const API = "https://bartendersbestfriend.herokuapp.com/";
+const API = "https://bartendersbestfriend.herokuapp.com";
 
 //setup Nav
 function navSetup () {
@@ -117,6 +117,26 @@ function splitIng (obj) {
 	ol += `</ol>`
 	return ol
 };
+
+function handleSearch() {
+	$('form#search').on('submit', (event) => {
+		event.preventDefault();
+		console.log(`Search: ${event.target[0].value}`);
+		let name = event.target[0].value;
+		getSearchDrinkName(name, renderDrink);
+	})
+};
+function getSearchDrinkName(name, callback) {
+		const options = {
+		url: `${API}/drinks/drink/${name}`,
+		type: 'GET',
+		dataType: 'json',
+		success: callback,
+		error: forGetDrinkFail,
+		crossOrigin: false
+	};
+	$.ajax(options);
+};
 //------------------------------------------------------------------------------------------------------------
 //onload
 function onload () {
@@ -126,6 +146,7 @@ function onload () {
 	handleHomeButton();
 	handleLogoutButton();
 	handleDrinkList();
+	handleSearch();
 }
 onload();
 //------------------------------------------------------------------------------------------------------------------------------

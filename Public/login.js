@@ -1,4 +1,4 @@
-const API = "https://bartendersbestfriend.herokuapp.com/";
+const API = "https://bartendersbestfriend.herokuapp.com";
 
 //handle login
 function handleLogin () {
