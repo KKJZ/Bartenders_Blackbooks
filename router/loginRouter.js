@@ -37,7 +37,7 @@ router.post('/', jsonParser, (req, res) => {
 		if (torf === false) {
 			res.status(400).send('Wrong password');
 		} else {
-			jwt.sign({user: userName}, "testCert", {expiresIn: '1h'}, (err, token) => {
+			jwt.sign({user: userName}, "testCert", {expiresIn: '1m'}, (err, token) => {
 				res.json({userName, token});
 				console.log('redirect');
 				res.redirect();
@@ -73,7 +73,7 @@ router.post('/refresh', verifyToken, jsonParser, (req, res) => {
 		} else {
 			console.log(req.body);
 			let user = req.body.userName;
-			jwt.sign({user}, "testCert", {expiresIn: '1h'}, (err, token) => {
+			jwt.sign({user}, "testCert", {expiresIn: '1m'}, (err, token) => {
 				console.log(`ERROR: ${err}`);
 				console.log(`TOKEN: ${token}`);
 				return res.json({user, token})
