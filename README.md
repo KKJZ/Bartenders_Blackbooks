@@ -1,6 +1,5 @@
 # Bartenders_Blackbooks
 <img src="https://travis-ci.org/KKJZ/Bartenders_Blackbooks.svg?branch=master">
-<hr>
 <h2>Built With:</h2>
 <ul>
   <li>node.js</li>
@@ -15,4 +14,4 @@
   <li>Allow Users to delete thier own drinks.</li>
 </ul>
  
-<a href="https://kkjz.github.io/Bartenders_Blackbooks/Public/Login.html" target="_blank">Check it out here!.</a>
+<a href="https://kkjz.github.io/Bartenders_Blackbooks/Public/Login.html" target="_blank">Check it out here!</a>
