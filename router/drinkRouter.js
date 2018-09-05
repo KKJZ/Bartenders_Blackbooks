@@ -78,22 +78,17 @@ router.get('/name/:name', (req, res) => {
 router.get('/drink/:name', (req, res) => {
 	DrinkCollection.find({})
 	.then(drinks => {
-		let result = [];
-		//array.filter
-		for (let i = 0;i < drinks.length; i++) {
-			let reqName = req.params.name.toLowerCase();
-			let dbName = drinks[i].drinkName.toLowerCase();
-			console.log(reqName, dbName);
-			console.log(dbName.match(reqName));
+		let reqName = req.params.name.toLowerCase();
+		let result = [] 
+		drinks.filter(drink => {
+			let dbName= drink.drinkName.toLowerCase();
+			console.log(dbName, reqName);
 			if (dbName.match(reqName)) {
-				result.push(drinks[i]);
+				result.push(drink)
 			}
-		}
-		if (result.length === 0) {
-			res.status(400).send('No drinks found with that name.');
-		}else {
-			res.json(result.map(drink => drink.serialize()));
-		}
+		});
+		console.log(result)
+		res.json(result.map(drink => drink.serialize()))
 	})
 	.catch(err => {
 		console.log(err);
