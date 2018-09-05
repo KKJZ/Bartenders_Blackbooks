@@ -7,6 +7,7 @@ function navSetup () {
 	$('span.userAccount').html(`<span class='userName'>${user}</span>'s Account`)
 };
 navSetup();
+//window.navSetup();
 
 //make event listener for button.home
 function handleHomeButton () {
@@ -99,7 +100,7 @@ function handleButtonView() {
 };
 
 //view terms button
-function handleButtonTerms() {
+function handleButtonTerms () {
 	$('div.button_terms').on('click', (event) => {
 		event.preventDefault();
 		// $('div.error').html('');
@@ -124,8 +125,8 @@ function checkJWT () {
 function errorJwt(err) {
 	if (err.status === 403){
 		localStorage.clear();
-		localStorage.setItem('error', 'Please Relogin.')
-		window.location ="../login.html"
+		localStorage.setItem('error', 'Please Relogin.');
+		window.location ="../login.html";
 	}else {
 	console.log(err);
 	$('div.error').html(`
@@ -133,6 +134,7 @@ function errorJwt(err) {
 		<br>${err.responseText}`);
 	};
 };
+//window.checkJWT();
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //ajax call to the drink endpoint
 function getDrink (callback) {
