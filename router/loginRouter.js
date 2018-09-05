@@ -47,23 +47,7 @@ router.post('/', jsonParser, (req, res) => {
 	.catch(err => {
 		return res.status(500).send('Something happened');
 	})
-})
-	// Users.findOne({"userName": userName}, function (err, user) {
-	// 	if (user === null) {
-	// 		const messege = "User name or password not found.";
-	// 		return res.send(400).send(messege);
-	// 	} else{
-	// 		users.hashPass(password)
-	// 		.then((hashedpass) => {Users.findOne({"userName": userName}), (err, user) => {
-	// 			console.log(hashedpass, user.password)
-	// 		}})
-	// 	}
-	// })
-	//validate password
-	//jwt sign
-	// jwt.sign({user: userName, password: password}, 'testCert', {expiresIn: '1h'}, (err, token) => {
-	// 	res.json({token: token});
-	// })
+});
 
 //refresh endpoint
 router.post('/refresh', verifyToken, jsonParser, (req, res) => {

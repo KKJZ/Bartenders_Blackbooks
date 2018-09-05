@@ -83,7 +83,18 @@ function loadMainPage (data) {
 	localStorage.setItem('userName', data.userName);
 	window.location = "./Main/Main.html";
 };
-
+//if error diplay in here
+function logoutError() {
+	let error = localStorage.getItem('error');
+	if (!(error === null)){
+		console.log(`if:${error}`);
+		$('div.error').html(`
+			<p style='color: red; text-align: center;'>${error}`);
+	}else {
+		console.log('no error');
+	};
+	localStorage.clear();
+};
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 //render homepage for user
 function renderMain (data) {
@@ -550,6 +561,7 @@ function onload () {
 	handleMyDrinkList();
 	handleMyDrinkEdit();
 	handleDrinkEditForm();
+	logoutError();
 }
 onload();
 //------------------------------------------------------------------------------------------------------------------------------
