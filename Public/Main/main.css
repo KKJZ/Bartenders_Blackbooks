@@ -233,7 +233,7 @@ div.newDrink > div.drink {
 	.drinkPage {
 		width: 500px;
     	height: 500px;
-    	margin-right: 5px;
+    	margin-right: 20px;
     	float: left;
     	margin-left: auto;
 	}
