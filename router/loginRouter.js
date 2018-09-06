@@ -58,7 +58,7 @@ router.post('/refresh', verifyToken, jsonParser, (req, res) => {
 			jwt.sign({user: userName}, "testCert", {expiresIn: '1m'}, (err, token) => {
 				console.log(`ERROR: ${err}`);
 				console.log(`TOKEN: ${token}`);
-				return res.json({user, token})
+				res.json({user, token});
 			})
 		};
 	});
