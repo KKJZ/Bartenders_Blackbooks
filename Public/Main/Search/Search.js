@@ -1,13 +1,4 @@
 const API = "https://bartendersbestfriend.herokuapp.com";
-
-//setup Nav
-function navSetup () {
-	console.log("JWT:",localStorage.getItem('jwt'));
-	console.log("User:", localStorage.getItem('userName'));
-	user = localStorage.getItem('userName');
-	$('span.userAccount').html(`<span class='userName'>${user}</span>'s Account`)
-};
-
 //make event listener for button.home
 function handleHomeButton () {
 	$('button.home').on('click', (event) => {
@@ -152,8 +143,6 @@ function handleBackBtn() {
 //------------------------------------------------------------------------------------------------------------
 //onload
 function onload () {
-	// refreshToken();
-	navSetup();
 	getDrink(renderDrink);
 	handleHomeButton();
 	handleLogoutButton();

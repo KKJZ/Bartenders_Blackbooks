@@ -1,13 +1,4 @@
 const API = "https://bartendersbestfriend.herokuapp.com";
-
-//setup Nav
-function navSetup () {
-	console.log("JWT:",localStorage.getItem('jwt'));
-	console.log("User:", localStorage.getItem('userName'));
-	user = localStorage.getItem('userName');
-	$('span.userAccount').html(`<span class='userName'>${user}</span>'s Account`)
-};
-
 //make event listener for button.home
 function handleHomeButton () {
 	$('button.home').on('click', (event) => {
@@ -15,7 +6,7 @@ function handleHomeButton () {
 	});
 };
 
-//botton logout
+//button logout
 function handleLogoutButton() {
 	$('button.logout').on('click', (event) => {
 		console.log('Pressed logout')
@@ -28,23 +19,8 @@ function handleLogoutButton() {
 function handleMakeDrink () {
 	$('#drink_register').on('submit', function() {
 		event.preventDefault();
-		// let filename = form[0][6].value.replace(/.*(\/|\\)/, '');
 		console.log(`POSTing drink data`);
 		let token = localStorage.getItem('jwt');
-		// let data = {
-		// 	user: user[0].textContent,
-		// 	drinkName: form[0][1].value,
-		// 	glass: form[0][2].value,
-		// 	ingredents: [{
-		// 		ingredent: form[0][3].value,
-		// 		measurement: form[0][4].value
-		// 	}],
-		// 	instructions: form[0][5].value,
-		// 	drinkImage: filename,
-		// 	garnish: form[0][7].value
-		// };
-		// console.log(form);
-		// console.log(data);
 		let formData = new FormData($(this)[0]);
 		console.log(`MY FORM DATA:${formData}`)
 		postDrink(formData, token, renderMadeDrink);
@@ -95,7 +71,6 @@ function renderMadeDrink (obj) {
 //----------------------------------------------------------------------------------------------------------------------
 //onload
 function onload () {
-	navSetup();
 	handleMakeDrink();
 	handleHomeButton();
 	handleLogoutButton();
