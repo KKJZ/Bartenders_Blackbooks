@@ -54,7 +54,7 @@ router.post('/refresh', verifyToken, jsonParser, (req, res) => {
 		if (err) {
 			res.sendStatus(403)
 		} else {
-			let user = req.body.userName;
+			let userName = req.body.userName;
 			jwt.sign({user: userName}, "testCert", {expiresIn: '1m'}, (err, token) => {
 				console.log(`ERROR: ${err}`);
 				console.log(`TOKEN: ${token}`);
