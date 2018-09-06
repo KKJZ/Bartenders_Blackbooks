@@ -100,12 +100,12 @@ router.get('/drink/:name', (req, res) => {
 //when user is made add to their profile
 //need to make a secure route
 router.post('/', upload.single('drinkImage'), verifyToken, (req, res) => {
-	console.log(req.body)
+	console.log('body:',req.body);
 	jwt.verify(req.token, "testCert", (err, authData) => {
 		if (err) {
 			res.sendStatus(403);
 		}	else {
-			// console.log(authData);
+			console.log('authData:', authData);
 			const requiredFields = ["drinkName","glass","ingredents","instructions", "garnish"];
 			for (let i=0; i<requiredFields.length; i++) {
 				const field = requiredFields[i];
