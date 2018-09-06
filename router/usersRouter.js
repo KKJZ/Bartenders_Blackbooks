@@ -51,7 +51,7 @@ router.post('/', jsonParser, (req, res) => {
 			})
 		})
 		.then(user => {
-			jwt.sign({user: user.userName, password: user.password}, "testCert", {expiresIn: '1m'}, (err, token) => {
+			jwt.sign({user: user.userName}, "testCert", {expiresIn: '1m'}, (err, token) => {
 				console.log(`ERROR: ${err}`)
 				console.log(`TOKEN: ${token}`);
 				return res.json({userName, token})

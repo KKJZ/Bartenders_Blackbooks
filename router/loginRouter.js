@@ -39,8 +39,6 @@ router.post('/', jsonParser, (req, res) => {
 		} else {
 			jwt.sign({user: userName}, "testCert", {expiresIn: '1m'}, (err, token) => {
 				res.json({userName, token});
-				console.log('redirect');
-				res.redirect();
 			})
 		}
 	})
@@ -51,13 +49,14 @@ router.post('/', jsonParser, (req, res) => {
 
 //refresh endpoint
 router.post('/refresh', verifyToken, jsonParser, (req, res) => {
+	console.log("UserName", req.body);
 	jwt.verify(req.token, "testCert", (err, authData) => {
 		if (err) {
 			res.sendStatus(403)
 		} else {
 			console.log(req.body);
 			let user = req.body.userName;
-			jwt.sign({user}, "testCert", {expiresIn: '1m'}, (err, token) => {
+			jwt.sign({user: userName}, "testCert", {expiresIn: '1m'}, (err, token) => {
 				console.log(`ERROR: ${err}`);
 				console.log(`TOKEN: ${token}`);
 				return res.json({user, token})
