@@ -48,7 +48,7 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 //refresh endpoint
-router.post('/refresh', verifyToken, jsonParser, (req, res) => {
+router.post('/refresh', verifyToken, (req, res) => {
 	console.log("UserName", req);
 	jwt.verify(req.token, "testCert", (err, authData) => {
 		if (err) {
