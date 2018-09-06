@@ -1,11 +1,11 @@
 //Check/refresh jwt
 function checkJWT () {
-	let user = localStorage.getItem('userName');
+	let user = {userName: localStorage.getItem('userName')};
 	$.ajax({
 		url: `https://bartendersbestfriend.herokuapp.com/login/refresh`,
 		type: "POST",
 		dataType: "json",
-		data: {"userName": + user},
+		data: JSON.stringify(user),
 		success: (obj) => localStorage.setItem('jwt', obj.token),
 		error: (err) => errorJwt(err),
 		beforeSend: function (xhr) {xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('jwt'));}
