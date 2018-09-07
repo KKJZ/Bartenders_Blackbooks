@@ -8,7 +8,6 @@ function handleHomeButton () {
 //botton logout
 function handleLogoutButton() {
 	$('button.logout').on('click', (event) => {
-		console.log('Pressed logout')
 		localStorage.clear();
 		window.location = '../../Login.html';
 	});
@@ -182,7 +181,7 @@ function editDrink (obj, id, jwt) {
 function handleDrinkDeleteResult() {
 	$('div.myDrink').on('click', 'button.delete', (event) => {
 		event.preventDefault();
-		let token = localStorage.getItem('jwt'); //change to localStorage.get('jwt');
+		let token = localStorage.getItem('jwt');
 		let theId = $(event)[0].target.id;
 		let name = $(event)[0].target.value
 		console.log($(event));
@@ -239,8 +238,3 @@ function onload () {
 };
 onload();
 //------------------------------------------------------------------------------------------------------------------------------
-//features still to add
-//terms and mix
-//favorites
-//editting 
-//comments

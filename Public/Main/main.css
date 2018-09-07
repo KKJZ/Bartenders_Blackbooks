@@ -36,6 +36,15 @@ fieldset {
 	text-align: center;
 }
 
+input {
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+legend {
+	font-size: 50px;
+}
+
 fieldset.makeDrink {
 	text-align: left;
 }
@@ -46,13 +55,16 @@ fieldset.makeDrink > h1,input.btn {
 	margin-right: 0;
 }
 
-input {
-	margin-bottom: 5px;
-	margin-top: 5px;
+form.login {
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
 }
 
-legend {
-	font-size: 50px;
+form#search {
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;	
 }
 
 div.login {
@@ -77,11 +89,6 @@ div.register {
     margin-right: auto;
 }
 
-form.login {
-	text-align: center;
-	margin-right: auto;
-	margin-left: auto;
-}
 
 div.button_drinks, div.button_make, div.button_myDrinks, div.button_terms, div.editDrink{
 	width: 100%;
@@ -102,16 +109,25 @@ div.search {
 	margin-left: auto; 
 }
 
+div.Search {
+	text-align: center;
+}
+
+div.newDrink > div.drink {
+	position: absolute;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+}
+
 input.back {
 	text-align: center;
 	margin-right: 200px;
 	margin-left: 200px;
 }
 
-form#search {
-	text-align: center;
-	margin-right: auto;
-	margin-left: auto;	
+img.icon {
+	width: 90px;
+	height: 90px;
 }
 
 img.result {
@@ -124,22 +140,13 @@ img.result {
 	margin-bottom: 10px; 
 }
 
+img.edit {
+	width: 250px;
+	height: 250px;
+}
+
 span.result {
 	display: block;
-}
-
-img.icon {
-	width: 90px;
-	height: 90px;
-}
-
-div.newDrink > div.drink {
-	position: absolute;
-	padding-top: 5px;
-	padding-bottom: 5px; 
-}
-div.Search {
-	text-align: center;
 }
 
 .home, .logout {
@@ -153,18 +160,12 @@ div.Search {
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-top: 20px;
-	/*position: absolute;*/
-	/*right: 0;*/
-	/*bottom: 1em;*/
 }
 
 .delete {
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-top: 20px;
-	/*position: absolute;*/
-	/*left: 0;*/
-	/*bottom: 1em;*/
 }
 
 .drinks {
@@ -173,7 +174,6 @@ div.Search {
 
 .border {
 	border: black 1px solid;
-  	/*background-color: rgba(50, 31, 31, 0.8);*/
 }
 
 .drink_log {
@@ -196,10 +196,6 @@ div.Search {
     width: 250px;
     height: 250px;
     float: none;
-}
-img.edit {
-	width: 250px;
-	height: 250px;
 }
 
 .hidden {

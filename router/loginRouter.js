@@ -15,9 +15,9 @@ router.post('/', jsonParser, (req, res) => {
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i]
 		if (!(field in req.body)) {
-			const messge = `Request body is missing ${field}`
-			console.error(messge);
-			return res.status(400).send(messge);
+			const messege = `Request body is missing ${field}`;
+			console.error(messege);
+			return res.status(400).send(messege);
 		}
 	}
 	//user authen
@@ -26,10 +26,10 @@ router.post('/', jsonParser, (req, res) => {
 	let users = Users();
 	let torf;
 	Users.findOne({"userName": userName}, (err, user) => {
-		console.log('USER:', user)
+		console.log('USER:', user);
 		if (user === null) {
-			return res.status(400).send('User not found')}
-		console.log( "HASED PASSWORD:", users.validatePassword(password, user.password));
+			return res.status(400).send('User not found')
+		}
 		torf = users.validatePassword(password, user.password);
 		return torf;
 	})
@@ -52,7 +52,7 @@ router.post('/refresh', verifyToken, jsonParser, (req, res) => {
 	console.log("UserName", req.body.userName);
 	jwt.verify(req.token, "testCert", (err, authData) => {
 		if (err) {
-			res.sendStatus(403)
+			res.sendStatus(403);
 		} else {
 			let userName = req.body.userName;
 			jwt.sign({user: userName}, "testCert", {expiresIn: '5m'}, (err, token) => {
@@ -72,7 +72,6 @@ function verifyToken(req, res, next) {	//get auth header
 		//split at space
 		const bearer = bearerHeader.split(' ');
 		const bearerToken = bearer[1];
-		console.log(`JWT: ${bearerToken}`)
 		//set token
 		req.token = bearerToken;
 		next();
