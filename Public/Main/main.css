@@ -138,6 +138,9 @@ div.newDrink > div.drink {
 	padding-top: 5px;
 	padding-bottom: 5px; 
 }
+div.Search {
+	text-align: center;
+}
 
 .home, .logout {
 	width: 100px;
@@ -194,6 +197,10 @@ div.newDrink > div.drink {
     height: 250px;
     float: none;
 }
+img.edit {
+	width: 250px;
+	height: 250px;
+}
 
 .hidden {
 	display: none;
@@ -236,6 +243,11 @@ div.newDrink > div.drink {
     	margin-right: 20px;
     	float: left;
     	margin-left: auto;
+	}
+	.drinkPage {
+		width: 500px;
+	    height: 500px;
+
 	}
 }
 

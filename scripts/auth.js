@@ -5,6 +5,7 @@ function checkJWT () {
 		url: `https://bartendersbestfriend.herokuapp.com/login/refresh`,
 		type: "POST",
 		dataType: "json",
+		contentType: "application/json",
 		data: JSON.stringify(user),
 		success: (obj) => localStorage.setItem('jwt', obj.token),
 		error: (err) => errorJwt(err),

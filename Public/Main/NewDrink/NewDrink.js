@@ -53,7 +53,7 @@ function forPostDrinkFail (err) {
 function renderMadeDrink (obj) {
 	console.log(obj);
 	$('form#drink_register').html('');
-	window.location = './MyDrinks/MyDrinks.html'
+	window.location = '../MyDrinks/MyDrinks.html'
 };
 //----------------------------------------------------------------------------------------------------------------------
 //onload

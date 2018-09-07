@@ -79,16 +79,8 @@ router.get('/drink/:name', (req, res) => {
 	DrinkCollection.find({})
 	.then(drinks => {
 		let reqName = req.params.name.toLowerCase();
-		let result = [] 
-		drinks.filter(drink => {
-			let dbName= drink.drinkName.toLowerCase();
-			console.log(dbName, reqName);
-			if (dbName.match(reqName)) {
-				result.push(drink)
-			}
-		});
-		console.log(result)
-		res.json(result.map(drink => drink.serialize()))
+		res.json(drinks.filter(drink => (drink.drinkName.toLowerCase().match(reqName)))
+			.map(drink => drink.serialize()));
 	})
 	.catch(err => {
 		console.log(err);

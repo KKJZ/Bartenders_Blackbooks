@@ -125,7 +125,7 @@ function handleMyDrinkEdit () {
 		console.log($('span#ingredents')[0].lastChild.id);
 		//turn the spans into a form
 		$('div.editDrink').removeClass('hidden');
-		$('div.editDrink').prepend(`<img class="edit drinkPage" src=${API}/${drinkImage} alt="${drinkName}">`);
+		$('div.editDrink').prepend(`<img class="edit" src=${drinkImage} alt="${drinkName}">`);
 		$('form#edit').html(`
 			<fieldset class="editDrink">
 				<input type="text" class="hidden" id="id" name="id" value="${drinkId}">
@@ -220,6 +220,8 @@ function handleBackBtn() {
 	$('input.back').on('click', (event) => {
 		$('input.back').addClass('hidden');
 		$('div.myDrink').html('');
+		$('div.editDrink > img').remove();
+		$('form#edit').html('');
 		getUserDrinks(localStorage.getItem('userName'), renderMyDrinks);
 	})
 };
