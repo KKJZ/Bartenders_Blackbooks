@@ -15,10 +15,10 @@
 </ul>
 <h2>Screenshots</h2>
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/JVckuPr"><a href="//imgur.com/JVckuPr"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+![alt text](https://i.imgur.com/jp80VAi.jpg "Login Page")
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/S4eNyhJ"><a href="//imgur.com/S4eNyhJ"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+![alt text](https://i.imgur.com/eOvJwUr.jpg "Main Page")
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/bJgL0aa"><a href="//imgur.com/bJgL0aa"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+![alt text](https://i.imgur.com/GpRodXV.jpg "Example Page")
 
 <a href="https://kkjz.github.io/Bartenders_Blackbooks/Public/Login.html" target="_blank">Check it out here!</a>
