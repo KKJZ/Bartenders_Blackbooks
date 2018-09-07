@@ -14,10 +14,13 @@
   <li>Allow Users to delete thier own drinks.</li>
 </ul>
 <h2>Screenshots</h2>
+<h3>Login Page</h3>
 
 ![alt text](https://i.imgur.com/jp80VAi.jpg "Login Page")
+<h3>Main Page</h3>
 
 ![alt text](https://i.imgur.com/eOvJwUr.jpg "Main Page")
+<h3>Example Page</h3>
 
 ![alt text](https://i.imgur.com/GpRodXV.jpg "Example Page")
 
