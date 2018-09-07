@@ -14,4 +14,11 @@
   <li>Allow Users to delete thier own drinks.</li>
 </ul>
 <h2>Screenshots</h2>
+
+![alt text](https://imgur.com/a/JVckuPr "Login Page")
+
+![alt text](https://imgur.com/a/S4eNyhJ "Main Page")
+
+![alt text](https://imgur.com/a/bJgL0aa "Example Page")
+
 <a href="https://kkjz.github.io/Bartenders_Blackbooks/Public/Login.html" target="_blank">Check it out here!</a>
