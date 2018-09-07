@@ -24,6 +24,8 @@
 
 ![alt text](https://i.imgur.com/GpRodXV.jpg "Example Page")
 
-<p>Test account: User: Test, Password: Test</p>
+<h3>Test account:</h3>
+<p>User: Test</p> 
+<p>Password: Test</p>
 <p>View my drinks for instructions on how to use the app.</p>
 <a href="https://kkjz.github.io/Bartenders_Blackbooks/Public/Login.html" target="_blank">Check it out here!</a>
