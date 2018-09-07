@@ -182,13 +182,13 @@ function editDrink (obj, id, jwt) {
 function handleDrinkDeleteResult() {
 	$('div.myDrink').on('click', 'button.delete', (event) => {
 		event.preventDefault();
-		let token = $('span.token')[0].textContent;
+		let token = localStorage.getItem('jwt'); //change to localStorage.get('jwt');
 		let theId = $(event)[0].target.id;
 		let name = $(event)[0].target.value
 		console.log($(event));
 		console.log(`DELETE ID: ${theId}`);
-		console.log(`NAME: ${name}`)
-		deleteById(theId, token, renderDelete, name)
+		console.log(`NAME: ${name}`);
+		deleteById(theId, token, renderDelete, name);
 	})
 };
 //delete by id
