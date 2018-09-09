@@ -15,9 +15,9 @@ router.post('/', jsonParser, (req, res) => {
 	for (let i=0; i<requiredFields.length; i++) {
 		const field = requiredFields[i]
 		if (!(field in req.body)) {
-			const messge = `Request body is missing ${field}`
-			console.error(messge);
-			return res.status(400).send(messge);
+			const messege = `Request body is missing ${field}`;
+			console.error(messege);
+			return res.status(400).send(messege);
 		}
 	}
 	//user authen
@@ -26,10 +26,10 @@ router.post('/', jsonParser, (req, res) => {
 	let users = Users();
 	let torf;
 	Users.findOne({"userName": userName}, (err, user) => {
-		console.log('USER:', user)
+		console.log('USER:', user);
 		if (user === null) {
-			return res.status(400).send('User not found')}
-		console.log( "HASED PASSWORD:", users.validatePassword(password, user.password));
+			return res.status(400).send('User not found')
+		}
 		torf = users.validatePassword(password, user.password);
 		return torf;
 	})
@@ -37,52 +37,34 @@ router.post('/', jsonParser, (req, res) => {
 		if (torf === false) {
 			res.status(400).send('Wrong password');
 		} else {
-			jwt.sign({user: userName}, "testCert", {expiresIn: '1h'}, (err, token) => {
+			jwt.sign({user: userName}, "testCert", {expiresIn: '5m'}, (err, token) => {
 				res.json({userName, token});
-				console.log('redirect');
-				res.redirect();
 			})
 		}
 	})
 	.catch(err => {
-		return res.status(500).send('Something happened');
+		return res.status(500).send('Something happened.');
 	})
-})
-	// Users.findOne({"userName": userName}, function (err, user) {
-	// 	if (user === null) {
-	// 		const messege = "User name or password not found.";
-	// 		return res.send(400).send(messege);
-	// 	} else{
-	// 		users.hashPass(password)
-	// 		.then((hashedpass) => {Users.findOne({"userName": userName}), (err, user) => {
-	// 			console.log(hashedpass, user.password)
-	// 		}})
-	// 	}
-	// })
-	//validate password
-	//jwt sign
-	// jwt.sign({user: userName, password: password}, 'testCert', {expiresIn: '1h'}, (err, token) => {
-	// 	res.json({token: token});
-	// })
-
-//refresh endpoint
-router.post('/refresh', verifyToken, (req, res) => {
-	jwt.verify(req.token, "testCert", (err, authData) => {
-		if (err) {
-			res.sendStatus(403)
-		} else {
-			let user = req.body.userName;
-			jwt.sign({user}, "testCert", {expiresIn: '1s'}, (err, token) => {
-				console.log(`ERROR: ${err}`);
-				console.log(`TOKEN: ${token}`);
-				return res.json({userName, token})
-			})
-		};
-	});
 });
 
-function verifyToken(req, res, next) {
-	//get auth header
+//refresh endpoint
+router.post('/refresh', verifyToken, jsonParser, (req, res) => {
+	console.log("UserName", req.body.userName);
+	jwt.verify(req.token, "testCert", (err, authData) => {
+		if (err) {
+			res.sendStatus(403);
+		} else {
+			let userName = req.body.userName;
+			jwt.sign({user: userName}, "testCert", {expiresIn: '5m'}, (err, token) => {
+				console.log(`ERROR: ${err}`);
+				console.log(`TOKEN: ${token}`);
+				res.json({userName, token});
+			})
+		}
+	})
+});
+
+function verifyToken(req, res, next) {	//get auth header
 	const bearerHeader = req.headers['authorization'];
 	console.log(`AUTHORIZATION: ${bearerHeader}`);
 	// check if bearer is undefined
@@ -90,7 +72,6 @@ function verifyToken(req, res, next) {
 		//split at space
 		const bearer = bearerHeader.split(' ');
 		const bearerToken = bearer[1];
-		console.log(`JWT: ${bearerToken}`)
 		//set token
 		req.token = bearerToken;
 		next();

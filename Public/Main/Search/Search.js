@@ -1,13 +1,4 @@
-const API = "https://bartendersbestfriend.herokuapp.com/";
-
-//setup Nav
-function navSetup () {
-	console.log("JWT:",localStorage.getItem('jwt'));
-	console.log("User:", localStorage.getItem('userName'));
-	user = localStorage.getItem('userName');
-	$('span.userAccount').html(`<span class='userName'>${user}</span>'s Account`)
-};
-
+const API = "https://bartendersbestfriend.herokuapp.com";
 //make event listener for button.home
 function handleHomeButton () {
 	$('button.home').on('click', (event) => {
@@ -89,6 +80,8 @@ function getOneDrink (id, callback) {
 //render one drink || lets make a new page instead named Result.html
 function renderOneDrink (obj) {
 	$('div.drink_results').html('');
+	$('form#search').addClass('hidden');
+	$('input.back').removeClass('hidden');
 	$('div.drink_result').html(`
 		<div class='drink colu-12 border'>
 			<img class="drinkPage" src=${API}/${obj.drinkImage} alt="${obj.drinkName}">
@@ -117,19 +110,45 @@ function splitIng (obj) {
 	ol += `</ol>`
 	return ol
 };
+
+function handleSearch() {
+	$('form#search').on('submit', (event) => {
+		event.preventDefault();
+		$('div.error').html('');
+		console.log(`Search: ${event.target[0].value}`);
+		let name = event.target[0].value;
+		getSearchDrinkName(name, renderDrink);
+	})
+};
+function getSearchDrinkName(name, callback) {
+		const options = {
+		url: `${API}/drinks/drink/${name}`,
+		type: 'GET',
+		dataType: 'json',
+		success: callback,
+		error: forGetDrinkFail,
+		crossOrigin: false
+	};
+	$.ajax(options);
+};
+//handle back button
+function handleBackBtn() {
+	$('input.back').on('click', (event) => {
+		$('input.back').addClass('hidden');
+		$('form#search').removeClass('hidden');
+		$('div.drink_result').html('');
+		getDrink(renderDrink);	
+	})
+};
 //------------------------------------------------------------------------------------------------------------
 //onload
 function onload () {
-	// refreshToken();
-	navSetup();
 	getDrink(renderDrink);
 	handleHomeButton();
 	handleLogoutButton();
 	handleDrinkList();
+	handleSearch();
+	handleBackBtn();
 }
 onload();
 //------------------------------------------------------------------------------------------------------------------------------
-//features still to add
-//favorites
-//editting 
-//comments

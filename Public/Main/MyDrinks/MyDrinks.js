@@ -1,43 +1,15 @@
-const API = "https://bartendersbestfriend.herokuapp.com/";
-
-function navSetup () {
-	console.log("JWT:",localStorage.getItem('jwt'));
-	console.log("User:", localStorage.getItem('userName'));
-	user = localStorage.getItem('userName');
-	$('span.userAccount').html(`<span class='userName'>${user}</span>'s Account`)
-};
-navSetup();
-
+const API = "https://bartendersbestfriend.herokuapp.com";
 //make event listener for button.home
 function handleHomeButton () {
 	$('button.home').on('click', (event) => {
 		window.location = '../Main.html';
-		// event.preventDefault();
-		// $('div.menu_buttons').removeClass('hidden');
-		// $('div.drink_results').html('');
-		// $('form#drink_register').html('');
-		// $('div.editDrink > img').remove()
-		// $('form#edit').html('');
-		// $('div.myDrinks').html('');
-		// $('div.myDrink').html('');
-		// $('div.termMix').html('');
-		// $('div.newDrink').html('');
-		// $('div.drink_result').html('');
-		// $("div.error").html('');
 	});
 };
 //botton logout
 function handleLogoutButton() {
 	$('button.logout').on('click', (event) => {
-		console.log('Pressed logout')
 		localStorage.clear();
 		window.location = '../../Login.html';
-		// event.preventDefault();
-		// $('div.error').html('');
-		// $('div.login').removeClass('hidden');
-		// $('nav').addClass('hidden');
-		// $('span.userAccount').html("");
-		// $('main').addClass('hidden');
 	});
 };
 //search drinks by user
@@ -93,7 +65,7 @@ function renderMyDrinks (obj) {
 	for (let i=0; i<obj.length; i++) {
 		const options = `
 		<div class='drink_log colu-4 border'>
-		<img class="result" src=${obj[i].drinkImage} alt="${obj[i].drinkName}">
+		<img class="result" src=${API}/${obj[i].drinkImage} alt="${obj[i].drinkName}">
 		<span class="result">Name: ${obj[i].drinkName}</span>
 		<span class="result">User: ${obj[i].user}</span>
 		<span class="result">Glass: ${obj[i].glass}</span>
@@ -114,10 +86,11 @@ function handleMyDrinkList () {
 };
 //render my one drink 
 function renderOneMyDrink (obj) {
+	$('input.back').removeClass('hidden');
 	$('div.myDrinks').html('');
 	$('div.myDrink').html(`
 		<div class="drink colu-12 border">
-			<img class="drinkPage" src=${obj.drinkImage} alt="${obj.drinkName}">
+			<img class="drinkPage" src=${API}/${obj.drinkImage} alt="${obj.drinkName}">
 			<span id="drinkId" class="hidden">${obj.id}</span>
 			<h2>Name</h2> <span id="drinkName" class="result">${obj.drinkName}</span>
 			<h2>User</h2> <span id="userName" class="result">${obj.user}</span>
@@ -151,7 +124,7 @@ function handleMyDrinkEdit () {
 		console.log($('span#ingredents')[0].lastChild.id);
 		//turn the spans into a form
 		$('div.editDrink').removeClass('hidden');
-		$('div.editDrink').prepend(`<img class="edit drinkPage" src=${drinkImage} alt="${drinkName}">`);
+		$('div.editDrink').prepend(`<img class="edit" src=${drinkImage} alt="${drinkName}">`);
 		$('form#edit').html(`
 			<fieldset class="editDrink">
 				<input type="text" class="hidden" id="id" name="id" value="${drinkId}">
@@ -171,12 +144,6 @@ function handleMyDrinkEdit () {
 			</fieldset>
 				`)
 		$('div.myDrink').html('');
-
-		// $('span#drinkName').replaceWith(`<input type="text" value="${drinkName}" name="drinkName">`);
-		// $('span#glass').replaceWith(`<input type="text" value="${glass}" name="glass">`);
-		// $('span#ingredents').replaceWith(`<textarea name="ingredents"  rows="6">${ingredents}</textarea>`);
-		// $('span#garnish').replaceWith(`<input type="text" value="${garnish}" name="garnish">`);
-		// $('span#instructions').replaceWith(`<textarea name="instructions"  rows="6">${instructions}</textarea><input class="btn-block btn" type="submit" name="edit">`);
 	})
 };
 //handle form submit for drink editting
@@ -214,13 +181,13 @@ function editDrink (obj, id, jwt) {
 function handleDrinkDeleteResult() {
 	$('div.myDrink').on('click', 'button.delete', (event) => {
 		event.preventDefault();
-		let token = $('span.token')[0].textContent;
+		let token = localStorage.getItem('jwt');
 		let theId = $(event)[0].target.id;
 		let name = $(event)[0].target.value
 		console.log($(event));
 		console.log(`DELETE ID: ${theId}`);
-		console.log(`NAME: ${name}`)
-		deleteById(theId, token, renderDelete, name)
+		console.log(`NAME: ${name}`);
+		deleteById(theId, token, renderDelete, name);
 	})
 };
 //delete by id
@@ -247,22 +214,27 @@ function renderDelete (name) {
 	getUserDrinks(localStorage.getItem('userName'), renderMyDrinks);
 	$("div.error").html(`<h1>${name}: DELETED</h1>`);
 };
+//handle back button
+function handleBackBtn() {
+	$('input.back').on('click', (event) => {
+		$('input.back').addClass('hidden');
+		$('div.myDrink').html('');
+		$('div.editDrink > img').remove();
+		$('form#edit').html('');
+		getUserDrinks(localStorage.getItem('userName'), renderMyDrinks);
+	})
+};
 //----------------------------------------------------------------------------------------------
 //onload
 function onload () {
 	getUserDrinks(localStorage.getItem('userName'), renderMyDrinks);
-
 	handleHomeButton();
 	handleLogoutButton();
 	handleDrinkDeleteResult();
 	handleMyDrinkList();
 	handleMyDrinkEdit();
 	handleDrinkEditForm();
-}
+	handleBackBtn();
+};
 onload();
 //------------------------------------------------------------------------------------------------------------------------------
-//features still to add
-//terms and mix
-//favorites
-//editting 
-//comments

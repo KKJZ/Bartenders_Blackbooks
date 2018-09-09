@@ -27,6 +27,13 @@
 		<div class="error">
 		</div>
 		<!-- Get list of all drinks goes into here -->
+		<div class="Search">
+			<input type="button" class="back hidden" name="back" value="Go back to search">
+			<form id="search">
+				<label for="search">Drink Name:
+					<input type="search" name="search" placeholder="Search for a drink"></label> <input type="submit" name="submit"><br>
+			</form>
+		</div>
 		<div class="drink_results rows">
 		</div>
 		<!-- a single drink will render here -->
@@ -35,5 +42,7 @@
 	</main>
 
 <script type="text/javascript" src="Search.js"></script>
+<script type="text/javascript" src="../../../scripts/nav.js"></script>
+<script type="text/javascript" src="../../../scripts/auth.js"></script>
 </body>
 </html>

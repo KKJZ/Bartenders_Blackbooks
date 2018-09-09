@@ -41,6 +41,8 @@
 	</div>
 	<div class="login">
 		<form role="login" id="login" method="POST">
+				<div class="error">
+				</div>
 			<fieldset>
 				<img class="icon" src="./icons/shaker.png">
 				<h1>Login</h1>
@@ -59,42 +61,6 @@
 	<div class="user_results">
 	</div>
 	<main role='main' class="hidden">
-		<!-- errors go in here -->
-		<div class="error">
-		</div>
-		<div class="menu_buttons">
-			<div class="button_drinks"><button class="drinks btn btn-block">Get a list all drinks</button></div>
-			<div class="button_make"><button class="drinks btn btn-block">Make a drink</button></div>
-			<div class="button_myDrinks"><button class="drinks btn btn-block">View My drinks</button></div>
-			<div class="button_terms"><button class="drinks btn btn-block">Terminology and Mixology</button></div>
-		</div>
-		<!-- Get list of all drinks goes into here -->
-		<div class="drink_results rows">
-		</div>
-		<!-- a single drink will render here -->
-		<div class="drink_result rows">
-		</div>
-		<!-- Make a drink goes here -->
-		<div class="makeDrink rows">
-			<div class="newDrink rows"></div>
-			<form id="drink_register">
-			</form>
-		</div>
-		<!-- view my drinks goes here -->
-		<div class="myDrinks rows">
-		</div>
-		<!-- viewing a single drink of yours -->
-		<div class="myDrink rows">
-		</div>
-		<!-- editting a drink of yours -->
-		<div class="editMyDrink rows">
-			<div class="editDrink col-12 border hidden">
-				<form id="edit" for="edit drink" method="PUT"></form>
-			</div>
-		</div>
-		<!-- term and mix goes here -->
-		<div class="termMix rows">
-		</div>
 	</main>
 
 <script type="text/javascript" src="login.js"></script>
