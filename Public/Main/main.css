@@ -38,15 +38,11 @@ fieldset {
 
 input {
 	margin-bottom: 5px;
-	margin-top: 5px;
+	margin-top: 5px !important;
 }
 
 legend {
 	font-size: 50px;
-}
-
-fieldset.makeDrink {
-	text-align: left;
 }
 
 fieldset.makeDrink > h1,input.btn {
@@ -90,7 +86,7 @@ div.register {
 }
 
 
-div.button_drinks, div.button_make, div.button_myDrinks, div.button_terms, div.editDrink{
+div.button_drinks, div.button_make, div.button_myDrinks, div.button_terms{
 	width: 100%;
 	max-width: 300px;
 	margin-left: auto;
@@ -119,6 +115,10 @@ div.newDrink > div.drink {
 	padding-bottom: 5px; 
 }
 
+/*div.drinkName, div.glass, div.ingredents, div.instructions, div.drinkImage, div.garnish > input, label {
+	display: block;
+}*/
+
 input.back {
 	text-align: center;
 	margin-right: 200px;
@@ -140,6 +140,11 @@ img.result {
 	margin-bottom: 10px; 
 }
 
+img.placeholder {
+	height: 50px;
+	width: 50px;
+}
+
 img.edit {
 	width: 250px;
 	height: 250px;
@@ -147,6 +152,10 @@ img.edit {
 
 span.result {
 	display: block;
+}
+
+textarea {
+	width: 100%;
 }
 
 .home, .logout {
@@ -199,7 +208,7 @@ span.result {
 }
 
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .rows {
@@ -263,6 +272,18 @@ span.result {
 
 	.colu-12 {
 		width: 100%;
+	}
+	div.drinkName {
+		float: left;
+	}
+	div.glass {
+		float: right;
+	}
+	div.drinkImage {
+		float: left;
+	}
+	div.garnish {
+		float: right;
 	}
 }
 @media only screen and (min-width: 426px) {

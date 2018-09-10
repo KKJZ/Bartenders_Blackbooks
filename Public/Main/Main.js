@@ -42,7 +42,10 @@ function handleButtonTerms () {
 	$('div.button_terms').on('click', (event) => {
 		event.preventDefault();
 		console.log("Terms button pressed");
-		window.location = "https://barsandbartending.com/bar-terms-and-bartender-terminology/"
+		if(confirm('Redirecting to BarsAndBartending.com is that ok?')){
+			window.location = "https://barsandbartending.com/bar-terms-and-bartender-terminology/"	
+		}
+		
 	})
 };
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

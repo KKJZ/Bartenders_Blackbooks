@@ -10,6 +10,7 @@ function handleLogin () {
 			userName: form[0][1].value,
 			password: form[0][2].value
 		};
+		$('div.error').html('');
 		login(data, loadMainPage)
 	});
 };
@@ -29,9 +30,8 @@ function login (objData, callback) {
 
 function loginError (err) {
 	console.log(err.responseText, err.status);
-	$('div.user_results').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`)
+	$('div.error').html(`
+		<p style='color: red; text-align: center;'>${err.responseText}</p>`)
 };
 //handle register button
 function handleRegister () {
@@ -39,6 +39,14 @@ function handleRegister () {
 		event.preventDefault();
 		$('div.login').addClass('hidden');
 		$('div.register').removeClass('hidden');
+		$('div.error').html('');
+	})
+};
+
+function handleBack () {
+	$('input.login').on('click', function(event) {
+		$('div.login').removeClass('hidden');
+		$('div.register').addClass('hidden');
 	})
 };
 
@@ -72,9 +80,8 @@ function registerUser (data, callback) {
 //on error register
 function errorRegister (err) {
 	console.log(err.responseText, err.status);
-	$('div.user_results').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`);
+	$('div.error').html(`
+		<p style='color: red; text-align: center;'>${err.responseText}</p>`);
 };
 
 function loadMainPage (data) {
@@ -87,7 +94,6 @@ function loadMainPage (data) {
 function logoutError() {
 	let error = localStorage.getItem('error');
 	if (!(error === null)){
-		console.log(`if:${error}`);
 		$('div.error').html(`
 			<p style='color: red; text-align: center;'>${error}`);
 	}else {
@@ -101,6 +107,7 @@ function logoutError() {
 function onload () {
 	handleRegister();
 	handleLogin();
+	handleBack();
 	handleRegisterSubmit();
 	logoutError();
 }

@@ -27,24 +27,45 @@
 		<div class="error">
 		</div>
 		<!-- Make a drink goes here -->
-		<div class="makeDrink rows">
+		<div class="makeDrink border rows">
 			<div class="newDrink rows"></div>
-			<form id="drink_register">
+			<form id="drink_register" for="New drinks" method="POST">
 				<fieldset class="makeDrink">
 					<h1>Make a new drink</h1>
-					<label for="drinkName">Drink Name:
-						<input type="text" name="drinkName" placeholder="Moscow Mule" required></label><br>
-					<label for="glass">Glass:
-						<input type="text" name="glass" placeholder="Copper Mug"></label><br>
-					<label for="ingredents">Ingredents:
-						<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill" required></textarea></label><br>
-					<label for="instructions" >Instructions
-						<textarea name="instructions" rows="6" placeholder="How it is made" required></textarea></label><br>
-					<label for="drinkImage">Drink Image:
-						<input type="file" name="drinkImage" accept="image/*" required></label><br>
-					<label for="garnish">Garnish:
-						<input type="text" name="garnish" placeholder="Lime Wedge"></label><br>
+					<div class="rows">
+						<div class="drinkName col-6">
+						<label for="drinkName">Drink Name:</label></br>
+							<input type="text" name="drinkName" placeholder="Moscow Mule" required>
+						</div>
+						<div class="glass col-6">
+						<label for="glass">Glass:</label></br>
+							<input type="text" name="glass" placeholder="Copper Mug">
+						</div>
+					</div>
+					<div class="rows">
+						<div class="ingredents col-12">
+						<label for="ingredents">Ingredents:<sub>(Should be seperated by a comma for each ingredent)</sub></label></br>
+							<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill" required></textarea>
+						</div>
+					</div>
+					<div class="rows">
+						<div class="instructions col-12">
+						<label for="instructions" >Instructions</label></br>
+						<textarea name="instructions" rows="6" placeholder="How it is made" required></textarea>
+						</div>
+					</div>
+					<div class="rows">
+						<div class="drinkImage col-6">
+						<label for="drinkImage">Drink Image:</label><img class="placeholder" alt="Placeholder" src="../../../images/placeholder.png">*</br>
+							<input type="file" name="drinkImage" accept="image/*" required>
+						</div>
+						<div class="garnish col-6">
+						<label for="garnish">Garnish:</label></br>
+							<input type="text" name="garnish" placeholder="Lime Wedge">
+						</div>
+					</div>
 					<input class="btn btn-block btn-lrg btn-primary" type="submit" name="Submit">
+					<small>*Just a placeholder pic</small>
 				</fieldset>
 			</form>
 		</div>

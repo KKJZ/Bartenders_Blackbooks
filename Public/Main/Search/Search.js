@@ -32,13 +32,16 @@ function getDrink (callback) {
 function forGetDrinkFail (err) {
 	console.log(err);
 	$('div.error').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`)
+		<p style='color: red; text-align: center;'>${err.responseText}</p>`)
 };
 
 //make items to click on
 function renderDrink (obj) {
 	$('div.drink_results').html('');
+	if (obj.length === 0) {
+		$('div.error').html(`
+			<p style='color: red; text-align: center;'>No drinks with that name.</p>`)
+	}
 	for (let i=0; i<obj.length; i++) {
 		const drink = `
 		<div class='drink_log colu-4 border'>

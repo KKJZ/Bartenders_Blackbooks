@@ -46,8 +46,7 @@ function postDrink(data, jwt, callback) {
 function forPostDrinkFail (err) {
 	console.log(err);
 	$('div.error').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`)
+		<p style='color: red; text-align: center;'>${err.responseText}</p>`)
 };
 //return just made drink from db || lets make a new page for myDrinks
 function renderMadeDrink (obj) {

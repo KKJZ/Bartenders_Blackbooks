@@ -40,8 +40,7 @@ function getOneDrink (id, callback) {
 function forGetDrinkFail (err) {
 	console.log(err);
 	$('div.error').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`)
+		<p style='color: red; text-align: center;'>${err.responseText}</p>`)
 };
 //split ingredents by the posistion in the array
 function splitIng (obj) {
@@ -56,8 +55,7 @@ function splitIng (obj) {
 function myDrinksFail (err) {
 	console.log(err);
 	$('div.error').html(`
-		<p style='color: red; text-align: center;'>ERROR: code ${err.status},
-		<br>${err.responseText}`)
+		<p style='color: red; text-align: center;'>${err.responseText}</p>`)
 };
 //render my drinks
 function renderMyDrinks (obj) {
@@ -124,24 +122,45 @@ function handleMyDrinkEdit () {
 		console.log($('span#ingredents')[0].lastChild.id);
 		//turn the spans into a form
 		$('div.editDrink').removeClass('hidden');
-		$('div.editDrink').prepend(`<img class="edit" src=${drinkImage} alt="${drinkName}">`);
-		$('form#edit').html(`
+		$('form#edit').html(`			
 			<fieldset class="editDrink">
+				<h1>Edit this drink</h1>
 				<input type="text" class="hidden" id="id" name="id" value="${drinkId}">
-				<label for="drinkName">Drink Name:
-					<input type="text" value="${drinkName}" name="drinkName" required></label><br>
-				<label for="glass">Glass:
-					<input type="text" value="${glass}" name="glass" required></label><br>
-				<label for="ingredents">ingredents:
-					<textarea name="ingredents" rows="6" required>${ingredents}</textarea></label><br>
-				<label for="garnish">Garnish:
-					<input type="text" value="${garnish}" name="garnish" required></label><br>
-				<label for="instructions">Instructions:
-					<textarea name="instructions" rows="6" required>${instructions}</textarea></label><br>
-				<label for="drinkImage">Drink Image:
-					<input type="file" name="drinkImage" accept="image/*"></label><br>
-				<input class="btn-block btn-lrg btn-primary btn" type="submit" name="Submit">
-			</fieldset>
+					<div class="rows">
+						<div class="drinkName col-6">
+						<label for="drinkName">Drink Name:</label></br>
+							<input type="text" name="drinkName" value="${drinkName}" placeholder="Drink Name" required>
+						</div>
+						<div class="glass col-6">
+						<label for="glass">Glass:</label></br>
+							<input type="text" value="${glass}" name="glass" placeholder="Copper Mug">
+						</div>
+					</div>
+					<div class="rows">
+						<div class="ingredents col-12">
+						<label for="ingredents">Ingredents:<sub>(Should be seperated by a comma for each ingredent)</sub></label></br>
+							<textarea name="ingredents" rows="6" placeholder="Vodka 1 1/2oz,&#10;Lime Juice 1/2oz,&#10;Ginger Beer Fill" required>${ingredents}</textarea>
+						</div>
+					</div>
+					<div class="rows">
+						<div class="instructions col-12">
+						<label for="instructions" >Instructions</label></br>
+						<textarea name="instructions" rows="6" placeholder="How it is made" required>${instructions}</textarea>
+						</div>
+					</div>
+					<div class="rows">
+						<div class="drinkImage col-6">
+						<label for="drinkImage">Drink Image:</label><img class="placeholder" alt="${drinkName}" src=${drinkImage}>*</br>
+							<input type="file" name="drinkImage" accept="image/*" required>
+						</div>
+						<div class="garnish col-6">
+						<label for="garnish">Garnish:</label></br>
+							<input type="text" name="garnish" value="${garnish}" placeholder="Garnish">
+						</div>
+					</div>
+					<input class="btn btn-block btn-lrg btn-primary" type="submit" name="Submit">
+					<small>*Just a placeholder pic</small>
+				</fieldset>
 				`)
 		$('div.myDrink').html('');
 	})
