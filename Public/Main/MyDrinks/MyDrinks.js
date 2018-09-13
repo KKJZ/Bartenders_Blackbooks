@@ -96,8 +96,8 @@ function renderOneMyDrink (obj) {
 			<h2>Ingredents</h2> <span id="ingredents" class="result">${splitIng(obj.ingredents)}<span id="${obj.ingredents}"></span></span>
 			<h2>Garnish</h2> <span id="garnish" class="result">${obj.garnish}</span>
 			<h2>Instructions</h2> <span id="instructions" class="result">${obj.instructions}</span>
-			<button id=${obj.id} class="btn edit">Edit</button>
-			<button id=${obj.id} value="${obj.drinkName}" class="btn delete">Delete</button>
+			<button id=${obj.id} class="btn btn-success edit">Edit</button>
+			<button id=${obj.id} value="${obj.drinkName}" class="btn btn-danger delete">Delete</button>
 		</div>`
 		);
 	// <form id="comments">

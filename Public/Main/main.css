@@ -2,6 +2,16 @@
 	box-sizing: border-box;
 }
 
+body {
+	background-image: url(../../images/background.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: 1920px 1080px;
+	height: 100%;
+}
+
+
 button {
 	display: block;
 	width: 64px;
@@ -10,12 +20,20 @@ button {
 	margin-left: auto;
 }
 
+button.landing {
+	width: 200px;
+	height: 64px;
+	margin-bottom: 20px;
+}
+
 nav {
 	display: block;
 	width: 100%;
 	text-align: center;
 	margin-bottom: 50px;
-	/*position: fixed;*/
+	background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    border: black 2px solid;
 }
 
 h1 {
@@ -51,7 +69,7 @@ fieldset.makeDrink > h1,input.btn {
 	margin-right: 0;
 }
 
-form.login {
+form#login {
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
@@ -59,19 +77,26 @@ form.login {
 
 form#search {
 	text-align: center;
+	display: inline-block;
 	margin-right: auto;
-	margin-left: auto;	
+	margin-left: auto;
+	background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
 }
 
 div.login {
 	width: 100%;
 	max-width: 330px;
-	padding: 15px;
 	padding-bottom: 40px;
     padding-top: 40px;
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    border: black 2px solid;
 }
 
 div.register {
@@ -83,6 +108,9 @@ div.register {
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    border: black 2px solid;
 }
 
 
@@ -113,6 +141,39 @@ div.newDrink > div.drink {
 	position: absolute;
 	padding-top: 5px;
 	padding-bottom: 5px; 
+}
+
+div.makeDrink, div.editDrink {
+	padding-right: 15px;
+	padding-left: 15px;
+	background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    border: black 2px solid;
+}
+
+div.landing {
+	margin-top: 100px;
+	padding-right: 15px;
+	padding-left: 15px;
+	background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    border: black 2px solid;
+    text-align: center;
+}
+
+div.landing > h1, h2, h3, h4 {
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+div.drink {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+}
+
+div.drink_log {
+	background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
 }
 
 /*div.drinkName, div.glass, div.ingredents, div.instructions, div.drinkImage, div.garnish > input, label {
@@ -182,8 +243,10 @@ textarea {
 }
 
 .border {
-	border: black 1px solid;
-}
+	background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    border: black 2px solid;
+}}
 
 .drink_log {
 	height: 350px;
