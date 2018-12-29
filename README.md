@@ -18,6 +18,13 @@
 <p>View my drinks for instructions on how to use the app.</p>
 <a href="https://kkjz.github.io/Bartenders_Blackbooks/Public/Landing.html" target="_blank">Check it out here!</a>
 
+<h2>TO DO:</h2>
+<ul>
+  <li>More classic cocktails</li>
+  <li>Pages rather then one long one</li>
+  <li>Comments</li>
+</ul>
+
 <h2>Screenshots:</h2>
 <h3>Login Page</h3>
 
